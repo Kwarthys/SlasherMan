@@ -6,6 +6,8 @@ public class LivingThing : MonoBehaviour
 {
     public int maxLife;
 
+    public GameObject deathAnimation;
+
     [SerializeField]
     protected int life;
 
@@ -19,6 +21,11 @@ public class LivingThing : MonoBehaviour
         life -= amount;
         if(life <= 0)
         {
+            if(deathAnimation != null)
+            {
+                Instantiate(deathAnimation, transform.position, Quaternion.identity);
+            }
+
             //ded
             Destroy(gameObject);
         }
