@@ -8,6 +8,8 @@ public class DashAttack : MonoBehaviour
 
     public bool isOkay = true;
 
+    public PlayerController controller;
+
     public float internalCD = 0.3f;
     private float lastCast = -1;
 
@@ -54,6 +56,7 @@ public class DashAttack : MonoBehaviour
             if(Vector3.Distance(parent.position, dashTarget) < 0.1f)
             {
                 dashing = false;
+                controller.canMove = true;
                 rbody.isKinematic = false;
             }
             return;
@@ -66,6 +69,7 @@ public class DashAttack : MonoBehaviour
                 //cast
                 lastCast = Time.realtimeSinceStartup;
                 dashing = true;
+                controller.canMove = false;
 
                 rbody.isKinematic = true;
 

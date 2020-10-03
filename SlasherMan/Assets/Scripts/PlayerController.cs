@@ -8,15 +8,26 @@ public class PlayerController : MonoBehaviour
 
     private float threshold = 0.15f;
 
+    private Rigidbody rbody;
+
+    public bool canMove = true;
+
+    public float rotSpeed = 10;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        rbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(!canMove)
+        {
+            return;
+        }
+
         float horizontal = remap8(Input.GetAxisRaw("Horizontal"));
         float vertical = remap8(Input.GetAxisRaw("Vertical"));
 
@@ -30,7 +41,12 @@ public class PlayerController : MonoBehaviour
             }
 
             transform.position += movement * speed * Time.deltaTime;
-            transform.rotation = Quaternion.LookRotation(movement);
+            Quaternion targetRot = Quaternion.LookRotation(movement);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpeed);
+        }
+        else if (vertical == 0 && horizontal == 0)
+        {
+            rbody.velocity = Vector3.zero;
         }
 
     }
