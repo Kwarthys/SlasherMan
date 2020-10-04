@@ -6,6 +6,8 @@ public class DashAttack : MonoBehaviour
 {
     public Camera cam;
 
+    public GameObject anim;
+
     public bool isOkay = true;
 
     public PlayerController controller;
@@ -98,6 +100,8 @@ public class DashAttack : MonoBehaviour
                 Debug.DrawRay(parent.position, dashTarget - parent.position, Color.green, 1);
 
                 parent.rotation = Quaternion.LookRotation(dashTarget - parent.position);
+
+                Instantiate(anim, transform.position, transform.rotation);
             }
         }
     }

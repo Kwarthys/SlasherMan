@@ -10,8 +10,6 @@ public class SlashAttack : Ability
 
     private int counter = 0;
 
-    public GameObject anim;
-
     private Transform animSpawn;
 
     public LayerMask floorLayer;
@@ -25,8 +23,6 @@ public class SlashAttack : Ability
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("hit " + other.gameObject.name);
-
         LivingThing l = other.gameObject.GetComponentInParent<LivingThing>();
         if (l != null)
         {
@@ -75,6 +71,8 @@ public class SlashAttack : Ability
 
                 //play anim
                 Instantiate(anim, animSpawn.position, animSpawn.rotation);
+
+                camShaker.shakeCamera(shakeDuration, shakeMagnitude);
             }
         }
     }

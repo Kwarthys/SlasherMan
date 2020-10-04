@@ -8,14 +8,21 @@ public class CameraController : MonoBehaviour
 
     public Transform target;
 
-    void Start()
+    private Vector3 shakeTarget;
+
+    private void Start()
     {
-        
+        transform.rotation = Quaternion.LookRotation(target.position - transform.position);
     }
 
     void Update()
     {
         transform.position = target.position + offset;
-        transform.rotation = Quaternion.LookRotation(target.position - transform.position);
+    }
+
+    private void OnValidate()
+    {
+        Start();
+        Update();
     }
 }
