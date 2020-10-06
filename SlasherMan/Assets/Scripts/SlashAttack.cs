@@ -6,13 +6,10 @@ public class SlashAttack : Ability
 {
     private int counter = 0;
 
-    private Transform animSpawn;
-
     private bool targetHit = false;
 
     private void Start()
     {
-        animSpawn = transform.Find("SlashAnimSpawn");
         attackZone = GetComponent<BoxCollider>();
         attackZone.enabled = false;
     }
@@ -68,7 +65,7 @@ public class SlashAttack : Ability
                 }
 
                 //play anim
-                Instantiate(anim, animSpawn.position, animSpawn.rotation);
+                Instantiate(anim, transform.position, transform.rotation);
 
                 camShaker.shakeCamera(shakeDuration, shakeMagnitude);
             }

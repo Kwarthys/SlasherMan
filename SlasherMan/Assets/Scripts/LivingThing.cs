@@ -19,15 +19,5 @@ public class LivingThing : MonoBehaviour
     public void takeDamage(int amount)
     {
         life -= amount;
-        if(life <= 0)
-        {
-            if(deathAnimation != null)
-            {
-                Instantiate(deathAnimation, transform.position, Quaternion.identity);
-            }
-
-            //ded
-            Destroy(gameObject);
-        }
     }
 }
