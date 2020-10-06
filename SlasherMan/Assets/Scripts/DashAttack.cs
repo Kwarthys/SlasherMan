@@ -2,28 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DashAttack : MonoBehaviour
+public class DashAttack : Ability
 {
-    public Camera cam;
-
-    public GameObject anim;
-
-    public bool isOkay = true;
 
     public PlayerController controller;
-
-    public float internalCD = 0.3f;
-    private float lastCast = -1;
 
     public float speed = 20;
     public float dashDistance = 7;
 
-    public LayerMask floorLayer;
     public LayerMask enemiesLayer;
 
-    public int damage = 25;
-
-    private bool dashing = false;
     private Vector3 dashTarget;
 
     private Rigidbody rbody;
@@ -34,67 +22,66 @@ public class DashAttack : MonoBehaviour
     {
         rbody = GetComponentInParent<Rigidbody>();
         parent = transform.parent;
+
+        attackZone = GetComponent<SphereCollider>();
+        attackZone.enabled = false;
     }
 
-    private void OnTriggerEnter(Collider col)
+    private void OnTriggerEnter(Collider other)
     {
-        if(dashing)
+        LivingThing l = other.gameObject.GetComponentInParent<LivingThing>();
+        if(l!=null)
         {
-            LivingThing l = col.gameObject.GetComponentInParent<LivingThing>();
-            if(l!=null)
-            {
-                l.takeDamage(damage);
-            }
-        }
+            l.takeDamage(damage);
+        }        
     }
 
 
     void Update()
     {
-        if(dashing)
+        if(inUse)
         {
             parent.position += (dashTarget - parent.position) * speed * Time.deltaTime;
 
             if(Vector3.Distance(parent.position, dashTarget) < 0.1f)
             {
-                dashing = false;
+                inUse = false;
                 controller.canMove = true;
                 rbody.isKinematic = false;
+                attackZone.enabled = false;
             }
             return;
         }
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            if(Time.realtimeSinceStartup - lastCast > internalCD)
+            if(canBeUsed())
             {
                 //cast
-                lastCast = Time.realtimeSinceStartup;
-                dashing = true;
-                controller.canMove = false;
+                registerUse();
+                manager.registerDash();
 
+                inUse = true;
+                controller.canMove = false;
+                attackZone.enabled = true;
                 rbody.isKinematic = true;
 
-                RaycastHit hit;
-                Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+                Vector3 hit;
 
-                Debug.DrawRay(ray.origin, ray.direction);
-
-                if (Physics.Raycast(ray, out hit, 60, floorLayer))
+                if (tryFindTarget(out hit))
                 {
-                    dashTarget = hit.point;
-                    dashTarget.y += 1;
+                    dashTarget = hit;
 
-                    if(Vector3.Distance(dashTarget, parent.position) > dashDistance)
-                    {
-                        Vector3 dashDirection = (dashTarget - parent.position).normalized;
-                        dashTarget = parent.position + dashDirection * dashDistance;
-                    }
+                    //if(Vector3.Distance(dashTarget, parent.position) > dashDistance)
+                    //{
+                    Vector3 dashDirection = (dashTarget - parent.position).normalized;
+                    dashTarget = parent.position + dashDirection * dashDistance;
+                    //}
                 }
                 else
                 {
                     Debug.LogError("Couldn't find floor to dash");
-                    dashing = false;
+                    inUse = false;
                 }
 
                 Debug.DrawRay(parent.position, dashTarget - parent.position, Color.green, 1);

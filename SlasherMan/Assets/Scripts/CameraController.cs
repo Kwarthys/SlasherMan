@@ -8,6 +8,8 @@ public class CameraController : MonoBehaviour
 
     public Transform target;
 
+    public float cameraSpeed = 20;
+
     private Vector3 shakeTarget;
 
     private void Start()
@@ -17,7 +19,7 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        transform.position = target.position + offset;
+        transform.position += (target.position + offset - transform.position) * cameraSpeed * Time.deltaTime;
     }
 
     private void OnValidate()

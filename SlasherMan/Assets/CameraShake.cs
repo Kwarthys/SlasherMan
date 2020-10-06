@@ -24,6 +24,7 @@ public class CameraShake : MonoBehaviour
             if(t >= 1)
             {
                 magnitude = 0;
+                duration = 0;
                 transform.localPosition = Vector3.zero;
                 return;
             }
