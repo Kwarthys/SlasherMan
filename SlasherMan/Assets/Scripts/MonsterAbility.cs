@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MonsterAbility : MonoBehaviour
 {
+    public Vector3 attackZoneSize;
+
     public float monsterAttackCD = 1;
     public float lastCast = -1;
 
@@ -11,29 +13,36 @@ public class MonsterAbility : MonoBehaviour
     private float timeOfAttackStart = -1;
     private bool attacking = false;
 
+    public GameObject preAttackAnim;
+    private HighLightResizer preAttackAnimInstanciated;
+
     public GameObject attackAnim;
 
     public int damage = 20;
 
-    private Collider attackZone;
+    private BoxCollider attackZone;
 
     private Monster controller;
 
     private int counter = 0;
 
+    private bool freezeDamage = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        attackZone = GetComponent<Collider>();
+        attackZone = GetComponent<BoxCollider>();
         attackZone.enabled = false;
 
-        controller = transform.root.GetComponent<Monster>();
+        controller = transform.parent.GetComponent<Monster>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         //Trigger the attack
         //Debug.Log("detected " + other.transform.root.name);
+
+        if (freezeDamage) return;
 
         LivingThing l = other.GetComponentInParent<LivingThing>();
         if(l!=null)
@@ -44,7 +53,7 @@ public class MonsterAbility : MonoBehaviour
     }
 
     private void Update()
-    {
+    { 
         if(attacking)
         {
             if(Time.realtimeSinceStartup - timeOfAttackStart > timeBeforeAttack)
@@ -55,6 +64,8 @@ public class MonsterAbility : MonoBehaviour
                 //AttackAnim
                 //Debug.Log("Attacking");
                 Instantiate(attackAnim, transform.position, transform.rotation);
+
+                Destroy(preAttackAnimInstanciated.gameObject);
             }
         }
     }
@@ -68,6 +79,12 @@ public class MonsterAbility : MonoBehaviour
 
         //StartAttackAnim
         //Debug.Log("StartAttack");
+        freezeDamage = true;
+        attackZone.enabled = true;
+        preAttackAnimInstanciated = Instantiate(preAttackAnim, attackZone.bounds.center, transform.rotation, transform).GetComponent<HighLightResizer>();
+        preAttackAnimInstanciated.resize(attackZone.size);
+        freezeDamage = false;
+        attackZone.enabled = false;
     }
 
     private void FixedUpdate()

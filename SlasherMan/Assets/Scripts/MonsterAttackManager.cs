@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class MonsterAttackManager : MonoBehaviour
 {
+    [SerializeField]
     private Collider attackTrigger;
 
+    [SerializeField]
     private MonsterAbility ability;
 
     // Start is called before the first frame update
@@ -29,6 +31,11 @@ public class MonsterAttackManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if(other.isTrigger)
+        {
+            return;
+        }
+
         if(other.transform.root.tag == "Player")
         {
             //Trigger the attack
