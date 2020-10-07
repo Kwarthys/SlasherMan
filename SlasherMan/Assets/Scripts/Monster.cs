@@ -9,6 +9,10 @@ public class Monster : LivingThing
 
     private bool allowMovement = true;
 
+    public LayerMask monsterLayer;
+
+    public float friendAvoidDistance = 3;
+
     public void setAllowMovement(bool state)
     {
         allowMovement = state;
@@ -17,8 +21,34 @@ public class Monster : LivingThing
 
     private void Update()
     {
+        Transform closestAlly = null;
+        foreach(Collider other in Physics.OverlapSphere(transform.position, friendAvoidDistance, monsterLayer))
+        {
+            if(other.transform.root != transform.root)
+            {
+                if (closestAlly == null)
+                {
+                    closestAlly = other.transform.root;
+                }
+                else if (Vector3.Distance(closestAlly.position, transform.position) > Vector3.Distance(other.transform.root.position, transform.position))
+                {
+                    closestAlly = other.transform.root;
+                }
+            }            
+        }
+
         //GetPlayer
         Vector3 target = GameObject.FindGameObjectWithTag("Player").transform.position;
+        Debug.DrawLine(transform.position, target, Color.red);
+
+        if(closestAlly != null)
+        {
+            //Move away from it
+            float distance = Vector3.Distance(closestAlly.position, transform.position);
+            target -= (closestAlly.position - transform.position).normalized * friendAvoidDistance / distance;
+            Debug.DrawLine(transform.position, target, Color.green);
+        }
+
 
         if(allowMovement)
         {

@@ -335,6 +335,9 @@ MonoBehaviour:
   life: 0
   speed: 5
   rotSpeed: 10
+  monsterLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &7905225111835679338
 GameObject:
   m_ObjectHideFlags: 0
