@@ -44,11 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ff28e1af049f5f4f98bb12693d9dac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackZoneSize: {x: 0, y: 0, z: 0}
   monsterAttackCD: 2
   lastCast: -1
   timeBeforeAttack: 1
   preAttackAnim: {fileID: 7286569862626166567, guid: 33315283554d69147971633c36f4d239, type: 3}
-  attackAnim: {fileID: 6197046656232529916, guid: b5da1cb3f53fe4247bf25edfeea57354, type: 3}
+  attackAnim: {fileID: 3121458812966204478, guid: a1c42421b9191ba40871a4b9de6e6b9b, type: 3}
   damage: 70
 --- !u!65 &738780440
 BoxCollider:
@@ -332,8 +333,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbcd6b7be3e4bf140a1a1ae9be986d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackTrigger: {fileID: 0}
-  ability: {fileID: 0}
 --- !u!65 &1676399378
 BoxCollider:
   m_ObjectHideFlags: 0
