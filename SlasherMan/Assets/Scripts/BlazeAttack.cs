@@ -11,6 +11,8 @@ public class BlazeAttack : Ability
 
     private ParticleSystem particles;
 
+    public Animator playerAnimator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -62,6 +64,8 @@ public class BlazeAttack : Ability
                 particles.Play();
 
                 camShaker.shakeCamera(shakeDuration, shakeMagnitude);
+
+                playerAnimator.SetTrigger("TriggerAttack");
             }
         }
     }

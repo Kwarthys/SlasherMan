@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
 
     public float rotSpeed = 10;
 
+    public Animator playerAnimator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bool isRunning = true;
+
         if(!canMove)
         {
             return;
@@ -44,10 +48,13 @@ public class PlayerController : MonoBehaviour
             Quaternion targetRot = Quaternion.LookRotation(movement);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpeed);
         }
-        else if (vertical == 0 && horizontal == 0)
+        else// if (vertical == 0 && horizontal == 0) //trying this
         {
             rbody.velocity = Vector3.zero;
+            isRunning = false;
         }
+
+        playerAnimator.SetBool("isRunning", isRunning);
 
     }
 
