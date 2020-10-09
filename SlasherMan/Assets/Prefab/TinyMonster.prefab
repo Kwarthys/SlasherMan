@@ -138,7 +138,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ff28e1af049f5f4f98bb12693d9dac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackZoneSize: {x: 0, y: 0, z: 0}
   monsterAttackCD: 1
   lastCast: -1
   timeBeforeAttack: 0.5
@@ -321,8 +320,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbcd6b7be3e4bf140a1a1ae9be986d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackTrigger: {fileID: 0}
-  ability: {fileID: 0}
 --- !u!114 &8022629325805311157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,10 +351,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.56
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 8
+  m_Acceleration: 10
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 200
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1

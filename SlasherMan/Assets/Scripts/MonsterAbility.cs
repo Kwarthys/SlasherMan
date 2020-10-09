@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider))]
 public class MonsterAbility : MonoBehaviour
 {
-    public Vector3 attackZoneSize;
-
     public float monsterAttackCD = 1;
     public float lastCast = -1;
 
@@ -20,6 +19,7 @@ public class MonsterAbility : MonoBehaviour
 
     public int damage = 20;
 
+    
     private BoxCollider attackZone;
 
     private Monster controller;

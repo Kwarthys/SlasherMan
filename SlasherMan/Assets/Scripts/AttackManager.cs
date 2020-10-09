@@ -65,6 +65,7 @@ public class AttackManager : MonoBehaviour
         {
             blaze.allowed = true;
             BlazeImage.color = Color.white;
+            slashCount = 0;
         }
     }
 }

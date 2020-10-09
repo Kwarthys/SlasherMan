@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HighLightResizer : MonoBehaviour
 {
+    //Raw size of the imported png
     private Vector3 currentSize = new Vector3(4.92f, .82f, 4.79f);
 
     public void resize(Vector3 size)

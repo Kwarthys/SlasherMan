@@ -9,9 +9,6 @@ public class BlazeAttack : Ability
     public float duration = 60;
     private float lastStart = -1;
 
-    public float dotTime = .5f;
-    private float lastDotTime = -1;
-
     private ParticleSystem particles;
 
     // Start is called before the first frame update
