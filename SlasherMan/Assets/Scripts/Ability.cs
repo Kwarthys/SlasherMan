@@ -27,6 +27,8 @@ public class Ability : MonoBehaviour
 
     public int damage;
 
+    public Animator playerAnimator;
+
     protected bool inUse = false;
 
     public bool canBeUsed()

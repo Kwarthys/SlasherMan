@@ -89,6 +89,8 @@ public class DashAttack : Ability
                 parent.rotation = Quaternion.LookRotation(dashTarget - parent.position);
 
                 Instantiate(anim, transform.position, transform.rotation);
+
+                //playerAnimator.SetTrigger("Dash");
             }
         }
     }

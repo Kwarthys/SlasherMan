@@ -1460,7 +1460,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shakeDuration: 2.5
-  shakeMagnitude: 2
+  shakeMagnitude: 1
   camShaker: {fileID: 1687258583}
   cam: {fileID: 1687258584}
   floorLayer:
@@ -1472,9 +1472,10 @@ MonoBehaviour:
   anim: {fileID: 0}
   internalCD: 0
   damage: 2
+  playerAnimator: {fileID: 635272750}
   controller: {fileID: 403791606}
   duration: 2
-  playerAnimator: {fileID: 635272750}
+  initTime: 0.5
 --- !u!65 &769369182
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7319,10 +7320,11 @@ MonoBehaviour:
     m_Bits: 256
   allowed: 1
   abilityName: Dash
-  manager: {fileID: 0}
+  manager: {fileID: 403791607}
   anim: {fileID: 8319904447794588626, guid: 2c42ef3a70bac1e4780a1b9a93e06bd9, type: 3}
   internalCD: 0.3
   damage: 25
+  playerAnimator: {fileID: 635272750}
   controller: {fileID: 403791606}
   speed: 15
   dashDistance: 15

@@ -9,9 +9,10 @@ public class BlazeAttack : Ability
     public float duration = 60;
     private float lastStart = -1;
 
-    private ParticleSystem particles;
+    public float initTime = .5f;
+    private bool starting = false;
 
-    public Animator playerAnimator;
+    private ParticleSystem particles;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,29 @@ public class BlazeAttack : Ability
     // Update is called once per frame
     void Update()
     {
+        if(starting)
+        {
+            if(Time.realtimeSinceStartup - lastStart > initTime)
+            {
+                inUse = true;
+                starting = false;
+
+                //Actually launching the spell
+
+                particles.Play();
+
+                attackZone.enabled = true;
+
+                camShaker.shakeCamera(shakeDuration, shakeMagnitude);
+            }
+
+            Vector3 target;
+            if (tryFindTarget(out target))
+            {
+                transform.parent.rotation = Quaternion.LookRotation(target - transform.parent.position);
+            }
+        }
+
         if(inUse)
         {
             if(Time.realtimeSinceStartup - lastStart > duration)
@@ -49,23 +73,17 @@ public class BlazeAttack : Ability
         {
             if(Input.GetKeyDown(KeyCode.R))
             {
-
                 registerUse();
                 manager.registerBlaze();
 
-                inUse = true;
-
-                attackZone.enabled = true;
+                //inUse = true;
+                starting = true;
 
                 lastStart = Time.realtimeSinceStartup;
 
                 controller.speed /= 2;
 
-                particles.Play();
-
-                camShaker.shakeCamera(shakeDuration, shakeMagnitude);
-
-                playerAnimator.SetTrigger("TriggerAttack");
+                playerAnimator.SetTrigger("Blaze");
             }
         }
     }

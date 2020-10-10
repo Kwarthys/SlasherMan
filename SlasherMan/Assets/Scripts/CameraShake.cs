@@ -51,9 +51,12 @@ public class CameraShake : MonoBehaviour
 
     public void shakeCamera(float duration, float magnitude)
     {
-        this.duration = Mathf.Max(this.duration, duration);
-        this.magnitude = Mathf.Max(this.magnitude, magnitude);
-        startShake = Time.realtimeSinceStartup;
-        shakeTarget = transform.localPosition;
+        if(this.magnitude < magnitude)
+        {
+            this.duration = Mathf.Max(this.duration, duration);
+            this.magnitude = Mathf.Max(this.magnitude, magnitude);
+            startShake = Time.realtimeSinceStartup;
+            shakeTarget = transform.localPosition;
+        }
     }
 }

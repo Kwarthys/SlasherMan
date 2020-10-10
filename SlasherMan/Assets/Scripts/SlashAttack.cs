@@ -8,8 +8,6 @@ public class SlashAttack : Ability
 
     private bool targetHit = false;
 
-    public Animator playerAnimator;
-
     private void Start()
     {
         attackZone = GetComponent<BoxCollider>();
@@ -71,7 +69,7 @@ public class SlashAttack : Ability
 
                 camShaker.shakeCamera(shakeDuration, shakeMagnitude);
 
-                playerAnimator.SetTrigger("TriggerAttack");
+                playerAnimator.SetTrigger("Slash");
             }
         }
     }
