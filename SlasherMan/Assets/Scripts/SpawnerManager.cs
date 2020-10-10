@@ -9,12 +9,15 @@ public class SpawnerManager : MonoBehaviour
     public float spawnRate = 1;
     private float lastSpawn = -1;
 
-    public float spawnAmount = 1;
+    //public GameObject monsterPrefab;
 
-    public GameObject monsterPrefab;
+    public List<MonsterMeta> monsters = new List<MonsterMeta>();
 
-    public LayerMask monsterLayer;
-    public GameObject monsterDeathAnimation;
+    //public LayerMask monsterLayer;
+    //public GameObject monsterDeathAnimation;
+
+    public int creditsPerSpawn = 10;
+    private int waveCredits = 0;
 
     private int mID = 0;
 
@@ -32,8 +35,9 @@ public class SpawnerManager : MonoBehaviour
         if(Time.realtimeSinceStartup - lastSpawn > spawnRate)
         {
             lastSpawn = Time.realtimeSinceStartup;
+            waveCredits = creditsPerSpawn;
             //Spawn
-            for(int i = 0; i < spawnAmount; ++i)
+            while(waveCredits > 0)
             {
                 spawnAMonster();
             }
@@ -54,9 +58,29 @@ public class SpawnerManager : MonoBehaviour
         spawnPoint.x += point.x;
         spawnPoint.z += point.y;
 
-        Monster m = Instantiate(monsterPrefab, spawnPoint, Quaternion.identity, transform).GetComponent<Monster>();
-        m.monsterLayer = monsterLayer;
-        m.deathAnimation = monsterDeathAnimation;
+        Monster m = Instantiate(getRandomMonsterPrefab(), spawnPoint, Quaternion.identity, transform).GetComponent<Monster>();
+        //m.monsterLayer = monsterLayer;
+        //m.deathAnimation = monsterDeathAnimation;
         m.transform.name = "Monster" + ++mID;
+    }
+
+    private GameObject getRandomMonsterPrefab()
+    {
+        MonsterMeta m;
+        int r;
+
+        float rarityRandom = Random.value;
+
+        do
+        {
+            r = Random.Range(0, monsters.Count);
+            Debug.Log(r + " / " + monsters.Count + " and " + rarityRandom);
+            m = monsters[r];
+        } while (m.monsterCost > waveCredits || rarityRandom < 1 - m.spawnChances);
+
+        Debug.Log("Spawned a " + m.monsterName + ". - " + waveCredits + "/" + creditsPerSpawn);
+
+        waveCredits -= m.monsterCost;
+        return m.monsterPrefab;
     }
 }

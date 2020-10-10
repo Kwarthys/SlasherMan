@@ -54,7 +54,7 @@ public class BlazeAttack : Ability
         {
             if(Time.realtimeSinceStartup - lastStart > duration)
             {
-                controller.speed *= 2;
+                controller.speed *= 1.5f;
                 attackZone.enabled = false;
                 particles.Stop();
                 inUse = false;
@@ -81,7 +81,7 @@ public class BlazeAttack : Ability
 
                 lastStart = Time.realtimeSinceStartup;
 
-                controller.speed /= 2;
+                controller.speed /= 1.5f;
 
                 playerAnimator.SetTrigger("Blaze");
             }
