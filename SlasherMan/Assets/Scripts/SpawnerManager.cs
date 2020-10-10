@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class SpawnerManager : MonoBehaviour
 {
-    public float spawnRange = 30;
+    public float spawnMinRange = 30;
+    public float spawnMaxRange = 50;
 
     public float spawnRate = 1;
     private float lastSpawn = -1;
 
-    //public GameObject monsterPrefab;
-
     public List<MonsterMeta> monsters = new List<MonsterMeta>();
-
-    //public LayerMask monsterLayer;
-    //public GameObject monsterDeathAnimation;
 
     public int creditsPerSpawn = 10;
     private int waveCredits = 0;
@@ -22,6 +18,8 @@ public class SpawnerManager : MonoBehaviour
     private int mID = 0;
 
     private Transform player;
+
+    public LayerMask floor;
 
     // Start is called before the first frame update
     void Start()
@@ -46,22 +44,34 @@ public class SpawnerManager : MonoBehaviour
 
     private void spawnAMonster()
     {
-        Vector3 spawnPoint = player.transform.position;
-        Vector2 point = Random.insideUnitCircle.normalized;
-        if(point.x == 0 && point.y == 0)
-        {
-            point.x = 1;
-        }
-
-        point *= spawnRange;
-
-        spawnPoint.x += point.x;
-        spawnPoint.z += point.y;
+        Vector3 spawnPoint = getSpawnPoint();
 
         Monster m = Instantiate(getRandomMonsterPrefab(), spawnPoint, Quaternion.identity, transform).GetComponent<Monster>();
-        //m.monsterLayer = monsterLayer;
-        //m.deathAnimation = monsterDeathAnimation;
         m.transform.name = "Monster" + ++mID;
+    }
+
+    private Vector3 getSpawnPoint()
+    {
+        Vector3 spawnPoint;
+
+        do
+        {
+            spawnPoint = player.transform.position;
+            Vector2 point = Random.insideUnitCircle.normalized;
+
+            if (point.x == 0 && point.y == 0)
+            {
+                //In case the normalisation gives us (0,0), we force it to (1,0)
+                point.x = 1;
+            }
+
+            point *= Random.Range(spawnMinRange, spawnMaxRange);
+
+            spawnPoint.x += point.x;
+            spawnPoint.z += point.y;
+        } while (!Physics.Raycast(spawnPoint, Vector3.down, 1, floor));
+
+        return spawnPoint;
     }
 
     private GameObject getRandomMonsterPrefab()
@@ -74,13 +84,27 @@ public class SpawnerManager : MonoBehaviour
         do
         {
             r = Random.Range(0, monsters.Count);
-            Debug.Log(r + " / " + monsters.Count + " and " + rarityRandom);
+            //Debug.Log(r + " / " + monsters.Count + " and " + rarityRandom);
             m = monsters[r];
         } while (m.monsterCost > waveCredits || rarityRandom < 1 - m.spawnChances);
 
-        Debug.Log("Spawned a " + m.monsterName + ". - " + waveCredits + "/" + creditsPerSpawn);
+        //Debug.Log("Spawned a " + m.monsterName + ". - " + waveCredits + "/" + creditsPerSpawn);
 
         waveCredits -= m.monsterCost;
         return m.monsterPrefab;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if(player != null)
+        {
+            Gizmos.DrawWireSphere(player.position, spawnMinRange);
+            Gizmos.DrawWireSphere(player.position, spawnMaxRange);
+        }
+        else
+        {
+            Gizmos.DrawWireSphere(Vector3.zero, spawnMinRange);
+            Gizmos.DrawWireSphere(Vector3.zero, spawnMaxRange);
+        }
     }
 }

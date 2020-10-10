@@ -298,6 +298,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   friendAvoidDistance: 3
+  monsterKillScore: 5
 --- !u!195 &8800394191712460216
 NavMeshAgent:
   m_ObjectHideFlags: 0

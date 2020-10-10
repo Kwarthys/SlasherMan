@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TinyMonster
   m_EditorClassIdentifier: 
   monsterPrefab: {fileID: 6729265255222185608, guid: 4fe2f5be3f482fe4590ac896708bb5da, type: 3}
-  monsterName: TieManager
+  monsterName: Coworker
   monsterCost: 1
   spawnChances: 1

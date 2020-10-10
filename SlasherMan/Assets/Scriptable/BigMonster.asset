@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: BigMonster
   m_EditorClassIdentifier: 
   monsterPrefab: {fileID: 8800394191712460219, guid: 46cc2409e7d39ec45a832fefc46b51a7, type: 3}
-  monsterName: TieMagi
+  monsterName: OccultManager
   monsterCost: 5
-  spawnChances: 0.3
+  spawnChances: 0.1

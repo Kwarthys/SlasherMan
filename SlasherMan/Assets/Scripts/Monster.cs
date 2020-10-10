@@ -15,6 +15,7 @@ public class Monster : LivingThing
     public float friendAvoidDistance = 3;
 
     private static ScoreManager scoreManager;
+    public int monsterKillScore = 1;
 
     private NavMeshAgent agent;
 
@@ -90,7 +91,7 @@ public class Monster : LivingThing
             }
 
             //ded
-            scoreManager.notifyKill(1);
+            scoreManager.notifyKill(monsterKillScore);
             Destroy(gameObject);
         }
     }
