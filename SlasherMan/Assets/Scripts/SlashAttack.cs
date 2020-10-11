@@ -19,7 +19,7 @@ public class SlashAttack : Ability
         LivingThing l = other.gameObject.GetComponentInParent<LivingThing>();
         if (l != null)
         {
-            l.takeDamage(damage);
+            dealDamage(l);
             targetHit = true;
         }
     }

@@ -11,10 +11,12 @@ public class Ability : MonoBehaviour
     [Space]
     public Camera cam;
     public LayerMask floorLayer;
+    [Header("Stats")]
+    public string abilityName;
+    public int totalDamage = 0;
+    public int totalKills = 0;
     [Space]
     public bool allowed = true;
-
-    public string abilityName;
 
     public AttackManager manager;
 
@@ -59,5 +61,18 @@ public class Ability : MonoBehaviour
 
         target = Vector3.zero;
         return false;
+    }
+
+    protected void dealDamage(LivingThing target)
+    {
+        if (target != null)
+        {
+            totalDamage += Mathf.Min(damage, target.getCurrentLife());
+            target.takeDamage(damage);
+            if (target.getCurrentLife() <= 0)
+            {
+                totalKills++;
+            }
+        }
     }
 }

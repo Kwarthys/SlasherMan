@@ -90,10 +90,6 @@ public class BlazeAttack : Ability
 
     private void OnTriggerStay(Collider other)
     {
-        LivingThing l = other.gameObject.GetComponentInParent<LivingThing>();
-        if (l != null)
-        {
-            l.takeDamage(damage);
-        }
+        dealDamage(other.gameObject.GetComponentInParent<LivingThing>());        
     }
 }

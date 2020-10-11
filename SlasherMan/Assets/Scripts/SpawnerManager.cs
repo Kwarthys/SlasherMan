@@ -12,7 +12,8 @@ public class SpawnerManager : MonoBehaviour
 
     public List<MonsterMeta> monsters = new List<MonsterMeta>();
 
-    public int creditsPerSpawn = 10;
+    public int startCreditsPerSpawn = 10;
+    private int creditsPerSpawn = 0;
     private int waveCredits = 0;
 
     private int mID = 0;
@@ -25,6 +26,20 @@ public class SpawnerManager : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        creditsPerSpawn = startCreditsPerSpawn;
+    }
+
+    public void reinit()
+    {
+        mID = 0;
+
+        foreach(Transform child in transform)
+        {
+            Destroy(child.gameObject);
+            lastSpawn = Time.realtimeSinceStartup;
+        }
+
+        creditsPerSpawn = startCreditsPerSpawn;
     }
 
     // Update is called once per frame
@@ -33,7 +48,7 @@ public class SpawnerManager : MonoBehaviour
         if(Time.realtimeSinceStartup - lastSpawn > spawnRate)
         {
             lastSpawn = Time.realtimeSinceStartup;
-            waveCredits = creditsPerSpawn;
+            waveCredits = creditsPerSpawn++;
             //Spawn
             while(waveCredits > 0)
             {

@@ -11,6 +11,8 @@ public abstract class LivingThing : MonoBehaviour
     [SerializeField]
     protected int life;
 
+    public int getCurrentLife() { return life; }
+
     private void Start()
     {
         life = maxLife;
@@ -20,7 +22,19 @@ public abstract class LivingThing : MonoBehaviour
     public void takeDamage(int amount)
     {
         life -= amount;
+        onTakeDamage();
+    }
+
+    private void Update()
+    {
+        if (life <= 0)
+        {
+            onDeath();
+        }
     }
 
     public abstract void init();
+
+    protected virtual void onDeath() { }
+    protected virtual void onTakeDamage() { }
 }

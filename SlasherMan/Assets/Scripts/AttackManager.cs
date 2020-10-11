@@ -21,12 +21,20 @@ public class AttackManager : MonoBehaviour
 
     private void Start()
     {
+        init();
+    }
+
+    public void init()
+    {
         dash = transform.Find("DashManager").GetComponent<DashAttack>();
         slash = transform.Find("SlashManager").GetComponent<SlashAttack>();
         blaze = transform.Find("BlazeManager").GetComponent<BlazeAttack>();
         BlazeImage.color = Color.red;
         DashImage.color = Color.red;
         SlashImage.color = Color.white;
+
+        slashCount = 0;
+        dashCount = 0;
 
         dash.allowed = false;
         blaze.allowed = false;

@@ -44,6 +44,8 @@ public class MonsterAbility : MonoBehaviour
 
         if (freezeDamage) return;
 
+        if (other.isTrigger) return;
+
         LivingThing l = other.GetComponentInParent<LivingThing>();
         if(l!=null)
         {

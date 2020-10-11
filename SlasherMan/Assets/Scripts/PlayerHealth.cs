@@ -7,25 +7,39 @@ public class PlayerHealth : LivingThing
 {
     public Slider slider;
 
-    void Update()
-    {
-        if (life <= 0)
-        {
-            if (deathAnimation != null)
-            {
-                Instantiate(deathAnimation, transform.position, Quaternion.identity);
-            }
+    [Header("OnDamageCameraShake")]
+    public CameraShake camShake;
+    public float duration = 0.2f;
+    public float magnitude = 0.2f;
 
-            //ded
-            transform.root.position = Vector3.zero;
-            life = maxLife;
-        }
+    [Header("GameManagement")]
+    public GameManager manager;
+
+    protected override void onTakeDamage()
+    {
+        //Take damage animations (sound / visual / camShake)
+        slider.value = life * 1.0f / maxLife;
+
+        camShake.shakeCamera(duration, magnitude);
+    }
+
+    protected override void onDeath()
+    {
+        if (deathAnimation != null)
+        {
+            Instantiate(deathAnimation, transform.position, Quaternion.identity);
+        }      
 
         slider.value = life * 1.0f / maxLife;
+
+        manager.notifyPlayerDead();
     }
 
     public override void init()
     {
-    
+        life = maxLife;
+        slider.value = life * 1.0f / maxLife;
+
+        transform.position = Vector3.zero;
     }
 }

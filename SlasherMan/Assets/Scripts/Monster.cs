@@ -81,18 +81,20 @@ public class Monster : LivingThing
         }
     }
 
-    private void Update()
+    protected override void onDeath()
     {
-        if (life <= 0)
+        if (deathAnimation != null)
         {
-            if (deathAnimation != null)
-            {
-                Instantiate(deathAnimation, transform.position, Quaternion.identity);
-            }
-
-            //ded
-            scoreManager.notifyKill(monsterKillScore);
-            Destroy(gameObject);
+            Instantiate(deathAnimation, transform.position, Quaternion.identity);
         }
+
+        //ded
+        scoreManager.notifyKill(monsterKillScore);
+        Destroy(gameObject);        
+    }
+
+    protected override void onTakeDamage()
+    {
+        //oof
     }
 }
