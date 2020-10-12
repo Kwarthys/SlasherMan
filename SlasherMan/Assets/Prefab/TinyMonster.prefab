@@ -144,6 +144,7 @@ MonoBehaviour:
   preAttackAnim: {fileID: 7286569862626166567, guid: 33315283554d69147971633c36f4d239, type: 3}
   attackAnim: {fileID: 6197046656232529916, guid: b5da1cb3f53fe4247bf25edfeea57354, type: 3}
   damage: 20
+  clipVolume: 0.5
   attacksAudio:
   - {fileID: 8300000, guid: 41d8c12eb5097ae4887d81f55054fee5, type: 3}
   - {fileID: 8300000, guid: d3641fea2b962f34bbb49e9c3d0f6280, type: 3}

@@ -20,6 +20,7 @@ public class MonsterAbility : MonoBehaviour
     public int damage = 20;
 
     [Header("Audio")]
+    public float clipVolume = 1f;
     private static AudioManager audioManager;
     public List<AudioClip> attacksAudio = new List<AudioClip>();
     
@@ -80,7 +81,7 @@ public class MonsterAbility : MonoBehaviour
                 if(attacksAudio.Count > 0 && audioManager!=null)
                 {
                     AudioClip clip = attacksAudio[Random.Range(0, attacksAudio.Count)];
-                    audioManager.playClip(clip, transform.position);
+                    audioManager.playClip(clip, clipVolume, transform.position);
                 }
             }
         }

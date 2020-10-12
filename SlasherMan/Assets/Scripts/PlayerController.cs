@@ -50,10 +50,10 @@ public class PlayerController : MonoBehaviour
         }
         else// if (vertical == 0 && horizontal == 0) //trying this
         {
-            rbody.velocity = Vector3.zero;
             isRunning = false;
         }
 
+        rbody.velocity = Vector3.zero;
         playerAnimator.SetBool("isRunning", isRunning);
 
     }

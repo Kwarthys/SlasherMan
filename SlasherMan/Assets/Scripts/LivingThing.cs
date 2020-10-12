@@ -8,6 +8,11 @@ public abstract class LivingThing : MonoBehaviour
 
     public GameObject deathAnimation;
 
+    [Header("Audio")]
+    public List<AudioClip> onDamageClips = new List<AudioClip>();
+    public float clipsVolume = 1;
+    private static AudioManager audioManager;
+    [Space]
     [SerializeField]
     protected int life;
 
@@ -16,12 +21,25 @@ public abstract class LivingThing : MonoBehaviour
     private void Start()
     {
         life = maxLife;
+
+        if (audioManager == null)
+        {
+            audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        }
+
         init();
     }
 
     public void takeDamage(int amount)
     {
         life -= amount;
+
+        if (onDamageClips.Count > 0 && audioManager != null)
+        {
+            AudioClip clip = onDamageClips[Random.Range(0, onDamageClips.Count)];
+            audioManager.playClip(clip, clipsVolume, transform.position);
+        }
+
         onTakeDamage();
     }
 

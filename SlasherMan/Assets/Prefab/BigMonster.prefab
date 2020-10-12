@@ -50,6 +50,10 @@ MonoBehaviour:
   preAttackAnim: {fileID: 7286569862626166567, guid: 33315283554d69147971633c36f4d239, type: 3}
   attackAnim: {fileID: 3121458812966204478, guid: a1c42421b9191ba40871a4b9de6e6b9b, type: 3}
   damage: 70
+  attacksAudio:
+  - {fileID: 8300000, guid: f27f448699e02ad49b2f56eadeb7bcee, type: 3}
+  - {fileID: 8300000, guid: 595a761176fe22b4a9eb63a7eed91289, type: 3}
+  - {fileID: 8300000, guid: 9e4791068f1100c47a83ab52d85ea30d, type: 3}
 --- !u!65 &738780440
 BoxCollider:
   m_ObjectHideFlags: 0

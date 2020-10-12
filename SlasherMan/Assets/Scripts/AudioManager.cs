@@ -24,7 +24,7 @@ public class AudioManager : MonoBehaviour
         transform.position = player.position;
     }
 
-    public void playClip(AudioClip clip, Vector3 sourcePos)
+    public void playClip(AudioClip clip, float volume, Vector3 sourcePos)
     {
         AudioSource source;
 
@@ -52,7 +52,7 @@ public class AudioManager : MonoBehaviour
         {
             //if(!source.isPlaying) //For now i'll check how stacking everything will work
             //{
-                source.PlayOneShot(clip);
+                source.PlayOneShot(clip, volume);
             //}
         }
     }
