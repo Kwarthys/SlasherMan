@@ -35,17 +35,14 @@ public class AudioManager : MonoBehaviour
         if((sourcePos - pos).sqrMagnitude < centerZoneSize)
         {
             source = center;
-            Debug.Log("center d:" + (sourcePos - pos).sqrMagnitude + " < " + centerZoneSize);
         }
         else if(sourcePos.x > pos.x)
         {
             source = right;
-            Debug.Log("right d:" + (sourcePos - pos).sqrMagnitude);
         }
         else
         {
             source = left;
-            Debug.Log("left d:" + (sourcePos - pos).sqrMagnitude);
         }
 
         if(source!=null)

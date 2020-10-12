@@ -19,7 +19,7 @@ public class Monster : LivingThing
 
     private NavMeshAgent agent;
 
-    private float targetRefreshTime = .3f;
+    private float targetRefreshTime = .05f;
     private float lastRefresh = -1;
 
     private Transform closestAlly;

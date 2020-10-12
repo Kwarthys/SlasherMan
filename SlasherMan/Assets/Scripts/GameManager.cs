@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public ScoreManager scoreManager;
     public PlayerHealth playerHealth;
     public PlayerController playerController;
+    public ItemSpawnerManager itemManager;
 
     private void Start()
     {
@@ -41,6 +42,11 @@ public class GameManager : MonoBehaviour
         defeatText.fontSize = minDefeatTextSize;
         endScreen.SetActive(false);
         playerDead = false;
+
+        foreach(Transform child in abilityStatsContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
     public void notifyPlayerDead()
@@ -104,6 +110,7 @@ public class GameManager : MonoBehaviour
         attackManager.init();
         spawnManager.reinit();
         scoreManager.reinit();
+        itemManager.reinit();
         playerHealth.init();
         playerController.canMove = true;
 

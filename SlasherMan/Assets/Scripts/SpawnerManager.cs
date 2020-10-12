@@ -36,9 +36,9 @@ public class SpawnerManager : MonoBehaviour
         foreach(Transform child in transform)
         {
             Destroy(child.gameObject);
-            lastSpawn = Time.realtimeSinceStartup;
         }
 
+        lastSpawn = Time.realtimeSinceStartup;
         creditsPerSpawn = startCreditsPerSpawn;
     }
 
