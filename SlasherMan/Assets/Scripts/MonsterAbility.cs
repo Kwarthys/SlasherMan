@@ -19,6 +19,9 @@ public class MonsterAbility : MonoBehaviour
 
     public int damage = 20;
 
+    [Header("Audio")]
+    private static AudioManager audioManager;
+    public List<AudioClip> attacksAudio = new List<AudioClip>();
     
     private BoxCollider attackZone;
 
@@ -35,6 +38,11 @@ public class MonsterAbility : MonoBehaviour
         attackZone.enabled = false;
 
         controller = transform.parent.GetComponent<Monster>();
+
+        if(audioManager == null)
+        {
+            audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -68,6 +76,12 @@ public class MonsterAbility : MonoBehaviour
                 Instantiate(attackAnim, transform.position, transform.rotation);
 
                 Destroy(preAttackAnimInstanciated.gameObject);
+
+                if(attacksAudio.Count > 0 && audioManager!=null)
+                {
+                    AudioClip clip = attacksAudio[Random.Range(0, attacksAudio.Count)];
+                    audioManager.playClip(clip, transform.position);
+                }
             }
         }
     }

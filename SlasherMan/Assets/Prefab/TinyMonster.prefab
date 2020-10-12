@@ -144,6 +144,14 @@ MonoBehaviour:
   preAttackAnim: {fileID: 7286569862626166567, guid: 33315283554d69147971633c36f4d239, type: 3}
   attackAnim: {fileID: 6197046656232529916, guid: b5da1cb3f53fe4247bf25edfeea57354, type: 3}
   damage: 20
+  attacksAudio:
+  - {fileID: 8300000, guid: 41d8c12eb5097ae4887d81f55054fee5, type: 3}
+  - {fileID: 8300000, guid: d3641fea2b962f34bbb49e9c3d0f6280, type: 3}
+  - {fileID: 8300000, guid: cd161e94ca03ce642a0e839523a8e07b, type: 3}
+  - {fileID: 8300000, guid: 0e10a0912805ad04e91556690ea3517d, type: 3}
+  - {fileID: 8300000, guid: 0bf8c39633449614a82cbd63e94b2a76, type: 3}
+  - {fileID: 8300000, guid: ccbf28a290c9de740b633f2cd889fbf9, type: 3}
+  - {fileID: 8300000, guid: 5be4a5484521db342aac0a1e7b341d4e, type: 3}
 --- !u!1 &6729265255118983909
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,6 +349,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   friendAvoidDistance: 3
+  monsterKillScore: 1
 --- !u!195 &6158786756179252213
 NavMeshAgent:
   m_ObjectHideFlags: 0
