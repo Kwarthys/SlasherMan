@@ -19,6 +19,8 @@ public class MonsterAbility : MonoBehaviour
 
     public int damage = 20;
 
+    public bool friendlyFire = false;
+
     [Header("Audio")]
     public float clipVolume = 1f;
     private static AudioManager audioManager;
@@ -52,11 +54,14 @@ public class MonsterAbility : MonoBehaviour
 
         if (other.isTrigger) return;
 
-        LivingThing l = other.GetComponentInParent<LivingThing>();
-        if(l!=null)
+        if(other.transform.root.tag == "Player" || friendlyFire)
         {
-            l.takeDamage(damage);
-            //Debug.Log("hit " + other.transform.root.name);
+            LivingThing l = other.GetComponentInParent<LivingThing>();
+            if(l!=null)
+            {
+                l.takeDamage(damage);
+                //Debug.Log("hit " + other.transform.root.name);
+            }
         }
     }
 

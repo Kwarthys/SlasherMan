@@ -29,6 +29,7 @@ public class DashAttack : Ability
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.isTrigger) return;
         dealDamage(other.gameObject.GetComponentInParent<LivingThing>());       
     }
 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 738780438}
   - component: {fileID: 738780439}
   - component: {fileID: 738780440}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Attacker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,7 +50,8 @@ MonoBehaviour:
   preAttackAnim: {fileID: 7286569862626166567, guid: 33315283554d69147971633c36f4d239, type: 3}
   attackAnim: {fileID: 3121458812966204478, guid: a1c42421b9191ba40871a4b9de6e6b9b, type: 3}
   damage: 70
-  clipVolume: 1
+  friendlyFire: 0
+  clipVolume: 1.1
   attacksAudio:
   - {fileID: 8300000, guid: f27f448699e02ad49b2f56eadeb7bcee, type: 3}
   - {fileID: 8300000, guid: 595a761176fe22b4a9eb63a7eed91289, type: 3}
@@ -66,7 +67,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.99, y: 1, z: 15.446287}
+  m_Size: {x: 5.55, y: 1, z: 15.446287}
   m_Center: {x: 0, y: 0, z: 8.666966}
 --- !u!1 &2044823277534556040
 GameObject:
@@ -255,11 +256,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8800394191712460222}
-  - component: {fileID: 8800394191712460217}
-  - component: {fileID: 8800394191712460216}
-  - component: {fileID: 1676399379}
+  - component: {fileID: 7563281024267863676}
   - component: {fileID: 1676399378}
-  m_Layer: 0
+  - component: {fileID: 8800394191712460217}
+  - component: {fileID: 1676399379}
+  - component: {fileID: 8800394191712460216}
+  m_Layer: 9
   m_Name: BigMonster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,6 +284,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &7563281024267863676
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8800394191712460219}
+  serializedVersion: 2
+  m_Mass: 1000
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 116
+  m_CollisionDetection: 0
+--- !u!65 &1676399378
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8800394191712460219}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.42, y: 1, z: 13.226333}
+  m_Center: {x: 0, y: 0, z: 7.5569882}
 --- !u!114 &8800394191712460217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,6 +337,18 @@ MonoBehaviour:
     m_Bits: 512
   friendAvoidDistance: 8
   monsterKillScore: 5
+--- !u!114 &1676399379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8800394191712460219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbcd6b7be3e4bf140a1a1ae9be986d54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!195 &8800394191712460216
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -320,7 +363,7 @@ NavMeshAgent:
   m_Acceleration: 5
   avoidancePriority: 50
   m_AngularSpeed: 200
-  m_StoppingDistance: 0
+  m_StoppingDistance: 5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -328,28 +371,3 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &1676399379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8800394191712460219}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbcd6b7be3e4bf140a1a1ae9be986d54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!65 &1676399378
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8800394191712460219}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.42, y: 1, z: 13.226333}
-  m_Center: {x: 0, y: 0, z: 7.5569882}

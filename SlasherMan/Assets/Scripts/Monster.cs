@@ -19,7 +19,7 @@ public class Monster : LivingThing
 
     private NavMeshAgent agent;
 
-    private float targetRefreshTime = .1f;
+    private float targetRefreshTime = .05f;
     private float lastRefresh = -1;
 
     private Transform player;
@@ -75,7 +75,12 @@ public class Monster : LivingThing
             }
 
             agent.isStopped = !allowMovement;
-            agent.SetDestination(target);
+            //agent.SetDestination(target);
+
+            /*trying*/ //seems ok, but will have to monitor this
+            NavMeshPath p = new NavMeshPath();
+            NavMesh.CalculatePath(transform.position, target, NavMesh.AllAreas, p);
+            agent.SetPath(p);
         }
     }
 

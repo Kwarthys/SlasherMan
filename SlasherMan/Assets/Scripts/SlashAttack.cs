@@ -16,6 +16,7 @@ public class SlashAttack : Ability
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.isTrigger) return;
         LivingThing l = other.gameObject.GetComponentInParent<LivingThing>();
         if (l != null)
         {
