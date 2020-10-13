@@ -45,6 +45,7 @@ public class DashAttack : Ability
                 controller.canMove = true;
                 rbody.isKinematic = false;
                 attackZone.enabled = false;
+                manager.releaseAttackBlock();
             }
             return;
         }

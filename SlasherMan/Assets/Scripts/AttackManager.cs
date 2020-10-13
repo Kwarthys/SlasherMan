@@ -19,6 +19,9 @@ public class AttackManager : MonoBehaviour
     public Image BlazeImage;
     public Image SlashImage;
 
+    private bool attackBlock = false;
+    public bool isAttackBlocked() { return attackBlock; }
+
     private void Start()
     {
         init();
@@ -40,40 +43,58 @@ public class AttackManager : MonoBehaviour
         blaze.allowed = false;
     }
 
+    private void updateButtons()
+    {
+        BlazeImage.color = colorFor(blaze.canBeUsed());
+        DashImage.color = colorFor(dash.canBeUsed());
+        SlashImage.color = colorFor(slash.canBeUsed());
+    }
+
+    private Color colorFor(bool b)
+    {
+        return attackBlock ? Color.grey : b ? Color.white : Color.red;
+    }
+
     public void registerBlaze()
     {
+        slashCount = 0;
+        attackBlock = true;
         blaze.allowed = false;
-        BlazeImage.color = Color.red;
+        updateButtons();
     }
 
     private void Update()
     {
-        SlashImage.color = slash.canBeUsed() ? Color.white : Color.red;
+        updateButtons();
     }
 
     public void registerDash()
     {
+        attackBlock = true;
         dashCount = Mathf.Max(0, dashCount - 1);
         if(dashCount == 0)
         {
             dash.allowed = false;
-            DashImage.color = Color.red;
         }
+    }
+
+    public void releaseAttackBlock()
+    {
+        attackBlock = false;
     }
 
     public void registerSlash()
     {
+        attackBlock = true;
+
         slashCount = Mathf.Min(blazeSlashCost, slashCount + 1);
         dashCount = Mathf.Min(dashMaxStock, dashCount+1);
 
         dash.allowed = true;
-        DashImage.color = Color.white;
 
         if (slashCount == blazeSlashCost)
         {
             blaze.allowed = true;
-            BlazeImage.color = Color.white;
-            slashCount = 0;
         }
     }
 }

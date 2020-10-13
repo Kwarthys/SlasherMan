@@ -13,6 +13,7 @@ public class SpawnerManager : MonoBehaviour
     public List<MonsterMeta> monsters = new List<MonsterMeta>();
 
     public int startCreditsPerSpawn = 10;
+    public float coefIncrease = 1.15f;
     private int creditsPerSpawn = 0;
     private int waveCredits = 0;
 
@@ -48,7 +49,8 @@ public class SpawnerManager : MonoBehaviour
         if(Time.realtimeSinceStartup - lastSpawn > spawnRate)
         {
             lastSpawn = Time.realtimeSinceStartup;
-            waveCredits = creditsPerSpawn++;
+            waveCredits = creditsPerSpawn;
+            creditsPerSpawn = (int)(creditsPerSpawn * coefIncrease);
             //Spawn
             while(waveCredits > 0)
             {

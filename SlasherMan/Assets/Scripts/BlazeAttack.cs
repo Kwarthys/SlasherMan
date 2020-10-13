@@ -58,6 +58,7 @@ public class BlazeAttack : Ability
                 attackZone.enabled = false;
                 particles.Stop();
                 inUse = false;
+                manager.releaseAttackBlock();
             }
 
             Vector3 target;

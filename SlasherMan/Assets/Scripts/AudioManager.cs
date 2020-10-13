@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    [SerializeField]
     private AudioSource center;
+    [SerializeField]
     private AudioSource left;
+    [SerializeField]
     private AudioSource right;
 
     public Transform player;
 
     private float centerZoneSize = 20;
 
-    void Start()
+    public static AudioManager Instance { get; private set; }
+
+    private void Awake()
     {
-        center = transform.Find("Center").GetComponent<AudioSource>();
-        left = transform.Find("Left").GetComponent<AudioSource>();
-        right = transform.Find("Right").GetComponent<AudioSource>();
+        Instance = this;
     }
 
     private void FixedUpdate()

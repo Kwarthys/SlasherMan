@@ -34,11 +34,13 @@ public class SlashAttack : Ability
                 inUse = false;
                 attackZone.enabled = false;
 
-                if(targetHit)
+                if (targetHit)
                 {
                     manager.registerSlash();
                     targetHit = false;
                 }
+
+                manager.releaseAttackBlock();
             }
         }
     }

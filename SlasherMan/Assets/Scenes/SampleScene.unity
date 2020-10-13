@@ -1254,13 +1254,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a40b6a96e1ebb24283c85b0bd3ee7f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnMinRange: 57.67
-  spawnMaxRange: 103.3
+  spawnMinRange: 35
+  spawnMaxRange: 50
   spawnRate: 3
   monsters:
   - {fileID: 11400000, guid: a309d6780632a8948b3e32d24e8c3732, type: 2}
   - {fileID: 11400000, guid: 3d4392e24f9299544b2e48cb6ab81102, type: 2}
   startCreditsPerSpawn: 20
+  coefIncrease: 1.05
   floor:
     serializedVersion: 2
     m_Bits: 256
@@ -2428,6 +2429,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e45bf621e90a1484f84a078ac06af5d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  center: {fileID: 406172932}
+  left: {fileID: 1878669634}
+  right: {fileID: 1063961598}
   player: {fileID: 403791605}
 --- !u!4 &1140905072
 Transform:

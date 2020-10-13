@@ -40,10 +40,7 @@ public class MonsterAbility : MonoBehaviour
 
         controller = transform.parent.GetComponent<Monster>();
 
-        if(audioManager == null)
-        {
-            audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-        }
+        audioManager = AudioManager.Instance;
     }
 
     private void OnTriggerEnter(Collider other)

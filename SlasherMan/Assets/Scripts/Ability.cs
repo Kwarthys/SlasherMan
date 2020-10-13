@@ -35,7 +35,7 @@ public class Ability : MonoBehaviour
 
     public bool canBeUsed()
     {
-        return allowed && (Time.realtimeSinceStartup - lastCast > internalCD);
+        return allowed && (Time.realtimeSinceStartup - lastCast > internalCD) && !manager.isAttackBlocked();
     }
 
     protected void registerUse()
