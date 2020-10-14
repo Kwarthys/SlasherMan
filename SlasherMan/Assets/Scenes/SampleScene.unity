@@ -1533,6 +1533,13 @@ MonoBehaviour:
   floorLayer:
     serializedVersion: 2
     m_Bits: 256
+  clips:
+  - {fileID: 8300000, guid: 16b18e63cec2cc04bb64914498341ed9, type: 3}
+  - {fileID: 8300000, guid: 375cc1a3b5815094e83eb40ee0d8752d, type: 3}
+  - {fileID: 8300000, guid: 066b4f7e26fdf974d9527927c4c38547, type: 3}
+  - {fileID: 8300000, guid: 6030f82f479a9804c919b0650d5e6edc, type: 3}
+  volume: 0.7
+  audioManager: {fileID: 1140905071}
   abilityName: Slash
   totalDamage: 0
   totalKills: 0
@@ -1630,6 +1637,10 @@ MonoBehaviour:
   floorLayer:
     serializedVersion: 2
     m_Bits: 256
+  clips:
+  - {fileID: 8300000, guid: 3b523d95e4bca8849a90613eb667d538, type: 3}
+  volume: 1
+  audioManager: {fileID: 1140905071}
   abilityName: Blaze
   totalDamage: 0
   totalKills: 0
@@ -1640,7 +1651,7 @@ MonoBehaviour:
   damage: 2
   playerAnimator: {fileID: 635272750}
   controller: {fileID: 403791606}
-  duration: 2
+  duration: 2.5
   initTime: 0.5
 --- !u!65 &769369182
 BoxCollider:
@@ -7959,6 +7970,9 @@ MonoBehaviour:
   floorLayer:
     serializedVersion: 2
     m_Bits: 256
+  clips: []
+  volume: 1
+  audioManager: {fileID: 0}
   abilityName: Dash
   totalDamage: 0
   totalKills: 0

@@ -75,6 +75,7 @@ public class BlazeAttack : Ability
             if(Input.GetKeyDown(KeyCode.R))
             {
                 registerUse();
+                startSoundEffect();
                 manager.registerBlaze();
 
                 //inUse = true;

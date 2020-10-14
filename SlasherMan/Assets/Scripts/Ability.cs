@@ -11,6 +11,10 @@ public class Ability : MonoBehaviour
     [Space]
     public Camera cam;
     public LayerMask floorLayer;
+    [Header("Audio")]
+    public List<AudioClip> clips = new List<AudioClip>();
+    public float volume = 1;
+    public AudioManager audioManager;
     [Header("Stats")]
     public string abilityName;
     public int totalDamage = 0;
@@ -45,6 +49,15 @@ public class Ability : MonoBehaviour
         if(manager == null)
         {
             manager = GetComponentInParent<AttackManager>();
+        }
+    }
+
+    protected void startSoundEffect()
+    {
+        if(clips.Count>0 && audioManager != null)
+        {
+            AudioClip clip = clips[Random.Range(0, clips.Count)];
+            audioManager.playClip(clip, volume, transform.position);
         }
     }
 

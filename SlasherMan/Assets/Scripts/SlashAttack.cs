@@ -72,6 +72,8 @@ public class SlashAttack : Ability
 
                 camShaker.shakeCamera(shakeDuration, shakeMagnitude);
 
+                startSoundEffect();
+
                 playerAnimator.SetTrigger("Slash");
             }
         }
