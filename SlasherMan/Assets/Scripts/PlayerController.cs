@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
 
     public Animator playerAnimator;
 
+    public LayerMask everything;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,9 +46,19 @@ public class PlayerController : MonoBehaviour
                 movement /= Mathf.Sqrt(2);
             }
 
-            transform.position += movement * speed * Time.deltaTime;
             Quaternion targetRot = Quaternion.LookRotation(movement);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpeed);
+
+            /**Check Obstacles**/
+            //bool rightObstacle = Physics.Raycast(transform.position + transform.right, transform.forward, 1);
+            //bool leftObstacle = Physics.Raycast(transform.position - transform.right, transform.forward, 1);
+            bool centerObstacle = Physics.Raycast(transform.position, transform.forward, 1, everything, QueryTriggerInteraction.Ignore);
+
+            if (/*!rightObstacle || !leftObstacle ||*/ !centerObstacle)
+            {
+                transform.position += movement * speed * Time.deltaTime;
+            }
+
         }
         else// if (vertical == 0 && horizontal == 0) //trying this
         {

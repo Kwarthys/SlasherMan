@@ -13,7 +13,9 @@ public class Ability : MonoBehaviour
     public LayerMask floorLayer;
     [Header("Audio")]
     public List<AudioClip> clips = new List<AudioClip>();
+    public List<AudioClip> clipsNoHit = new List<AudioClip>();
     public float volume = 1;
+    public float volumeNoHit = 1;
     public AudioManager audioManager;
     [Header("Stats")]
     public string abilityName;
@@ -54,10 +56,19 @@ public class Ability : MonoBehaviour
 
     protected void startSoundEffect()
     {
-        if(clips.Count>0 && audioManager != null)
+        if (clips.Count > 0 && audioManager != null)
         {
             AudioClip clip = clips[Random.Range(0, clips.Count)];
             audioManager.playClip(clip, volume, transform.position);
+        }
+    }
+
+    protected void startSoundEffectNoHit()
+    {
+        if (clipsNoHit.Count > 0 && audioManager != null)
+        {
+            AudioClip clip = clipsNoHit[Random.Range(0, clipsNoHit.Count)];
+            audioManager.playClip(clip, volumeNoHit, transform.position);
         }
     }
 

@@ -39,8 +39,14 @@ public class SlashAttack : Ability
                 {
                     manager.registerSlash();
                     targetHit = false;
-                }
 
+                    //startSoundEffect();
+                }
+                // else
+                //{
+                //     startSoundEffectNoHit();
+                // }
+                startSoundEffect();
                 manager.releaseAttackBlock();
             }
         }
@@ -71,8 +77,6 @@ public class SlashAttack : Ability
                 Instantiate(anim, transform.position, transform.rotation);
 
                 camShaker.shakeCamera(shakeDuration, shakeMagnitude);
-
-                startSoundEffect();
 
                 playerAnimator.SetTrigger("Slash");
             }

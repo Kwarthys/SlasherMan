@@ -117,4 +117,9 @@ public class GameManager : MonoBehaviour
         initialise();
 
     }
+
+    public void quit()
+    {
+        Application.Quit();
+    }
 }

@@ -86,7 +86,7 @@ public class SpawnerManager : MonoBehaviour
 
             spawnPoint.x += point.x;
             spawnPoint.z += point.y;
-        } while (!Physics.Raycast(spawnPoint, Vector3.down, 1, floor));
+        } while (!Physics.Raycast(spawnPoint, Vector3.down, 3, floor));
 
         return spawnPoint;
     }
