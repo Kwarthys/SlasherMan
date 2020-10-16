@@ -11,6 +11,8 @@ public class ItemSpawnerManager : MonoBehaviour
 
     public float mapSize = 50;
 
+    public float density = 0.5f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +20,7 @@ public class ItemSpawnerManager : MonoBehaviour
         {
             for (float i = -mapSize + gridUnitSize/2; i < mapSize - gridUnitSize/2; i += gridUnitSize)
             {
-                if(Random.value > 0.2f)
+                if(Random.value > 1-density)
                 {
                     GameObject prefab = getRandomObject();
 

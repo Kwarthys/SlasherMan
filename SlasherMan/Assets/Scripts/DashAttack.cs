@@ -58,6 +58,7 @@ public class DashAttack : Ability
                 //cast
                 registerUse();
                 manager.registerDash();
+                startSoundEffect();
 
                 inUse = true;
                 controller.canMove = false;
