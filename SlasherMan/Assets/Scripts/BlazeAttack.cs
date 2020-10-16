@@ -14,6 +14,8 @@ public class BlazeAttack : Ability
 
     private ParticleSystem particles;
 
+    private Vector3 dirBLAZE;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,11 +45,7 @@ public class BlazeAttack : Ability
                 camShaker.shakeCamera(shakeDuration, shakeMagnitude);
             }
 
-            Vector3 target;
-            if (tryFindTarget(out target))
-            {
-                transform.parent.rotation = Quaternion.LookRotation(target - transform.parent.position);
-            }
+            steerToAim();
         }
 
         if(inUse)
@@ -61,18 +59,14 @@ public class BlazeAttack : Ability
                 manager.releaseAttackBlock();
             }
 
-            Vector3 target;
-            if (tryFindTarget(out target))
-            {
-                transform.parent.rotation = Quaternion.LookRotation(target - transform.parent.position);
-            }
+            steerToAim();
 
             return;
         }
 
         if(canBeUsed())
         {
-            if(Input.GetKeyDown(KeyCode.R))
+            if(MyInputManager.Instance.blazeKeyPressed())
             {
                 registerUse();
                 startSoundEffect();
@@ -86,8 +80,27 @@ public class BlazeAttack : Ability
                 controller.speed /= 1.5f;
 
                 playerAnimator.SetTrigger("Blaze");
+
+                if(MyInputManager.Instance.tryGetAimDirection(out dirBLAZE))
+                {
+                    //yee we have an aim
+                }
+                else
+                {
+                    dirBLAZE = transform.forward;
+                }
             }
         }
+    }
+
+    private void steerToAim()
+    {
+        if (tryFindAimDirection(out Vector3 dir))
+        {
+            dirBLAZE = dir;
+        }
+
+        transform.parent.rotation = Quaternion.LookRotation(dirBLAZE);
     }
 
     private void OnTriggerStay(Collider other)

@@ -34,17 +34,11 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        float horizontal = remap8(Input.GetAxisRaw("Horizontal"));
-        float vertical = remap8(Input.GetAxisRaw("Vertical"));
+        Vector3 movement = MyInputManager.Instance.getMoveDirection();
 
-        if(Mathf.Abs(horizontal) > threshold || Mathf.Abs(vertical) > threshold)
+        if (movement.magnitude > threshold)
         {
-            Vector3 movement = new Vector3(horizontal, 0, vertical);
-
-            if(Mathf.Abs(horizontal) == 1 && Mathf.Abs(vertical) == 1)
-            {
-                movement /= Mathf.Sqrt(2);
-            }
+            movement.Normalize();
 
             Quaternion targetRot = Quaternion.LookRotation(movement);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpeed);
@@ -67,23 +61,5 @@ public class PlayerController : MonoBehaviour
 
         rbody.velocity = Vector3.zero;
         playerAnimator.SetBool("isRunning", isRunning);
-
-    }
-
-
-    private float remap8(float f)
-    {
-        if(f > threshold)
-        {
-            return 1;
-        }
-        else if(f < -threshold)
-        {
-            return -1;
-        }
-        else
-        {
-            return 0;
-        }
     }
 }

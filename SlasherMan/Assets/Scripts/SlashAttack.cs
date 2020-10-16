@@ -56,21 +56,17 @@ public class SlashAttack : Ability
     {
         if(canBeUsed())
         {
-            if(Input.GetMouseButtonDown(0))
+            if(MyInputManager.Instance.slashKeyPressed())
             {
                 registerUse();
                 inUse = true;
                 attackZone.enabled = true;
 
-                Vector3 target;
+                Vector3 dir;
 
-                if (tryFindTarget(out target))
+                if (tryFindAimDirection(out dir))
                 {
-                    transform.parent.rotation = Quaternion.LookRotation(target - transform.parent.position);
-                }
-                else
-                {
-                    Debug.Log("Could not find floor");
+                    transform.parent.rotation = Quaternion.LookRotation(dir);
                 }
 
                 //play anim

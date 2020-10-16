@@ -50,8 +50,8 @@ public class DashAttack : Ability
             }
             return;
         }
-
-        if(Input.GetKeyDown(KeyCode.Space))
+        
+        if(MyInputManager.Instance.dashKeyPressed())
         {
             if(canBeUsed())
             {
@@ -65,6 +65,17 @@ public class DashAttack : Ability
                 attackZone.enabled = true;
                 rbody.isKinematic = true;
 
+                dashTarget = MyInputManager.Instance.getMoveDirection();
+                if(dashTarget.magnitude < 0.1f)
+                {
+                    dashTarget = transform.position + transform.forward * dashDistance;
+                }
+                else
+                {
+                    dashTarget = transform.position + dashTarget * dashDistance;
+                }
+
+                /*
                 Vector3 hit;
 
                 if (tryFindTarget(out hit))
@@ -82,10 +93,11 @@ public class DashAttack : Ability
                     Debug.LogError("Couldn't find floor to dash");
                     inUse = false;
                 }
+                */
 
-                Debug.DrawRay(parent.position, dashTarget - parent.position, Color.green, 1);
+                //Debug.DrawRay(parent.position, dashTarget - parent.position, Color.green, 1);
 
-                parent.rotation = Quaternion.LookRotation(dashTarget - parent.position);
+                //parent.rotation = Quaternion.LookRotation(dashTarget - parent.position);
 
                 Instantiate(anim, transform.position, transform.rotation);
 

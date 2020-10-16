@@ -5,11 +5,11 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     [SerializeField]
-    private AudioSource center;
+    private AudioSource center = null;
     [SerializeField]
-    private AudioSource left;
+    private AudioSource left = null;
     [SerializeField]
-    private AudioSource right;
+    private AudioSource right = null;
 
     public Transform player;
 

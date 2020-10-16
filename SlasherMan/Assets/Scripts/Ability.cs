@@ -72,19 +72,9 @@ public class Ability : MonoBehaviour
         }
     }
 
-    protected bool tryFindTarget(out Vector3 target)
+    protected bool tryFindAimDirection(out Vector3 target)
     {
-        RaycastHit hit;
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, 60, floorLayer))
-        {
-            target = hit.point;
-            target.y = transform.parent.position.y;
-            return true;
-        }
-
-        target = Vector3.zero;
-        return false;
+        return MyInputManager.Instance.tryGetAimDirection(out target);
     }
 
     protected void dealDamage(LivingThing target)
