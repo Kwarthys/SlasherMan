@@ -24,7 +24,7 @@ public class MyInputManager : MonoBehaviour
 
     public bool slashKeyPressed()
     {
-        return Input.GetMouseButtonDown(0) || Input.GetAxisRaw("RightTrigger") > threshold;
+        return Input.GetMouseButtonDown(0) || Mathf.Abs(Input.GetAxisRaw("RightTrigger")) > threshold;
     }
 
     public bool dashKeyPressed()
@@ -34,7 +34,7 @@ public class MyInputManager : MonoBehaviour
 
     public bool blazeKeyPressed()
     {
-        return Input.GetKeyDown(KeyCode.R) || Input.GetAxisRaw("LeftTrigger") > threshold;
+        return Input.GetKeyDown(KeyCode.R) || Mathf.Abs(Input.GetAxisRaw("LeftTrigger")) > threshold;
     }
 
     public Vector3 getMoveDirection()
@@ -61,6 +61,7 @@ public class MyInputManager : MonoBehaviour
 
     private bool tryGetAimDirectionStick(out Vector3 aimDir)
     {
+        //RightStick
         float shorizontal = remap8(Input.GetAxisRaw("SecondHorizontal"));
         float svertical = remap8(Input.GetAxisRaw("SecondVertical"));
 

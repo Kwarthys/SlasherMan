@@ -44,11 +44,9 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpeed);
 
             /**Check Obstacles**/
-            //bool rightObstacle = Physics.Raycast(transform.position + transform.right, transform.forward, 1);
-            //bool leftObstacle = Physics.Raycast(transform.position - transform.right, transform.forward, 1);
             bool centerObstacle = Physics.Raycast(transform.position, transform.forward, 1, everything, QueryTriggerInteraction.Ignore);
 
-            if (/*!rightObstacle || !leftObstacle ||*/ !centerObstacle)
+            if (!centerObstacle)
             {
                 transform.position += movement * speed * Time.deltaTime;
             }
