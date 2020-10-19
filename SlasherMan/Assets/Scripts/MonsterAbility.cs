@@ -17,6 +17,8 @@ public class MonsterAbility : MonoBehaviour
 
     public GameObject attackAnim;
 
+    public Animator monsterAnimator;
+
     public int damage = 20;
 
     public bool friendlyFire = false;
@@ -76,7 +78,10 @@ public class MonsterAbility : MonoBehaviour
 
                 //AttackAnim
                 //Debug.Log("Attacking");
-                Instantiate(attackAnim, transform.position, transform.rotation);
+                if(attackAnim!=null)
+                {
+                    Instantiate(attackAnim, transform.position + transform.forward * 1.6f, Quaternion.identity);
+                }
 
                 Destroy(preAttackAnimInstanciated.gameObject);
 
@@ -104,6 +109,11 @@ public class MonsterAbility : MonoBehaviour
         preAttackAnimInstanciated.resize(attackZone.size);
         freezeDamage = false;
         attackZone.enabled = false;
+
+        if(monsterAnimator != null)
+        {
+            monsterAnimator.SetTrigger("Attack");
+        }
     }
 
     private void FixedUpdate()
