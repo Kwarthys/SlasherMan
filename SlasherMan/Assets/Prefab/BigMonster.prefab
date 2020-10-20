@@ -49,8 +49,11 @@ MonoBehaviour:
   timeBeforeAttack: 1
   preAttackAnim: {fileID: 7286569862626166567, guid: 33315283554d69147971633c36f4d239, type: 3}
   attackAnim: {fileID: 3121458812966204478, guid: a1c42421b9191ba40871a4b9de6e6b9b, type: 3}
+  monsterAnimator: {fileID: 0}
   damage: 70
   friendlyFire: 0
+  rotateAnimation: 1
+  forwardAnimation: 0
   clipVolume: 1.1
   attacksAudio:
   - {fileID: 8300000, guid: f27f448699e02ad49b2f56eadeb7bcee, type: 3}

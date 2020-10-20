@@ -23,6 +23,10 @@ public class MonsterAbility : MonoBehaviour
 
     public bool friendlyFire = false;
 
+    [Header("Animation")]
+    public bool rotateAnimation = false;
+    public bool forwardAnimation = true;
+
     [Header("Audio")]
     public float clipVolume = 1f;
     private static AudioManager audioManager;
@@ -80,7 +84,15 @@ public class MonsterAbility : MonoBehaviour
                 //Debug.Log("Attacking");
                 if(attackAnim!=null)
                 {
-                    Instantiate(attackAnim, transform.position + transform.forward * 1.6f, Quaternion.identity);
+                    Vector3 pos = transform.position;
+                    if(forwardAnimation)
+                    {
+                        pos += transform.forward * 1.5f;
+                    }
+
+                    Quaternion rot = rotateAnimation ? transform.rotation : Quaternion.identity;
+
+                    Instantiate(attackAnim, pos, rot);
                 }
 
                 Destroy(preAttackAnimInstanciated.gameObject);
