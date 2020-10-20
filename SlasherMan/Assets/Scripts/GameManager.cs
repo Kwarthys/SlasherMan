@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
 
     public void retryClick()
     {
-        Debug.Log("retry");
+        //Debug.Log("retry");
         foreach (Ability a in abilities)
         {
             a.totalDamage = 0;
@@ -120,6 +120,7 @@ public class GameManager : MonoBehaviour
 
     public void quit()
     {
+        Debug.Log("Quit");
         Application.Quit();
     }
 }

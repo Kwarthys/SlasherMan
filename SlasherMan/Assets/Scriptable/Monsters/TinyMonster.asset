@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20d54047bb228594f80b2071e4441ffd, type: 3}
   m_Name: TinyMonster
   m_EditorClassIdentifier: 
-  monsterPrefab: {fileID: 6729265255222185608, guid: 4fe2f5be3f482fe4590ac896708bb5da, type: 3}
+  monsterPrefab: {fileID: 4165088615984683339, guid: 4fe2f5be3f482fe4590ac896708bb5da, type: 3}
   monsterName: Coworker
   monsterCost: 1
   spawnChances: 1
