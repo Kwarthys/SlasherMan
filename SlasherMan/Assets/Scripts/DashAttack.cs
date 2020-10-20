@@ -101,7 +101,7 @@ public class DashAttack : Ability
 
                 Instantiate(anim, transform.position, transform.rotation);
 
-                //playerAnimator.SetTrigger("Dash");
+                playerAnimator.SetTrigger("Dash");
             }
         }
     }

@@ -4,17 +4,26 @@ ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable:
   - first:
+      74: -7626363906017909467
+    second: Light|LightAction
+  - first:
       74: 4781951162920444690
     second: Idle
+  - first:
+      74: -1900132722527647994
+    second: Armature|LightAction
   - first:
       74: 5522812681064789136
     second: Run
   - first:
-      74: 7509640188325939964
-    second: Slash
+      74: 6720303635017113406
+    second: Attack
   - first:
       74: 5465279517355473271
     second: Blaze
+  - first:
+      74: -8444228808809566427
+    second: Dash
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -102,7 +111,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Slash
+      name: Attack
       takeName: Armature|ArmatureAction
       internalID: 0
       firstFrame: 86
@@ -135,7 +144,36 @@ ModelImporter:
       takeName: Armature|ArmatureAction
       internalID: 0
       firstFrame: 98
-      lastFrame: 150
+      lastFrame: 158
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Dash
+      takeName: Armature|ArmatureAction
+      internalID: 0
+      firstFrame: 159
+      lastFrame: 170
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
