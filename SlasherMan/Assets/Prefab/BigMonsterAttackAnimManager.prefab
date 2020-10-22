@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   singleAnimPrefab: {fileID: 7854660120635998010, guid: 3548542257ce31b47a6d2509f17c8395, type: 3}
-  size: 16
+  size: 13
   number: 7
