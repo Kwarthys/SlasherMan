@@ -15,12 +15,37 @@ public class PlayerHealth : LivingThing
     [Header("GameManagement")]
     public GameManager manager;
 
+    [Header("OnHitScreenAnimation")]
+    public Image onHitImage;
+    public float maxOpacity = .7f;
+    public float decreaseOpacity = 0.15f;
+    private float opacity = 0;
+    private Color color = Color.white;
+
+    protected override void onUpdate()
+    {
+        if(opacity > 0)
+        {
+            opacity -= decreaseOpacity;
+
+            if (opacity <= 0)
+            {
+                opacity = 0;
+            }
+
+            color.a = opacity;
+            onHitImage.color = color;
+        }
+    }
+
     protected override void onTakeDamage()
     {
         //Take damage animations (sound / visual / camShake)
         slider.value = life * 1.0f / maxLife;
 
         camShake.shakeCamera(duration, magnitude);
+
+        opacity = maxOpacity;
     }
 
     protected override void onDeath()

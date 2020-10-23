@@ -19,10 +19,13 @@ public class MonsterAttackManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Time.realtimeSinceStartup - ability.lastCast > ability.monsterAttackCD)
+        if (attackTrigger.enabled == false)
         {
-            //Searching for a target entering attackzone
-            attackTrigger.enabled = true;
+            if (Time.realtimeSinceStartup - ability.lastCast > ability.monsterAttackCD)// + ability.timeBeforeAttack * 0.8f)
+            {
+                //Searching for a target entering attackzone
+                attackTrigger.enabled = true;
+            }
         }
     }
 
@@ -36,8 +39,9 @@ public class MonsterAttackManager : MonoBehaviour
         if(other.transform.root.tag == "Player")
         {
             //Trigger the attack
-            attackTrigger.enabled = false;
             ability.lastCast = Time.realtimeSinceStartup;
+            attackTrigger.enabled = false;
+            //Debug.Log("disabling");
             ability.startAttack();
         }
     }

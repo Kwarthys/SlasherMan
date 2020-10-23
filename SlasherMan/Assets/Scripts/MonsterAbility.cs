@@ -75,7 +75,7 @@ public class MonsterAbility : MonoBehaviour
     { 
         if(attacking)
         {
-            if(Time.realtimeSinceStartup - timeOfAttackStart > timeBeforeAttack)
+            if (Time.realtimeSinceStartup - timeOfAttackStart > timeBeforeAttack)
             {
                 attacking = false;
                 attackZone.enabled = true;

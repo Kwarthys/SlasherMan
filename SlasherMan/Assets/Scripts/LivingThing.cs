@@ -49,10 +49,13 @@ public abstract class LivingThing : MonoBehaviour
         {
             onDeath();
         }
+
+        onUpdate();
     }
 
     public abstract void init();
 
     protected virtual void onDeath() { }
     protected virtual void onTakeDamage() { }
+    protected virtual void onUpdate() { }
 }
