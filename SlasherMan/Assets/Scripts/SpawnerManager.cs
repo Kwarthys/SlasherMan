@@ -23,6 +23,8 @@ public class SpawnerManager : MonoBehaviour
 
     public LayerMask floor;
 
+    public int maxMonsterCount = 150;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,7 +54,7 @@ public class SpawnerManager : MonoBehaviour
             waveCredits = creditsPerSpawn;
             creditsPerSpawn = (int)(creditsPerSpawn * coefIncrease);
             //Spawn
-            while(waveCredits > 0)
+            while(waveCredits > 0 && transform.childCount < maxMonsterCount)
             {
                 spawnAMonster();
             }

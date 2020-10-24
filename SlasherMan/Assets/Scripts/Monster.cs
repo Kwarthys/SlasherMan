@@ -26,6 +26,8 @@ public class Monster : LivingThing
 
     private Transform closestAlly;
 
+    public float seeDistance = 15;
+
     public void setAllowMovement(bool state)
     {
         allowMovement = state;
@@ -65,6 +67,14 @@ public class Monster : LivingThing
             }
 
             Vector3 target = player.position;
+
+            if((target - transform.position).magnitude > seeDistance)
+            {
+                Vector2 r = Random.insideUnitCircle * seeDistance;
+                target = transform.position;
+                target.x += r.x;
+                target.z += r.y;
+            }
 
             if (closestAlly != null)
             {
