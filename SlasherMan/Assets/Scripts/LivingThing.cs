@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class LivingThing : MonoBehaviour
+public class LivingThing : MonoBehaviour
 {
     public int maxLife;
 
@@ -53,7 +53,7 @@ public abstract class LivingThing : MonoBehaviour
         onUpdate();
     }
 
-    public abstract void init();
+    public virtual void init() {}
 
     protected virtual void onDeath() { }
     protected virtual void onTakeDamage() { }

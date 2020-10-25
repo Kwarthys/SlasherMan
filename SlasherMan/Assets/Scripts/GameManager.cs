@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
             playerDead = true;
             buildAbilitiesStats();
             playerController.canMove = false;
+            attackManager.preventAttack();
         }
     }
 
@@ -115,7 +116,6 @@ public class GameManager : MonoBehaviour
         playerController.canMove = true;
 
         initialise();
-
     }
 
     public void quit()

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,9 +16,13 @@ public class AttackManager : MonoBehaviour
     public int blazeSlashCost = 4;
     public int dashMaxStock = 2;
 
+    [Header("UILinks")]
     public Image DashImage;
     public Image BlazeImage;
     public Image SlashImage;
+
+    public List<Animator> dashTokenAnimators = new List<Animator>();
+    public List<Animator> blazeTokenAnimators = new List<Animator>();
 
     private bool attackBlock = false;
     public bool isAttackBlocked() { return attackBlock; }
@@ -41,6 +46,8 @@ public class AttackManager : MonoBehaviour
 
         dash.allowed = false;
         blaze.allowed = false;
+
+        attackBlock = false;
     }
 
     private void updateButtons()
@@ -61,6 +68,16 @@ public class AttackManager : MonoBehaviour
         attackBlock = true;
         blaze.allowed = false;
         updateButtons();
+
+        foreach(Animator a in blazeTokenAnimators)
+        {
+            a.SetTrigger("Fade");
+        }
+    }
+
+    internal void preventAttack()
+    {
+        attackBlock = true;
     }
 
     private void Update()
@@ -72,7 +89,10 @@ public class AttackManager : MonoBehaviour
     {
         attackBlock = true;
         dashCount = Mathf.Max(0, dashCount - 1);
-        if(dashCount == 0)
+
+        dashTokenAnimators[dashCount].SetTrigger("Fade");
+
+        if (dashCount == 0)
         {
             dash.allowed = false;
         }
@@ -86,6 +106,18 @@ public class AttackManager : MonoBehaviour
     public void registerSlash()
     {
         attackBlock = true;
+
+        if (dashCount < dashMaxStock)
+        {
+            dashTokenAnimators[dashCount].gameObject.SetActive(true);
+            dashTokenAnimators[dashCount].SetTrigger("Pop");
+        }
+
+        if (slashCount < blazeSlashCost)
+        {
+            blazeTokenAnimators[slashCount].gameObject.SetActive(true);
+            blazeTokenAnimators[slashCount].SetTrigger("Pop");
+        }
 
         slashCount = Mathf.Min(blazeSlashCost, slashCount + 1);
         dashCount = Mathf.Min(dashMaxStock, dashCount+1);
