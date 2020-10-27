@@ -18,6 +18,8 @@ public class DashAttack : Ability
 
     private Transform parent;
 
+    public LayerMask walls;
+
     private void Start()
     {
         rbody = GetComponentInParent<Rigidbody>();
@@ -38,7 +40,19 @@ public class DashAttack : Ability
     {
         if(inUse)
         {
-            parent.position += (dashTarget - parent.position) * speed * Time.deltaTime;
+            if(!Physics.Raycast(transform.position, transform.forward, 3.0f/*magicnumber*/, walls))
+            {
+                //Debug.DrawRay(transform.position, transform.forward * 3, Color.green, 1);
+                parent.position += (dashTarget - parent.position) * speed * Time.deltaTime;
+            }
+            else
+            {
+                inUse = false;
+                controller.canMove = true;
+                rbody.isKinematic = false;
+                attackZone.enabled = false;
+                manager.releaseAttackBlock();
+            }
 
             if(Vector3.Distance(parent.position, dashTarget) < 0.1f)
             {
