@@ -24,6 +24,12 @@ public class AttackManager : MonoBehaviour
     public Sprite blazeON;
     public Sprite blazeOFF;
 
+    public Sprite dashON;
+    public Sprite dashOFF;
+
+    public Sprite slashON;
+    public Sprite slashOFF;
+
     public List<Animator> dashTokenAnimators = new List<Animator>();
     public List<Animator> blazeTokenAnimators = new List<Animator>();
 
@@ -41,8 +47,8 @@ public class AttackManager : MonoBehaviour
         slash = transform.Find("SlashManager").GetComponent<SlashAttack>();
         blaze = transform.Find("BlazeManager").GetComponent<BlazeAttack>();
         //BlazeImage.color = Color.red;
-        DashImage.color = Color.red;
-        SlashImage.color = Color.white;
+        //DashImage.color = Color.red;
+        //SlashImage.color = Color.white;
 
         slashCount = 0;
         dashCount = 0;
@@ -71,10 +77,21 @@ public class AttackManager : MonoBehaviour
         {
             blazeImage = blazeOFF;
         }
-
         BlazeImage.sprite = blazeImage;
-        DashImage.color = colorFor(dash.canBeUsed());
-        SlashImage.color = colorFor(slash.canBeUsed());
+
+        Sprite dashImage = dashON;
+        if (!dash.canBeUsed() || attackBlock)
+        {
+            dashImage = dashOFF;
+        }
+        DashImage.sprite = dashImage;
+
+        Sprite slashImage = slashON;
+        if (!slash.canBeUsed() || attackBlock)
+        {
+            slashImage = slashOFF;
+        }
+        SlashImage.sprite = slashImage;
     }
 
     private Color colorFor(bool b)
