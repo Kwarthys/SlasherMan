@@ -1237,6 +1237,8 @@ MonoBehaviour:
   DashImage: {fileID: 1270103255}
   BlazeImage: {fileID: 1033784138}
   SlashImage: {fileID: 261240330}
+  blazeON: {fileID: 21300000, guid: 85f48814f2f68494ea9015ef868b195a, type: 3}
+  blazeOFF: {fileID: 21300000, guid: a8a18b226cbcbc640abdf50e42b322ce, type: 3}
   dashTokenAnimators:
   - {fileID: 1726940416}
   - {fileID: 1188077393}
@@ -1327,7 +1329,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &406090550
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3139,7 +3141,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 85f48814f2f68494ea9015ef868b195a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
