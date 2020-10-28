@@ -1267,6 +1267,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a6e05b0f8dfc58948b2f1e268eb52198, type: 3}
   - {fileID: 8300000, guid: 5ab7cc9572c4c164bbd36a7f85b26697, type: 3}
   clipsVolume: 1
+  cooldown: 1.5
   life: 0
   slider: {fileID: 192695975}
   camShake: {fileID: 1687258583}
@@ -2006,7 +2007,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 607826859}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a40b6a96e1ebb24283c85b0bd3ee7f8, type: 3}
   m_Name: 
@@ -9433,6 +9434,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 1703306288}
   freeze: 0
+  minSize: 65
+  maxSize: 100
+  decrease: 0.02
+  killIncrease: 0.3
   score: 0
 --- !u!4 &1679324840
 Transform:
@@ -10511,6 +10516,7 @@ MonoBehaviour:
   deathAnimation: {fileID: 0}
   onDamageClips: []
   clipsVolume: 1
+  cooldown: 1.5
   life: 0
 --- !u!136 &2041119316
 CapsuleCollider:

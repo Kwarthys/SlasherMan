@@ -48,6 +48,16 @@ public class AttackManager : MonoBehaviour
         blaze.allowed = false;
 
         attackBlock = false;
+
+        foreach (Animator a in dashTokenAnimators)
+        {
+            a.SetTrigger("Fade");
+        }
+
+        foreach (Animator a in blazeTokenAnimators)
+        {
+            a.SetTrigger("Fade");
+        }
     }
 
     private void updateButtons()

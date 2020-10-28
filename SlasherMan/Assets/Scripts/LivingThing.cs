@@ -11,6 +11,8 @@ public class LivingThing : MonoBehaviour
     [Header("Audio")]
     public List<AudioClip> onDamageClips = new List<AudioClip>();
     public float clipsVolume = 1;
+    public float cooldown = 1.5f;
+    private float lastOnDamage = -1;
     private static AudioManager audioManager;
     [Space]
     [SerializeField]
@@ -34,8 +36,9 @@ public class LivingThing : MonoBehaviour
     {
         life -= amount;
 
-        if (onDamageClips.Count > 0 && audioManager != null)
+        if (onDamageClips.Count > 0 && audioManager != null && Time.realtimeSinceStartup - lastOnDamage > cooldown)
         {
+            lastOnDamage = Time.realtimeSinceStartup;
             AudioClip clip = onDamageClips[Random.Range(0, onDamageClips.Count)];
             audioManager.playClip(clip, clipsVolume, transform.position);
         }

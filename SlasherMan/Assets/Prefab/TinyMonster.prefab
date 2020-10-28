@@ -138,8 +138,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxLife: 50
   deathAnimation: {fileID: 795148925151017390, guid: d82e8707d6275704bbf8c69abbd33e1e, type: 3}
-  onDamageClips: []
+  onDamageClips:
+  - {fileID: 8300000, guid: d947962cc5f423a409569734b4665fed, type: 3}
+  - {fileID: 8300000, guid: b743c667cf3d105469839fe18fc52a6a, type: 3}
+  - {fileID: 8300000, guid: 94d155b3c4a870846ad6fef54bfae9de, type: 3}
   clipsVolume: 1
+  cooldown: 2.1
   life: 0
   speed: 5
   rotSpeed: 10
