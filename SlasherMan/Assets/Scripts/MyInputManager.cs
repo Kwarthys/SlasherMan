@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class MyInputManager : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class MyInputManager : MonoBehaviour
 
     private float mouseTimeOut = .5f;
     private float lastMouseMove = -1;
+
+    public TextMeshProUGUI blazeKeyHint;
+    public TextMeshProUGUI slashKeyHint;
+    public TextMeshProUGUI dashKeyHint;
 
     private Vector3 lastMousePos = Vector3.zero;
 
@@ -81,6 +86,25 @@ public class MyInputManager : MonoBehaviour
         }
         lastMousePos = Input.mousePosition;
 
+        bool mouseUsed = !isMouseUseless();
+
+        if(!mouseUsed && blazeKeyHint.text == "R")
+        {
+            blazeKeyHint.text = "Right Trigger";
+            slashKeyHint.text = "Left Trigger";
+            dashKeyHint.text = "A";
+
+            Cursor.visible = false;
+        }
+        else if(mouseUsed && blazeKeyHint.text == "Right Trigger")
+        {
+            blazeKeyHint.text = "R";
+            slashKeyHint.text = "Right Clic";
+            dashKeyHint.text = "Space";
+
+            Cursor.visible = true;
+        }
+
         /*
         if (Input.GetKeyDown(KeyCode.JoystickButton0))
         {
@@ -106,7 +130,9 @@ public class MyInputManager : MonoBehaviour
 
     private bool isMouseUseless()
     {
-        return Time.realtimeSinceStartup - lastMouseMove > mouseTimeOut;
+        bool keyBoardUsed = Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D);
+
+        return Time.realtimeSinceStartup - lastMouseMove > mouseTimeOut && !keyBoardUsed;
     }
 
     protected bool tryFindTargetMouse(out Vector3 target)

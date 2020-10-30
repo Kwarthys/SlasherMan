@@ -29,6 +29,8 @@ public class SlashAttack : Ability
     {
         if(inUse)
         {
+            steerToAim();
+
             if(counter++ > 1)
             {
                 counter = 0;
@@ -46,36 +48,46 @@ public class SlashAttack : Ability
                 //{
                 //     startSoundEffectNoHit();
                 // }
-                startSoundEffect();
+                //startSoundEffect();
                 manager.releaseAttackBlock();
             }
         }
     }
 
-    private void Update()
+    protected override void prepareCast()
     {
-        if(canBeUsed())
+        if (tryFindAimDirection(out Vector3 dir))
         {
-            if(MyInputManager.Instance.slashKeyPressed())
-            {
-                registerUse();
-                inUse = true;
-                attackZone.enabled = true;
-
-                Vector3 dir;
-
-                if (tryFindAimDirection(out dir))
-                {
-                    transform.parent.rotation = Quaternion.LookRotation(dir);
-                }
-
-                //play anim
-                Instantiate(anim, transform.position, transform.rotation);
-
-                camShaker.shakeCamera(shakeDuration, shakeMagnitude);
-
-                playerAnimator.SetTrigger("Slash");
-            }
+            transform.parent.rotation = Quaternion.LookRotation(dir);
         }
+
+        //play anim
+        Instantiate(anim, transform.position, transform.rotation);
+
+        camShaker.shakeCamera(shakeDuration, shakeMagnitude);
+
+        playerAnimator.SetTrigger("Slash");
+
+        newSteerToAim();
+
+        controller.speed /= 1.2f; 
+    }
+
+    protected override void cast()
+    {
+        attackZone.enabled = true;
+        inUse = true;
+
+        controller.speed *= 1.2f;
+    }
+
+    protected override void registerToManager()
+    {
+        //manager.registerSlash();
+    }
+
+    protected override bool inputPressed()
+    {
+        return MyInputManager.Instance.slashKeyPressed();
     }
 }

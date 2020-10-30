@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class AudioManager : MonoBehaviour
     private AudioSource right = null;
 
     public Transform player;
+
+    public Slider mainVolume;
 
     private float centerZoneSize = 20;
 
@@ -52,7 +55,7 @@ public class AudioManager : MonoBehaviour
         {
             //if(!source.isPlaying) //For now i'll check how stacking everything will work
             //{
-                source.PlayOneShot(clip, volume);
+                source.PlayOneShot(clip, volume * mainVolume.value);
             //}
         }
     }

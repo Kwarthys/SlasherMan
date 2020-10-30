@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class DashAttack : Ability
 {
-
-    public PlayerController controller;
-
     public float speed = 20;
     public float dashDistance = 7;
 
@@ -32,94 +29,75 @@ public class DashAttack : Ability
     private void OnTriggerEnter(Collider other)
     {
         if (other.isTrigger) return;
-        dealDamage(other.gameObject.GetComponentInParent<LivingThing>());       
+        dealDamage(other.gameObject.GetComponentInParent<LivingThing>());
     }
 
+    protected override bool inputPressed()
+    {
+        return MyInputManager.Instance.dashKeyPressed();
+    }
 
-    void Update()
+    protected override void cast()
+    {
+        inUse = true;
+        controller.canMove = false;
+        attackZone.enabled = true;
+        rbody.isKinematic = true;
+
+        camShaker.shakeCamera(shakeDuration, shakeMagnitude);
+
+        dashTarget = MyInputManager.Instance.getMoveDirection();
+        if (dashTarget.magnitude < 0.1f)
+        {
+            dashTarget = transform.position + transform.forward * dashDistance;
+        }
+        else
+        {
+            dashTarget = transform.position + dashTarget * dashDistance;
+        }
+
+        Instantiate(anim, transform.position, transform.rotation);
+
+        playerAnimator.SetTrigger("Dash");
+    }
+
+    protected override void registerToManager()
+    {
+        manager.registerDash();
+    }
+
+    private void stopDash()
+    {
+        inUse = false;
+        controller.canMove = true;
+        rbody.isKinematic = false;
+        attackZone.enabled = false;
+        manager.releaseAttackBlock();
+    }
+
+    protected override void onUpdate()
     {
         if(inUse)
         {
-            if(!Physics.Raycast(transform.position, transform.forward, 3.0f/*magicnumber*/, walls))
+            if(!Physics.Raycast(transform.position, transform.forward, 3.0f, walls))
             {
                 //Debug.DrawRay(transform.position, transform.forward * 3, Color.green, 1);
                 parent.position += (dashTarget - parent.position) * speed * Time.deltaTime;
             }
             else
             {
-                inUse = false;
-                controller.canMove = true;
-                rbody.isKinematic = false;
-                attackZone.enabled = false;
-                manager.releaseAttackBlock();
+                stopDash();
             }
 
             if(Vector3.Distance(parent.position, dashTarget) < 0.1f)
             {
-                inUse = false;
-                controller.canMove = true;
-                rbody.isKinematic = false;
-                attackZone.enabled = false;
-                manager.releaseAttackBlock();
+                stopDash();
             }
             return;
         }
         
-        if(MyInputManager.Instance.dashKeyPressed())
-        {
-            if(canBeUsed())
-            {
-                //cast
-                registerUse();
-                manager.registerDash();
-                startSoundEffect();
-
-                inUse = true;
-                controller.canMove = false;
-                attackZone.enabled = true;
-                rbody.isKinematic = true;
-
-                dashTarget = MyInputManager.Instance.getMoveDirection();
-                if(dashTarget.magnitude < 0.1f)
-                {
-                    dashTarget = transform.position + transform.forward * dashDistance;
-                }
-                else
-                {
-                    dashTarget = transform.position + dashTarget * dashDistance;
-                }
-
-                /*
-                Vector3 hit;
-
-                if (tryFindTarget(out hit))
-                {
-                    dashTarget = hit;
-
-                    //if(Vector3.Distance(dashTarget, parent.position) > dashDistance)
-                    //{
-                    Vector3 dashDirection = (dashTarget - parent.position).normalized;
-                    dashTarget = parent.position + dashDirection * dashDistance;
-                    //}
-                }
-                else
-                {
-                    Debug.LogError("Couldn't find floor to dash");
-                    inUse = false;
-                }
-                */
-
-                //Debug.DrawRay(parent.position, dashTarget - parent.position, Color.green, 1);
-
-                //parent.rotation = Quaternion.LookRotation(dashTarget - parent.position);
-
-                Instantiate(anim, transform.position, transform.rotation);
-
-                playerAnimator.SetTrigger("Dash");
-            }
-        }
     }
-
+    
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(transform.position, dashDistance);

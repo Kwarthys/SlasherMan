@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ability : MonoBehaviour
+public abstract class Ability : MonoBehaviour
 {
+    public PlayerController controller;
     [Header("Camera Shake")]
     public float shakeDuration;
     public float shakeMagnitude;
@@ -23,13 +24,17 @@ public class Ability : MonoBehaviour
     public int totalKills = 0;
     [Space]
     public bool allowed = true;
+    public float attackDelay = 0;
+    private bool waitingDelay = false;
+
+    protected Vector3 aimDir;
 
     public AttackManager manager;
 
     public GameObject anim;
 
     public float internalCD;
-    private float lastCast = 0;
+    protected float lastCast = 0;
 
     protected Collider attackZone;
 
@@ -39,12 +44,50 @@ public class Ability : MonoBehaviour
 
     protected bool inUse = false;
 
-    public bool canBeUsed()
+    private void Update()
+    {
+        if(canBeCasted() && inputPressed())
+        {
+            registerCast();
+            registerToManager();
+            startSoundEffect();
+            if(attackDelay == 0)
+            {
+                cast();
+            }
+            else
+            {
+                prepareCast();
+                waitingDelay = true;
+            }
+        }
+
+        if(waitingDelay)
+        {
+            if(Time.realtimeSinceStartup - lastCast > attackDelay)
+            {
+                waitingDelay = false;
+                cast();
+            }
+        }
+
+        onUpdate();
+    }
+
+    protected abstract void registerToManager();
+
+    protected abstract void cast();
+
+    protected virtual void prepareCast() { }
+
+    protected virtual void onUpdate() { }
+
+    public bool canBeCasted()
     {
         return allowed && (Time.realtimeSinceStartup - lastCast > internalCD) && !manager.isAttackBlocked();
     }
 
-    protected void registerUse()
+    protected void registerCast()
     {
         lastCast = Time.realtimeSinceStartup;
 
@@ -53,6 +96,8 @@ public class Ability : MonoBehaviour
             manager = GetComponentInParent<AttackManager>();
         }
     }
+
+    protected abstract bool inputPressed();
 
     protected void startSoundEffect()
     {
@@ -88,5 +133,27 @@ public class Ability : MonoBehaviour
                 totalKills++;
             }
         }
+    }
+
+    protected void newSteerToAim()
+    {
+        if (MyInputManager.Instance.tryGetAimDirection(out aimDir))
+        {
+            //yee we have an aim
+        }
+        else
+        {
+            aimDir = transform.forward;
+        }
+    }
+
+    protected void steerToAim()
+    {
+        if (tryFindAimDirection(out Vector3 dir))
+        {
+            aimDir = dir;
+        }
+
+        transform.parent.rotation = Quaternion.LookRotation(aimDir);
     }
 }

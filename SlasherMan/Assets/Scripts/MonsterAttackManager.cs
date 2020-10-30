@@ -36,7 +36,15 @@ public class MonsterAttackManager : MonoBehaviour
             return;
         }
 
-        if(other.transform.root.tag == "Player")
+        if (other.attachedRigidbody != null)
+        {
+            if(other.attachedRigidbody.isKinematic)
+            {
+                return;
+            }
+        }
+
+        if (other.transform.root.tag == "Player")
         {
             //Trigger the attack
             ability.lastCast = Time.realtimeSinceStartup;

@@ -4,17 +4,9 @@ using UnityEngine;
 
 public class BlazeAttack : Ability
 {
-    public PlayerController controller;
-
     public float duration = 60;
-    private float lastStart = -1;
-
-    public float initTime = .5f;
-    private bool starting = false;
 
     private ParticleSystem particles;
-
-    private Vector3 dirBLAZE;
 
     // Start is called before the first frame update
     void Start()
@@ -26,31 +18,42 @@ public class BlazeAttack : Ability
         particles.Stop();
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void prepareCast()
     {
-        if(starting)
-        {
-            if(Time.realtimeSinceStartup - lastStart > initTime)
-            {
-                inUse = true;
-                starting = false;
+        controller.speed /= 1.5f;
 
-                //Actually launching the spell
+        playerAnimator.SetTrigger("Blaze");
 
-                particles.Play();
+        newSteerToAim();
+    }
 
-                attackZone.enabled = true;
+    protected override void cast()
+    {
+        inUse = true;
 
-                camShaker.shakeCamera(shakeDuration, shakeMagnitude);
-            }
+        particles.Play();
 
-            steerToAim();
-        }
+        attackZone.enabled = true;
 
+        camShaker.shakeCamera(shakeDuration, shakeMagnitude);
+    }
+
+    protected override void registerToManager()
+    {
+        manager.registerBlaze();
+    }
+
+    protected override bool inputPressed()
+    {
+        return MyInputManager.Instance.blazeKeyPressed();
+    }
+
+    
+    protected override void onUpdate()
+    {
         if(inUse)
         {
-            if(Time.realtimeSinceStartup - lastStart > duration)
+            if(Time.realtimeSinceStartup - lastCast > duration)
             {
                 controller.speed *= 1.5f;
                 attackZone.enabled = false;
@@ -63,44 +66,6 @@ public class BlazeAttack : Ability
 
             return;
         }
-
-        if(canBeUsed())
-        {
-            if(MyInputManager.Instance.blazeKeyPressed())
-            {
-                registerUse();
-                startSoundEffect();
-                manager.registerBlaze();
-
-                //inUse = true;
-                starting = true;
-
-                lastStart = Time.realtimeSinceStartup;
-
-                controller.speed /= 1.5f;
-
-                playerAnimator.SetTrigger("Blaze");
-
-                if(MyInputManager.Instance.tryGetAimDirection(out dirBLAZE))
-                {
-                    //yee we have an aim
-                }
-                else
-                {
-                    dirBLAZE = transform.forward;
-                }
-            }
-        }
-    }
-
-    private void steerToAim()
-    {
-        if (tryFindAimDirection(out Vector3 dir))
-        {
-            dirBLAZE = dir;
-        }
-
-        transform.parent.rotation = Quaternion.LookRotation(dirBLAZE);
     }
 
     private void OnTriggerStay(Collider other)

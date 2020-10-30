@@ -73,21 +73,21 @@ public class AttackManager : MonoBehaviour
     {
         //BlazeImage.color = colorFor(blaze.canBeUsed());
         Sprite blazeImage = blazeON;
-        if(!blaze.canBeUsed() || attackBlock)
+        if(!blaze.canBeCasted() || attackBlock)
         {
             blazeImage = blazeOFF;
         }
         BlazeImage.sprite = blazeImage;
 
         Sprite dashImage = dashON;
-        if (!dash.canBeUsed() || attackBlock)
+        if (!dash.canBeCasted() || attackBlock)
         {
             dashImage = dashOFF;
         }
         DashImage.sprite = dashImage;
 
         Sprite slashImage = slashON;
-        if (!slash.canBeUsed() || attackBlock)
+        if (!slash.canBeCasted() || attackBlock)
         {
             slashImage = slashOFF;
         }
