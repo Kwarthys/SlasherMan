@@ -8,7 +8,7 @@ public class SpawnerManager : MonoBehaviour
     public float spawnMaxRange = 50;
 
     public float spawnRate = 1;
-    private float lastSpawn = -1;
+    private float lastSpawn = -10;
 
     public List<MonsterMeta> monsters = new List<MonsterMeta>();
 
@@ -41,7 +41,7 @@ public class SpawnerManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        lastSpawn = Time.realtimeSinceStartup;
+        lastSpawn = Time.realtimeSinceStartup - 10;
         creditsPerSpawn = startCreditsPerSpawn;
     }
 

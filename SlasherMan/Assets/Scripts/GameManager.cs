@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("LoreScreen")]
+    public GameObject loreScreen;
+
     [Header("EndScreen")]
     public GameObject endScreen;
     public Image endScreenBackGound;
@@ -33,7 +37,16 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        initialise();
+        spawnManager.gameObject.SetActive(false);
+        itemManager.gameObject.SetActive(false);
+        loreScreen.SetActive(true);
+    }
+
+    public void startGame()
+    {
+        spawnManager.gameObject.SetActive(true);
+        itemManager.gameObject.SetActive(true);
+        retryClick();
     }
 
     public void initialise()
