@@ -9,7 +9,7 @@ public class BlazeAttack : Ability
     private ParticleSystem particles;
 
     // Start is called before the first frame update
-    void Start()
+    protected override void onStart()
     {
         attackZone = GetComponent<BoxCollider>();
         attackZone.enabled = false;

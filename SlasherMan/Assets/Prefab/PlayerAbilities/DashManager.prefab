@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5184344631776020869
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5184344631776020870}
+  - component: {fileID: 5184344631776020888}
+  - component: {fileID: 5184344631776020871}
+  m_Layer: 0
+  m_Name: DashManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5184344631776020870
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5184344631776020869}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5184344631776020888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5184344631776020869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2027bcaff1074654586c2a34bb00ecbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeDuration: 0.25
+  shakeMagnitude: 2
+  floorLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  clips:
+  - {fileID: 8300000, guid: 81dea616a7627bc48b214c9828eec86b, type: 3}
+  clipsNoHit: []
+  volume: 1
+  volumeNoHit: 1
+  abilityName: Dash
+  totalDamage: 0
+  totalKills: 0
+  allowed: 1
+  attackDelay: 0
+  anim: {fileID: 8319904447794588626, guid: 2c42ef3a70bac1e4780a1b9a93e06bd9, type: 3}
+  internalCD: 0.3
+  damage: 25
+  speed: 15
+  dashDistance: 15
+  enemiesLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  walls:
+    serializedVersion: 2
+    m_Bits: 1024
+--- !u!135 &5184344631776020871
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5184344631776020869}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.3
+  m_Center: {x: 0, y: 0, z: 0}

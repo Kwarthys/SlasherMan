@@ -6,35 +6,45 @@ using UnityEngine.UI;
 
 public class AttackManager : MonoBehaviour
 {
-    private DashAttack dash;
-    private SlashAttack slash;
-    private BlazeAttack blaze;
+    private Ability support;
+    private Ability attack;
+    private Ability special;
+    /*
+    private DashAttack support;
+    private SlashAttack attack;
+    private BlazeAttack special;
+    */
+    private int attackCount = 0;
+    private int supportCharges = 0;
 
-    private int slashCount = 0;
-    private int dashCount = 0;
-
-    public int blazeSlashCost = 4;
-    public int dashMaxStock = 2;
+    public int specialCost = 4;
+    public int supportMaxCharges = 2;
 
     [Header("UILinks")]
-    public Image DashImage;
-    public Image BlazeImage;
-    public Image SlashImage;
+    public Image supportImage;
+    public Image specialImage;
+    public Image attackImage;
 
-    public Sprite blazeON;
-    public Sprite blazeOFF;
+    public Sprite specialON;
+    public Sprite specialOFF;
 
-    public Sprite dashON;
-    public Sprite dashOFF;
+    public Sprite supportON;
+    public Sprite supportOFF;
 
-    public Sprite slashON;
-    public Sprite slashOFF;
+    public Sprite attackON;
+    public Sprite attackOFF;
 
-    public List<Animator> dashTokenAnimators = new List<Animator>();
-    public List<Animator> blazeTokenAnimators = new List<Animator>();
+    public List<Animator> supportTokenAnimators = new List<Animator>();
+    public List<Animator> specialTokenAnimators = new List<Animator>();
 
     private bool attackBlock = false;
     public bool isAttackBlocked() { return attackBlock; }
+
+    public Ability[] getAbilities()
+    {
+        Ability[] abs = { attack, support, special };
+        return abs;
+    }
 
     private void Start()
     {
@@ -43,55 +53,90 @@ public class AttackManager : MonoBehaviour
 
     public void init()
     {
+        /*
         dash = transform.Find("DashManager").GetComponent<DashAttack>();
         slash = transform.Find("SlashManager").GetComponent<SlashAttack>();
         blaze = transform.Find("BlazeManager").GetComponent<BlazeAttack>();
+        */
         //BlazeImage.color = Color.red;
         //DashImage.color = Color.red;
         //SlashImage.color = Color.white;
 
-        slashCount = 0;
-        dashCount = 0;
+        attackCount = 0;
+        supportCharges = 0;
 
-        dash.allowed = false;
-        blaze.allowed = false;
+        support.allowed = false;
+        special.allowed = false;
 
         attackBlock = false;
 
-        foreach (Animator a in dashTokenAnimators)
+        foreach (Animator a in supportTokenAnimators)
         {
             a.SetTrigger("Fade");
         }
 
-        foreach (Animator a in blazeTokenAnimators)
+        foreach (Animator a in specialTokenAnimators)
         {
             a.SetTrigger("Fade");
+        }
+    }
+
+    public void updateAbility(ItemType slot, GameObject ability)
+    {
+        Ability a = ability.GetComponent<Ability>();
+
+        //Debug.log
+        if(slot == ItemType.attack)
+        {
+            attack = a;
+        }
+        else if(slot == ItemType.support)
+        {
+            support = a;
+        }
+        else if(slot == ItemType.special)
+        {
+            special = a;
+        }
+        else
+        {
+            Debug.LogWarning(slot + " not supported in attack Manager");
         }
     }
 
     private void updateButtons()
     {
         //BlazeImage.color = colorFor(blaze.canBeUsed());
-        Sprite blazeImage = blazeON;
-        if(!blaze.canBeCasted() || attackBlock)
+        if(special != null)
         {
-            blazeImage = blazeOFF;
+            Sprite specialSprite = specialON;
+            if (!special.canBeCasted() || attackBlock)
+            {
+                specialSprite = specialOFF;
+            }
+            specialImage.sprite = specialSprite;
         }
-        BlazeImage.sprite = blazeImage;
 
-        Sprite dashImage = dashON;
-        if (!dash.canBeCasted() || attackBlock)
+        if(support!=null)
         {
-            dashImage = dashOFF;
+            Sprite supportSprite = supportON;
+            if (!support.canBeCasted() || attackBlock)
+            {
+                supportSprite = supportOFF;
+            }
+            supportImage.sprite = supportSprite;
         }
-        DashImage.sprite = dashImage;
 
-        Sprite slashImage = slashON;
-        if (!slash.canBeCasted() || attackBlock)
+        if(attack != null)
         {
-            slashImage = slashOFF;
+            Sprite attackSprite = attackON;
+            if (!attack.canBeCasted() || attackBlock)
+            {
+                attackSprite = attackOFF;
+            }
+            this.attackImage.sprite = attackSprite;
         }
-        SlashImage.sprite = slashImage;
+
     }
 
     private Color colorFor(bool b)
@@ -101,12 +146,12 @@ public class AttackManager : MonoBehaviour
 
     public void registerBlaze()
     {
-        slashCount = 0;
+        attackCount = 0;
         attackBlock = true;
-        blaze.allowed = false;
+        special.allowed = false;
         updateButtons();
 
-        foreach(Animator a in blazeTokenAnimators)
+        foreach(Animator a in specialTokenAnimators)
         {
             a.SetTrigger("Fade");
         }
@@ -125,13 +170,13 @@ public class AttackManager : MonoBehaviour
     public void registerDash()
     {
         attackBlock = true;
-        dashCount = Mathf.Max(0, dashCount - 1);
+        supportCharges = Mathf.Max(0, supportCharges - 1);
 
-        dashTokenAnimators[dashCount].SetTrigger("Fade");
+        supportTokenAnimators[supportCharges].SetTrigger("Fade");
 
-        if (dashCount == 0)
+        if (supportCharges == 0)
         {
-            dash.allowed = false;
+            support.allowed = false;
         }
     }
 
@@ -144,26 +189,26 @@ public class AttackManager : MonoBehaviour
     {
         attackBlock = true;
 
-        if (dashCount < dashMaxStock)
+        if (supportCharges < supportMaxCharges)
         {
-            dashTokenAnimators[dashCount].gameObject.SetActive(true);
-            dashTokenAnimators[dashCount].SetTrigger("Pop");
+            supportTokenAnimators[supportCharges].gameObject.SetActive(true);
+            supportTokenAnimators[supportCharges].SetTrigger("Pop");
         }
 
-        if (slashCount < blazeSlashCost)
+        if (attackCount < specialCost)
         {
-            blazeTokenAnimators[slashCount].gameObject.SetActive(true);
-            blazeTokenAnimators[slashCount].SetTrigger("Pop");
+            specialTokenAnimators[attackCount].gameObject.SetActive(true);
+            specialTokenAnimators[attackCount].SetTrigger("Pop");
         }
 
-        slashCount = Mathf.Min(blazeSlashCost, slashCount + 1);
-        dashCount = Mathf.Min(dashMaxStock, dashCount+1);
+        attackCount = Mathf.Min(specialCost, attackCount + 1);
+        supportCharges = Mathf.Min(supportMaxCharges, supportCharges+1);
 
-        dash.allowed = true;
+        support.allowed = true;
 
-        if (slashCount == blazeSlashCost)
+        if (attackCount == specialCost)
         {
-            blaze.allowed = true;
+            special.allowed = true;
         }
     }
 }

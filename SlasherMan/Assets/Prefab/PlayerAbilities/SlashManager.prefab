@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &185253645259937814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 185253645259937813}
+  - component: {fileID: 185253645259937811}
+  - component: {fileID: 185253645259937812}
+  m_Layer: 0
+  m_Name: SlashManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &185253645259937813
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185253645259937814}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &185253645259937811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185253645259937814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa5cda870ce43884fa3f29bcc3f96f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 0}
+  shakeDuration: 0.2
+  shakeMagnitude: 0.6
+  camShaker: {fileID: 0}
+  cam: {fileID: 0}
+  floorLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  clips:
+  - {fileID: 8300000, guid: 16b18e63cec2cc04bb64914498341ed9, type: 3}
+  - {fileID: 8300000, guid: 375cc1a3b5815094e83eb40ee0d8752d, type: 3}
+  - {fileID: 8300000, guid: 066b4f7e26fdf974d9527927c4c38547, type: 3}
+  - {fileID: 8300000, guid: 6030f82f479a9804c919b0650d5e6edc, type: 3}
+  clipsNoHit:
+  - {fileID: 8300000, guid: 7aea2cb0c6d35b64a97fbbf1de7cba30, type: 3}
+  volume: 0.7
+  volumeNoHit: 0.7
+  audioManager: {fileID: 0}
+  abilityName: Slash
+  totalDamage: 0
+  totalKills: 0
+  allowed: 1
+  attackDelay: 0.1
+  manager: {fileID: 0}
+  anim: {fileID: 6197046656232529916, guid: b5da1cb3f53fe4247bf25edfeea57354, type: 3}
+  internalCD: 0.5
+  damage: 50
+  playerAnimator: {fileID: 0}
+--- !u!65 &185253645259937812
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185253645259937814}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 4, y: 1, z: 3.6680655}
+  m_Center: {x: 0, y: 0, z: 1.9140207}

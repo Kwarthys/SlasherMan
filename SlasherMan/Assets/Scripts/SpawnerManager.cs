@@ -10,6 +10,9 @@ public class SpawnerManager : MonoBehaviour
     public float spawnRate = 1;
     private float lastSpawn = -10;
 
+    public int wavesPerLevel = 30;
+    private int waveCount = 0;
+
     public List<MonsterMeta> monsters = new List<MonsterMeta>();
 
     public int startCreditsPerSpawn = 10;
@@ -25,6 +28,10 @@ public class SpawnerManager : MonoBehaviour
 
     public int maxMonsterCount = 150;
 
+    public bool wavesEnded = false;
+
+    public GameManager manager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,32 +39,59 @@ public class SpawnerManager : MonoBehaviour
         creditsPerSpawn = startCreditsPerSpawn;
     }
 
-    public void reinit()
+    public void resetForNext()
     {
         mID = 0;
 
-        foreach(Transform child in transform)
+        foreach (Transform child in transform)
         {
             Destroy(child.gameObject);
         }
 
         lastSpawn = Time.realtimeSinceStartup - 10;
+
+        waveCount = 0;
+        wavesEnded = false;
+    }
+
+    public void reinit()
+    {
+        resetForNext();
+
         creditsPerSpawn = startCreditsPerSpawn;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Time.realtimeSinceStartup - lastSpawn > spawnRate)
+        if (wavesEnded)
         {
-            lastSpawn = Time.realtimeSinceStartup;
-            waveCredits = creditsPerSpawn;
-            creditsPerSpawn = (int)(creditsPerSpawn * coefIncrease);
-            //Spawn
-            while(waveCredits > 0 && transform.childCount < maxMonsterCount)
+            if (transform.childCount == 0)
             {
-                spawnAMonster();
+                manager.notifyLastMonsterKill();
             }
+        }
+        else
+        {
+            if (Time.realtimeSinceStartup - lastSpawn > spawnRate && !wavesEnded)
+            {
+                lastSpawn = Time.realtimeSinceStartup;
+                waveCredits = creditsPerSpawn;
+                creditsPerSpawn = (int)(creditsPerSpawn * coefIncrease);
+                //Spawn
+                while(waveCredits > 0 && transform.childCount < maxMonsterCount)
+                {
+                    spawnAMonster();
+                }
+
+                waveCount++;
+            }
+
+            if(waveCount >= wavesPerLevel && !wavesEnded)
+            {
+                wavesEnded = true;
+            }
+
         }
     }
 

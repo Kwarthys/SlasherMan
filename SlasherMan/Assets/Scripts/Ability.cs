@@ -4,20 +4,20 @@ using UnityEngine;
 
 public abstract class Ability : MonoBehaviour
 {
-    public PlayerController controller;
+    protected PlayerController controller;
     [Header("Camera Shake")]
     public float shakeDuration;
     public float shakeMagnitude;
-    public CameraShake camShaker;
+    protected CameraShake camShaker;
     [Space]
-    public Camera cam;
+    protected Camera cam;
     public LayerMask floorLayer;
     [Header("Audio")]
     public List<AudioClip> clips = new List<AudioClip>();
     public List<AudioClip> clipsNoHit = new List<AudioClip>();
     public float volume = 1;
     public float volumeNoHit = 1;
-    public AudioManager audioManager;
+    protected AudioManager audioManager;
     [Header("Stats")]
     public string abilityName;
     public int totalDamage = 0;
@@ -29,8 +29,9 @@ public abstract class Ability : MonoBehaviour
 
     protected Vector3 aimDir;
 
-    public AttackManager manager;
+    protected AttackManager manager;
 
+    [Header("AttackParameters")]
     public GameObject anim;
 
     public float internalCD;
@@ -40,9 +41,22 @@ public abstract class Ability : MonoBehaviour
 
     public int damage;
 
-    public Animator playerAnimator;
+    protected Animator playerAnimator;
 
     protected bool inUse = false;
+
+    private void Start()
+    {
+        controller = GetComponentInParent<PlayerController>();
+        manager = GetComponentInParent<AttackManager>();
+        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+        camShaker = cam.gameObject.GetComponent<CameraShake>();
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+
+        playerAnimator = GameObject.Find("Hero").GetComponent<Animator>();
+
+        onStart();
+    }
 
     private void Update()
     {
@@ -74,6 +88,8 @@ public abstract class Ability : MonoBehaviour
         onUpdate();
     }
 
+    protected virtual void onStart() { }
+
     protected abstract void registerToManager();
 
     protected abstract void cast();
@@ -90,11 +106,6 @@ public abstract class Ability : MonoBehaviour
     protected void registerCast()
     {
         lastCast = Time.realtimeSinceStartup;
-
-        if(manager == null)
-        {
-            manager = GetComponentInParent<AttackManager>();
-        }
     }
 
     protected abstract bool inputPressed();

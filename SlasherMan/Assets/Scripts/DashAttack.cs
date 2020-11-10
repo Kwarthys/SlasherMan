@@ -17,7 +17,7 @@ public class DashAttack : Ability
 
     public LayerMask walls;
 
-    private void Start()
+    protected override void onStart()
     {
         rbody = GetComponentInParent<Rigidbody>();
         parent = transform.parent;

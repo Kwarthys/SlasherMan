@@ -25,8 +25,6 @@ public class GameManager : MonoBehaviour
     public float minDefeatTextSize = 30;
     public float maxDefeatTextSize = 70;
 
-    public List<Ability> abilities = new List<Ability>();
-
     [Header("RestartTheGame")]
     public SpawnerManager spawnManager;
     public AttackManager attackManager;
@@ -93,7 +91,7 @@ public class GameManager : MonoBehaviour
 
     private void buildAbilitiesStats()
     {
-        foreach(Ability a in abilities)
+        foreach(Ability a in attackManager.getAbilities())
         {
             string text = a.abilityName + ":\n";
             string damage = "Damage: " + a.totalDamage;
@@ -112,10 +110,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void notifyLastMonsterKill()
+    {
+        //GG
+
+        //Loot
+
+        //Start new level
+        attackManager.init();
+        spawnManager.resetForNext();
+        itemManager.reinit();
+        playerHealth.init();
+        initialise();
+    }
+
     public void retryClick()
     {
         //Debug.Log("retry");
-        foreach (Ability a in abilities)
+        foreach (Ability a in attackManager.getAbilities())
         {
             a.totalDamage = 0;
             a.totalKills = 0;

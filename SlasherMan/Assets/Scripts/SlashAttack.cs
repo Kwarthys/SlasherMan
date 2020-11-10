@@ -8,7 +8,7 @@ public class SlashAttack : Ability
 
     private bool targetHit = false;
 
-    private void Start()
+    protected override void onStart()
     {
         attackZone = GetComponent<BoxCollider>();
         attackZone.enabled = false;
