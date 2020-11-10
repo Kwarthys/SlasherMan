@@ -90,16 +90,16 @@ public class MyInputManager : MonoBehaviour
 
         if(!mouseUsed && blazeKeyHint.text == "R")
         {
-            blazeKeyHint.text = "Right Trigger";
-            slashKeyHint.text = "Left Trigger";
+            blazeKeyHint.text = "Left Trigger";
+            slashKeyHint.text = "Right Trigger";
             dashKeyHint.text = "A";
 
             Cursor.visible = false;
         }
-        else if(mouseUsed && blazeKeyHint.text == "Right Trigger")
+        else if(mouseUsed && blazeKeyHint.text == "Left Trigger")
         {
             blazeKeyHint.text = "R";
-            slashKeyHint.text = "Right Clic";
+            slashKeyHint.text = "Left Clic";
             dashKeyHint.text = "Space";
 
             Cursor.visible = true;
