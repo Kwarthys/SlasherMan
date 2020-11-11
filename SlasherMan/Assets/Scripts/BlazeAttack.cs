@@ -40,12 +40,12 @@ public class BlazeAttack : Ability
 
     protected override void registerToManager()
     {
-        manager.registerBlaze();
+        manager.registerSpecial();
     }
 
     protected override bool inputPressed()
     {
-        return MyInputManager.Instance.blazeKeyPressed();
+        return MyInputManager.Instance.specialKeyPressed();
     }
 
     

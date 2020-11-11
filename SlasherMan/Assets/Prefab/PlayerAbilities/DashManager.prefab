@@ -62,6 +62,8 @@ MonoBehaviour:
   anim: {fileID: 8319904447794588626, guid: 2c42ef3a70bac1e4780a1b9a93e06bd9, type: 3}
   internalCD: 0.3
   damage: 25
+  chargeCost: 1
+  chargeCapacity: 2
   speed: 15
   dashDistance: 15
   enemiesLayer:

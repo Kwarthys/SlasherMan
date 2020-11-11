@@ -22,7 +22,7 @@ public class InventoryManager : MonoBehaviour
         updateUI();
     }
 
-    private void Start()
+    private void Awake()
     {
         foreach(PlayerItemScriptable item in starterItems)
         {
@@ -35,7 +35,7 @@ public class InventoryManager : MonoBehaviour
                     equippedItems[item.type].instanciatedObject = null;
                     equippedItems[item.type] = item;
                     equippedItems[item.type].instanciatedObject = Instantiate(item.prefab, playerAbilityHolder);
-                    attackManager.updateAbility(item.type, equippedItems[item.type].instanciatedObject);
+                    attackManager.updateAbility(item);
                 }
                 else
                 {
@@ -48,7 +48,7 @@ public class InventoryManager : MonoBehaviour
                 if (isItemWeapon(item.type))
                 {
                     item.instanciatedObject = Instantiate(item.prefab, playerAbilityHolder);
-                    attackManager.updateAbility(item.type, item.instanciatedObject);
+                    attackManager.updateAbility(item);
                 }
             }
         }
@@ -76,7 +76,7 @@ public class InventoryManager : MonoBehaviour
         updateUIFor(ItemType.special, specialImage);
     }
 
-    private bool tryGetItemInSlot(ItemType slot, out PlayerItemScriptable item)
+    public bool tryGetItemInSlot(ItemType slot, out PlayerItemScriptable item)
     {
         item = null;
 

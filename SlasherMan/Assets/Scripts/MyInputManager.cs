@@ -27,17 +27,17 @@ public class MyInputManager : MonoBehaviour
         Instance = this;        
     }
 
-    public bool slashKeyPressed()
+    public bool attackKeyPressed()
     {
         return Input.GetMouseButtonDown(0) || Mathf.Abs(Input.GetAxisRaw("RightTrigger")) > threshold;
     }
 
-    public bool dashKeyPressed()
+    public bool supportKeyPressed()
     {
         return Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.JoystickButton0);
     }
 
-    public bool blazeKeyPressed()
+    public bool specialKeyPressed()
     {
         return Input.GetKeyDown(KeyCode.R) || Mathf.Abs(Input.GetAxisRaw("LeftTrigger")) > threshold;
     }

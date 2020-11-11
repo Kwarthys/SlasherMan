@@ -9,30 +9,13 @@ public class AttackManager : MonoBehaviour
     private Ability support;
     private Ability attack;
     private Ability special;
-    /*
-    private DashAttack support;
-    private SlashAttack attack;
-    private BlazeAttack special;
-    */
-    private int attackCount = 0;
-    private int supportCharges = 0;
-
-    public int specialCost = 4;
-    public int supportMaxCharges = 2;
 
     [Header("UILinks")]
     public Image supportImage;
     public Image specialImage;
     public Image attackImage;
 
-    public Sprite specialON;
-    public Sprite specialOFF;
-
-    public Sprite supportON;
-    public Sprite supportOFF;
-
-    public Sprite attackON;
-    public Sprite attackOFF;
+    public InventoryManager inventoryManager;
 
     public List<Animator> supportTokenAnimators = new List<Animator>();
     public List<Animator> specialTokenAnimators = new List<Animator>();
@@ -62,9 +45,6 @@ public class AttackManager : MonoBehaviour
         //DashImage.color = Color.red;
         //SlashImage.color = Color.white;
 
-        attackCount = 0;
-        supportCharges = 0;
-
         support.allowed = false;
         special.allowed = false;
 
@@ -81,62 +61,64 @@ public class AttackManager : MonoBehaviour
         }
     }
 
-    public void updateAbility(ItemType slot, GameObject ability)
+    public void updateAbility(PlayerItemScriptable abilityItem)
     {
-        Ability a = ability.GetComponent<Ability>();
+        Ability a = abilityItem.instanciatedObject.GetComponent<Ability>();
 
         //Debug.log
-        if(slot == ItemType.attack)
+        if(abilityItem.type == ItemType.attack)
         {
             attack = a;
         }
-        else if(slot == ItemType.support)
+        else if(abilityItem.type == ItemType.support)
         {
             support = a;
         }
-        else if(slot == ItemType.special)
+        else if(abilityItem.type == ItemType.special)
         {
             special = a;
         }
         else
         {
-            Debug.LogWarning(slot + " not supported in attack Manager");
+            Debug.LogWarning(abilityItem.type + " not supported in attack Manager");
         }
     }
 
     private void updateButtons()
     {
+        PlayerItemScriptable item;
+
         //BlazeImage.color = colorFor(blaze.canBeUsed());
-        if(special != null)
+        if (inventoryManager.tryGetItemInSlot(ItemType.special, out item))
         {
-            Sprite specialSprite = specialON;
+            Sprite specialSprite = item.itemSpriteON;
             if (!special.canBeCasted() || attackBlock)
             {
-                specialSprite = specialOFF;
+                specialSprite = item.itemSpriteOFF;
             }
             specialImage.sprite = specialSprite;
         }
 
-        if(support!=null)
+        if (inventoryManager.tryGetItemInSlot(ItemType.support, out item))
         {
-            Sprite supportSprite = supportON;
+            Sprite supportSprite = item.itemSpriteON;
             if (!support.canBeCasted() || attackBlock)
             {
-                supportSprite = supportOFF;
+                supportSprite = item.itemSpriteOFF;
             }
             supportImage.sprite = supportSprite;
         }
 
-        if(attack != null)
+        if (inventoryManager.tryGetItemInSlot(ItemType.attack, out item))
         {
-            Sprite attackSprite = attackON;
+            Sprite attackSprite = item.itemSpriteON;
             if (!attack.canBeCasted() || attackBlock)
             {
-                attackSprite = attackOFF;
+                attackSprite = item.itemSpriteOFF;
             }
             this.attackImage.sprite = attackSprite;
         }
-
+        //i am convinced there is a better way to do this, but still dunno how, will figure out later
     }
 
     private Color colorFor(bool b)
@@ -144,16 +126,16 @@ public class AttackManager : MonoBehaviour
         return attackBlock ? Color.grey : b ? Color.white : Color.red;
     }
 
-    public void registerBlaze()
+    public void registerSpecial()
     {
-        attackCount = 0;
         attackBlock = true;
-        special.allowed = false;
+        int oldAmount = special.chargeAmount;
+        special.chargeAmount = Mathf.Max(0, special.chargeAmount - special.chargeCost);
         updateButtons();
 
-        foreach(Animator a in specialTokenAnimators)
+        for(int i = oldAmount - 1; i >= special.chargeAmount; i--)
         {
-            a.SetTrigger("Fade");
+            specialTokenAnimators[i].SetTrigger("fade");
         }
     }
 
@@ -167,17 +149,16 @@ public class AttackManager : MonoBehaviour
         updateButtons();
     }
 
-    public void registerDash()
+    public void registerSupport()
     {
         attackBlock = true;
-        supportCharges = Mathf.Max(0, supportCharges - 1);
+        int oldAmount = support.chargeAmount;
+        support.chargeAmount = Mathf.Max(0, support.chargeAmount - support.chargeCost);
 
-        supportTokenAnimators[supportCharges].SetTrigger("Fade");
-
-        if (supportCharges == 0)
+        for (int i = oldAmount - 1; i >= support.chargeAmount; i--)
         {
-            support.allowed = false;
-        }
+             supportTokenAnimators[i].SetTrigger("fade");
+        }    
     }
 
     public void releaseAttackBlock()
@@ -185,30 +166,22 @@ public class AttackManager : MonoBehaviour
         attackBlock = false;
     }
 
-    public void registerSlash()
+    public void registerAttack()
     {
         attackBlock = true;
 
-        if (supportCharges < supportMaxCharges)
+        if (support.chargeAmount < support.chargeCapacity)
         {
-            supportTokenAnimators[supportCharges].gameObject.SetActive(true);
-            supportTokenAnimators[supportCharges].SetTrigger("Pop");
+            supportTokenAnimators[support.chargeAmount].gameObject.SetActive(true);
+            supportTokenAnimators[support.chargeAmount].SetTrigger("Pop");
+            support.addCharge();
         }
 
-        if (attackCount < specialCost)
+        if (special.chargeAmount < special.chargeCost)
         {
-            specialTokenAnimators[attackCount].gameObject.SetActive(true);
-            specialTokenAnimators[attackCount].SetTrigger("Pop");
+            specialTokenAnimators[special.chargeAmount].gameObject.SetActive(true);
+            specialTokenAnimators[special.chargeAmount].SetTrigger("Pop");
+            special.chargeAmount++;
         }
-
-        attackCount = Mathf.Min(specialCost, attackCount + 1);
-        supportCharges = Mathf.Min(supportMaxCharges, supportCharges+1);
-
-        support.allowed = true;
-
-        if (attackCount == specialCost)
-        {
-            special.allowed = true;
-        }
-    }
+    }   
 }

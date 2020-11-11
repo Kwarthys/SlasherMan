@@ -1284,21 +1284,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aae41dc863317b44b5d7e3d2a16c3d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blazeSlashCost: 4
-  dashMaxStock: 2
-  DashImage: {fileID: 1270103255}
-  BlazeImage: {fileID: 1033784138}
-  SlashImage: {fileID: 261240330}
-  blazeON: {fileID: 21300000, guid: 85f48814f2f68494ea9015ef868b195a, type: 3}
-  blazeOFF: {fileID: 21300000, guid: a8a18b226cbcbc640abdf50e42b322ce, type: 3}
-  dashON: {fileID: 21300000, guid: e264a697b13c66f4488d0bd23e450e97, type: 3}
-  dashOFF: {fileID: 21300000, guid: 2d076f4cd772bdc4abdff01895a7a3de, type: 3}
-  slashON: {fileID: 21300000, guid: 078358b833f125f4d89916ca35c967f1, type: 3}
-  slashOFF: {fileID: 21300000, guid: 85d183217d252b14bbc2ae6bc4baa21c, type: 3}
-  dashTokenAnimators:
+  supportImage: {fileID: 1270103255}
+  specialImage: {fileID: 1033784138}
+  attackImage: {fileID: 261240330}
+  inventoryManager: {fileID: 1679324842}
+  supportTokenAnimators:
   - {fileID: 1726940416}
   - {fileID: 1188077393}
-  blazeTokenAnimators:
+  specialTokenAnimators:
   - {fileID: 1158280649}
   - {fileID: 1066727524}
   - {fileID: 9563507}
@@ -5075,10 +5068,6 @@ MonoBehaviour:
   maxAlphaValue: 0.95
   minDefeatTextSize: 50
   maxDefeatTextSize: 70
-  abilities:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   spawnManager: {fileID: 607826860}
   attackManager: {fileID: 403791607}
   scoreManager: {fileID: 1679324839}
@@ -5098,11 +5087,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   starterItems:
-  - {fileID: 11400000, guid: 33fe1f0e7e9b38d4c99418efd81d04db, type: 2}
+  - {fileID: 11400000, guid: 9d3c60ad30c20fd4aa5d7fc159ff4ade, type: 2}
+  - {fileID: 11400000, guid: 860f240c5d201f244b958659563c4ec0, type: 2}
+  - {fileID: 11400000, guid: 4ad4bc9e565989048be7fa7caaf6a21e, type: 2}
   attackImage: {fileID: 261240330}
   supportImage: {fileID: 1270103255}
   specialImage: {fileID: 1033784138}
   playerAbilityHolder: {fileID: 403791605}
+  attackManager: {fileID: 403791607}
 --- !u!1 &1687258581
 GameObject:
   m_ObjectHideFlags: 0
@@ -5649,7 +5641,7 @@ GameObject:
   - component: {fileID: 1719341791}
   m_Layer: 0
   m_Name: Model
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6333,10 +6325,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2041119319}
+  - component: {fileID: 2041119315}
   - component: {fileID: 2041119318}
   - component: {fileID: 2041119317}
   - component: {fileID: 2041119316}
-  - component: {fileID: 2041119315}
   m_Layer: 9
   m_Name: Dummy
   m_TagString: Untagged

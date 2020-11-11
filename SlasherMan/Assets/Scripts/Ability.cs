@@ -41,6 +41,10 @@ public abstract class Ability : MonoBehaviour
 
     public int damage;
 
+    public int chargeCost = 0;
+    public int chargeCapacity = 0;
+    public int chargeAmount = 0;
+
     protected Animator playerAnimator;
 
     protected bool inUse = false;
@@ -90,7 +94,7 @@ public abstract class Ability : MonoBehaviour
 
     protected virtual void onStart() { }
 
-    protected abstract void registerToManager();
+    protected virtual void registerToManager() { }
 
     protected abstract void cast();
 
@@ -100,12 +104,17 @@ public abstract class Ability : MonoBehaviour
 
     public bool canBeCasted()
     {
-        return allowed && (Time.realtimeSinceStartup - lastCast > internalCD) && !manager.isAttackBlocked();
+        return allowed && (Time.realtimeSinceStartup - lastCast > internalCD) && !manager.isAttackBlocked() && chargeAmount >= chargeCost;
     }
 
     protected void registerCast()
     {
         lastCast = Time.realtimeSinceStartup;
+    }
+
+    public void addCharge()
+    {
+        chargeAmount = Mathf.Min(chargeAmount + 1, chargeCapacity);
     }
 
     protected abstract bool inputPressed();
@@ -133,17 +142,22 @@ public abstract class Ability : MonoBehaviour
         return MyInputManager.Instance.tryGetAimDirection(out target);
     }
 
-    protected void dealDamage(LivingThing target)
+    public void dealDamage(LivingThing target, int damageAmount)
     {
         if (target != null)
         {
-            totalDamage += Mathf.Min(damage, target.getCurrentLife());
-            target.takeDamage(damage);
+            totalDamage += Mathf.Min(damageAmount, target.getCurrentLife());
+            target.takeDamage(damageAmount);
             if (target.getCurrentLife() <= 0)
             {
                 totalKills++;
             }
         }
+    }
+
+    public void dealDamage(LivingThing target)
+    {
+        dealDamage(target, damage);
     }
 
     protected void newSteerToAim()

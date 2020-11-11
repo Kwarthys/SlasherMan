@@ -39,7 +39,7 @@ public class SlashAttack : Ability
 
                 if (targetHit)
                 {
-                    manager.registerSlash();
+                    manager.registerAttack();
                     targetHit = false;
 
                     //startSoundEffect();
@@ -81,13 +81,8 @@ public class SlashAttack : Ability
         controller.speed *= 1.2f;
     }
 
-    protected override void registerToManager()
-    {
-        //manager.registerSlash();
-    }
-
     protected override bool inputPressed()
     {
-        return MyInputManager.Instance.slashKeyPressed();
+        return MyInputManager.Instance.attackKeyPressed();
     }
 }

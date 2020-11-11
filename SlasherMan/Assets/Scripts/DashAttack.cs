@@ -34,7 +34,7 @@ public class DashAttack : Ability
 
     protected override bool inputPressed()
     {
-        return MyInputManager.Instance.dashKeyPressed();
+        return MyInputManager.Instance.supportKeyPressed();
     }
 
     protected override void cast()
@@ -63,7 +63,7 @@ public class DashAttack : Ability
 
     protected override void registerToManager()
     {
-        manager.registerDash();
+        manager.registerSupport();
     }
 
     private void stopDash()
