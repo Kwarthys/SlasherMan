@@ -22,9 +22,14 @@ public class InventoryManager : MonoBehaviour
 
     private void Awake()
     {
-        foreach(PlayerItemScriptable item in starterItems)
+        foreach (PlayerItemScriptable item in allItemsInGame)
         {
-            if(equippedItems.ContainsKey(item.type))
+            item.itemLevel = 1;
+        }
+
+        foreach (PlayerItemScriptable item in starterItems)
+            {
+                if (equippedItems.ContainsKey(item.type))
             {
                 Debug.LogWarning("Replacing item in starter");
                 if(isItemWeapon(item.type))
@@ -120,7 +125,7 @@ public class InventoryManager : MonoBehaviour
     {
         int r = UnityEngine.Random.Range(0, allItemsInGame.Count);
         PlayerItemScriptable item = allItemsInGame[r];
-        //item.itemLevel = stageNumber;
+        item.itemLevel = stageNumber;
         return item;
     }
 }

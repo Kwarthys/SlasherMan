@@ -141,7 +141,7 @@ public class GameManager : MonoBehaviour
         inventoryDisplayer.refreshSlots();
         //Loot
         //Debug.Log("Generate a Loot");
-        inventoryDisplayer.generateALoot(stageNumber);
+        inventoryDisplayer.generateALoot(stageNumber++);
 
         playerController.canMove = false;
         attackManager.masterAttackBlock = true;

@@ -22,6 +22,9 @@ public abstract class Ability : MonoBehaviour
     public string abilityName;
     public int totalDamage = 0;
     public int totalKills = 0;
+    [Header("LevelEffects")]
+    public int level = 1;
+    public float levelDamageCoef = 1.10f;//10% more damage by level
     [Space]
     public float attackDelay = 0;
     private bool waitingDelay = false;
@@ -148,8 +151,10 @@ public abstract class Ability : MonoBehaviour
     {
         if (target != null)
         {
-            totalDamage += Mathf.Min(damageAmount, target.getCurrentLife());
-            target.takeDamage(damageAmount);
+            int finalDamage = (int)(damageAmount * Mathf.Pow(levelDamageCoef, level-1));
+
+            totalDamage += Mathf.Min(finalDamage, target.getCurrentLife());
+            target.takeDamage(finalDamage);
             if (target.getCurrentLife() <= 0)
             {
                 totalKills++;

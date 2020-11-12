@@ -71,6 +71,7 @@ public class AttackManager : MonoBehaviour
     public void updateAbility(PlayerItemScriptable abilityItem)
     {
         Ability a = abilityItem.instanciatedObject.GetComponent<Ability>();
+        a.level = abilityItem.itemLevel;
 
         //Debug.log
         if(abilityItem.type == ItemType.Attack)

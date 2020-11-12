@@ -5,6 +5,7 @@ using UnityEngine;
 public class FireBallController : MonoBehaviour
 {
     public FireBallAttack initiator;
+    public GameObject fireBallExplosion;
     public AnimationCurve damageOverDistance;
     public float maxDistance = 1.5f;
     public float speed = 150;
@@ -37,6 +38,7 @@ public class FireBallController : MonoBehaviour
 
         //spawnAnimation
         //BOOM
+        Instantiate(fireBallExplosion, transform.position, Quaternion.identity);
 
         Destroy(gameObject);
     }
