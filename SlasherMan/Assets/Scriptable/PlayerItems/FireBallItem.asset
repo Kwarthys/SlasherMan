@@ -17,3 +17,4 @@ MonoBehaviour:
   type: 0
   prefab: {fileID: 7152651473575963022, guid: a88e519f1f0ab32438f083f1380a3671, type: 3}
   instanciatedObject: {fileID: 0}
+  itemName: Fireball Item

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ItemType { attack, support, special, body, foot}
+public enum ItemType { Attack, Support, Special, Crown, Foot, Body}
 
 [CreateAssetMenu(fileName = "PlayerItem", menuName = "PlayerItem")]
 public class PlayerItemScriptable : ScriptableObject
@@ -12,4 +12,8 @@ public class PlayerItemScriptable : ScriptableObject
     public ItemType type;
     public GameObject prefab;
     public GameObject instanciatedObject = null;
+
+    public string itemName =  "Item";
+
+    public int itemLevel = 1;
 }

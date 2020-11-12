@@ -152,7 +152,7 @@ MonoBehaviour:
     m_Bits: 512
   friendAvoidDistance: 3
   monsterKillScore: 1
-  seeDistance: 40
+  seeDistance: 80
 --- !u!195 &3591091783852753974
 NavMeshAgent:
   m_ObjectHideFlags: 0

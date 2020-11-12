@@ -5,7 +5,6 @@ using UnityEngine;
 public class FireBallController : MonoBehaviour
 {
     public FireBallAttack initiator;
-    public AttackManager manager;
     public AnimationCurve damageOverDistance;
     public float maxDistance = 1.5f;
     public float speed = 150;
@@ -44,17 +43,29 @@ public class FireBallController : MonoBehaviour
 
     private void explode()
     {
+        bool hit = false;
+
         foreach(Collider other in Physics.OverlapSphere(transform.position, maxDistance))
         {
             Debug.DrawRay(other.transform.position, Vector3.up * 5, Color.red, 50);
-            if(!other.isTrigger)
+            if(!other.isTrigger && other.transform.tag != "Player")
             {
+                //Debug.Log(other.tag);
                 float realDistance = Vector3.Distance(transform.position, other.transform.position);
                 float distanceCoef = damageOverDistance.Evaluate(realDistance / maxDistance / 2);
                 int damageDone = (int)(initiator.damage * distanceCoef);
                 //Debug.Log("Did " + damageDone + "(" + distanceCoef + ") damage to " + other.transform.name + " at " + realDistance);
-                initiator.dealDamage(other.GetComponentInParent<LivingThing>(), damageDone);
+                if(initiator.dealDamage(other.GetComponentInParent<LivingThing>(), damageDone))
+                {
+                    hit = true;
+                }
+
             }
+        }
+
+        if(hit)
+        {
+            initiator.registerAddCharge();
         }
     }
 

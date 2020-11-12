@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ItemSpawnerManager : MonoBehaviour
+public class FurnitureSpawnerManager : MonoBehaviour
 {
     public List<SceneItemMeta> objects = new List<SceneItemMeta>();
 

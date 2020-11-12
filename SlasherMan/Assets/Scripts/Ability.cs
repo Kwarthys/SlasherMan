@@ -23,7 +23,6 @@ public abstract class Ability : MonoBehaviour
     public int totalDamage = 0;
     public int totalKills = 0;
     [Space]
-    public bool allowed = true;
     public float attackDelay = 0;
     private bool waitingDelay = false;
 
@@ -94,7 +93,9 @@ public abstract class Ability : MonoBehaviour
 
     protected virtual void onStart() { }
 
-    protected virtual void registerToManager() { }
+    protected abstract void registerToManager();
+
+    public void registerAddCharge() { manager.registerAddCharge(); }
 
     protected abstract void cast();
 
@@ -104,7 +105,8 @@ public abstract class Ability : MonoBehaviour
 
     public bool canBeCasted()
     {
-        return allowed && (Time.realtimeSinceStartup - lastCast > internalCD) && !manager.isAttackBlocked() && chargeAmount >= chargeCost;
+        if (manager == null) return false;//happens before the "start" of the new abilities
+        return (Time.realtimeSinceStartup - lastCast > internalCD) && !manager.isAttackBlocked() && chargeAmount >= chargeCost;
     }
 
     protected void registerCast()
@@ -142,7 +144,7 @@ public abstract class Ability : MonoBehaviour
         return MyInputManager.Instance.tryGetAimDirection(out target);
     }
 
-    public void dealDamage(LivingThing target, int damageAmount)
+    public bool dealDamage(LivingThing target, int damageAmount)
     {
         if (target != null)
         {
@@ -153,6 +155,8 @@ public abstract class Ability : MonoBehaviour
                 totalKills++;
             }
         }
+
+        return target != null;
     }
 
     public void dealDamage(LivingThing target)

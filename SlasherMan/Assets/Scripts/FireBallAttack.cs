@@ -18,12 +18,18 @@ public class FireBallAttack : Ability
         steerToAim();//do better
 
         FireBallController f = Instantiate(fireballPrefab, transform.position + transform.forward, transform.rotation).GetComponent<FireBallController>();
-        f.manager = manager;
         f.initiator = this;
+
+        manager.releaseAttackBlock();
     }
 
     protected override bool inputPressed()
     {
         return MyInputManager.Instance.attackKeyPressed();
+    }
+
+    protected override void registerToManager()
+    {
+        manager.registerAttack();
     }
 }

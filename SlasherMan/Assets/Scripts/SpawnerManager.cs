@@ -29,6 +29,7 @@ public class SpawnerManager : MonoBehaviour
     public int maxMonsterCount = 150;
 
     public bool wavesEnded = false;
+    private bool waitingLoot = false;
 
     public GameManager manager;
 
@@ -52,6 +53,7 @@ public class SpawnerManager : MonoBehaviour
 
         waveCount = 0;
         wavesEnded = false;
+        waitingLoot = false;
     }
 
     public void reinit()
@@ -68,7 +70,11 @@ public class SpawnerManager : MonoBehaviour
         {
             if (transform.childCount == 0)
             {
-                manager.notifyLastMonsterKill();
+                if(!waitingLoot)
+                {
+                    manager.notifyLastMonsterKill();
+                    waitingLoot = true;
+                }
             }
         }
         else

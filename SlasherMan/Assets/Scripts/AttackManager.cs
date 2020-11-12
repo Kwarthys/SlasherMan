@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class AttackManager : MonoBehaviour
 {
-    private Ability support;
-    private Ability attack;
-    private Ability special;
+    private Ability support = null;
+    private Ability attack = null;
+    private Ability special = null;
 
     [Header("UILinks")]
     public Image supportImage;
@@ -20,8 +20,11 @@ public class AttackManager : MonoBehaviour
     public List<Animator> supportTokenAnimators = new List<Animator>();
     public List<Animator> specialTokenAnimators = new List<Animator>();
 
-    private bool attackBlock = false;
-    public bool isAttackBlocked() { return attackBlock; }
+    public bool masterAttackBlock = false; //used by managers
+
+    [SerializeField]
+    private bool attackBlock = false; //used by abilities
+    public bool isAttackBlocked() { return attackBlock || masterAttackBlock; }
 
     public Ability[] getAbilities()
     {
@@ -45,9 +48,6 @@ public class AttackManager : MonoBehaviour
         //DashImage.color = Color.red;
         //SlashImage.color = Color.white;
 
-        support.allowed = false;
-        special.allowed = false;
-
         attackBlock = false;
 
         foreach (Animator a in supportTokenAnimators)
@@ -59,6 +59,13 @@ public class AttackManager : MonoBehaviour
         {
             a.SetTrigger("Fade");
         }
+
+        attack.chargeAmount = 0;
+
+        if(support != null)
+            support.chargeAmount = 0;
+        if(special != null)
+            special.chargeAmount = 0;
     }
 
     public void updateAbility(PlayerItemScriptable abilityItem)
@@ -66,15 +73,15 @@ public class AttackManager : MonoBehaviour
         Ability a = abilityItem.instanciatedObject.GetComponent<Ability>();
 
         //Debug.log
-        if(abilityItem.type == ItemType.attack)
+        if(abilityItem.type == ItemType.Attack)
         {
             attack = a;
         }
-        else if(abilityItem.type == ItemType.support)
+        else if(abilityItem.type == ItemType.Support)
         {
             support = a;
         }
-        else if(abilityItem.type == ItemType.special)
+        else if(abilityItem.type == ItemType.Special)
         {
             special = a;
         }
@@ -88,8 +95,7 @@ public class AttackManager : MonoBehaviour
     {
         PlayerItemScriptable item;
 
-        //BlazeImage.color = colorFor(blaze.canBeUsed());
-        if (inventoryManager.tryGetItemInSlot(ItemType.special, out item))
+        if (inventoryManager.tryGetItemInSlot(ItemType.Special, out item))
         {
             Sprite specialSprite = item.itemSpriteON;
             if (!special.canBeCasted() || attackBlock)
@@ -99,7 +105,7 @@ public class AttackManager : MonoBehaviour
             specialImage.sprite = specialSprite;
         }
 
-        if (inventoryManager.tryGetItemInSlot(ItemType.support, out item))
+        if (inventoryManager.tryGetItemInSlot(ItemType.Support, out item))
         {
             Sprite supportSprite = item.itemSpriteON;
             if (!support.canBeCasted() || attackBlock)
@@ -109,14 +115,14 @@ public class AttackManager : MonoBehaviour
             supportImage.sprite = supportSprite;
         }
 
-        if (inventoryManager.tryGetItemInSlot(ItemType.attack, out item))
+        if (inventoryManager.tryGetItemInSlot(ItemType.Attack, out item))
         {
             Sprite attackSprite = item.itemSpriteON;
             if (!attack.canBeCasted() || attackBlock)
             {
                 attackSprite = item.itemSpriteOFF;
             }
-            this.attackImage.sprite = attackSprite;
+            attackImage.sprite = attackSprite;
         }
         //i am convinced there is a better way to do this, but still dunno how, will figure out later
     }
@@ -135,7 +141,7 @@ public class AttackManager : MonoBehaviour
 
         for(int i = oldAmount - 1; i >= special.chargeAmount; i--)
         {
-            specialTokenAnimators[i].SetTrigger("fade");
+            specialTokenAnimators[i].SetTrigger("Fade");
         }
     }
 
@@ -157,7 +163,7 @@ public class AttackManager : MonoBehaviour
 
         for (int i = oldAmount - 1; i >= support.chargeAmount; i--)
         {
-             supportTokenAnimators[i].SetTrigger("fade");
+             supportTokenAnimators[i].SetTrigger("Fade");
         }    
     }
 
@@ -166,22 +172,53 @@ public class AttackManager : MonoBehaviour
         attackBlock = false;
     }
 
+    public void registerAddCharge()
+    {
+        if (support != null)
+        {
+            if (support.chargeAmount < support.chargeCapacity)
+            {
+                supportTokenAnimators[support.chargeAmount].gameObject.SetActive(true);
+                supportTokenAnimators[support.chargeAmount].SetTrigger("Pop");
+                support.addCharge();
+            }
+        }
+
+        if (special != null)
+        {
+            if (special.chargeAmount < special.chargeCost)
+            {
+                specialTokenAnimators[special.chargeAmount].gameObject.SetActive(true);
+                specialTokenAnimators[special.chargeAmount].SetTrigger("Pop");
+                special.addCharge();
+            }
+        }
+    }
+
     public void registerAttack()
     {
         attackBlock = true;
 
-        if (support.chargeAmount < support.chargeCapacity)
+        /*
+        if(support != null)
         {
-            supportTokenAnimators[support.chargeAmount].gameObject.SetActive(true);
-            supportTokenAnimators[support.chargeAmount].SetTrigger("Pop");
-            support.addCharge();
+            if (support.chargeAmount < support.chargeCapacity)
+            {
+                supportTokenAnimators[support.chargeAmount].gameObject.SetActive(true);
+                supportTokenAnimators[support.chargeAmount].SetTrigger("Pop");
+                support.addCharge();
+            }
         }
 
-        if (special.chargeAmount < special.chargeCost)
+        if(special != null)
         {
-            specialTokenAnimators[special.chargeAmount].gameObject.SetActive(true);
-            specialTokenAnimators[special.chargeAmount].SetTrigger("Pop");
-            special.chargeAmount++;
+            if (special.chargeAmount < special.chargeCost)
+            {
+                specialTokenAnimators[special.chargeAmount].gameObject.SetActive(true);
+                specialTokenAnimators[special.chargeAmount].SetTrigger("Pop");
+                special.chargeAmount++;
+            }
         }
+        */
     }   
 }

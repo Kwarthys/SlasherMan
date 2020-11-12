@@ -17,3 +17,5 @@ MonoBehaviour:
   type: 2
   prefab: {fileID: 6068856570968395015, guid: d3acf0d45385d7e4592d3d20738750ac, type: 3}
   instanciatedObject: {fileID: 0}
+  itemName: Blaze Item
+  itemLevel: 1

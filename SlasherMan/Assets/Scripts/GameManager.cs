@@ -25,25 +25,32 @@ public class GameManager : MonoBehaviour
     public float minDefeatTextSize = 30;
     public float maxDefeatTextSize = 70;
 
+    [Header("EndOfLevel")]
+    public int stageNumber = 1;
+    public GameObject levelEndScreen;
+    public InventoryDisplayer inventoryDisplayer;
+    public InventoryManager inventoryManager;
+
     [Header("RestartTheGame")]
     public SpawnerManager spawnManager;
     public AttackManager attackManager;
     public ScoreManager scoreManager;
     public PlayerHealth playerHealth;
     public PlayerController playerController;
-    public ItemSpawnerManager itemManager;
+    public FurnitureSpawnerManager furnitureManager;
 
     private void Start()
     {
         spawnManager.gameObject.SetActive(false);
-        itemManager.gameObject.SetActive(false);
+        furnitureManager.gameObject.SetActive(false);
         loreScreen.SetActive(true);
+        stageNumber = 1;
     }
 
     public void startGame()
     {
         spawnManager.gameObject.SetActive(true);
-        itemManager.gameObject.SetActive(true);
+        furnitureManager.gameObject.SetActive(true);
         retryClick();
     }
 
@@ -52,12 +59,15 @@ public class GameManager : MonoBehaviour
         endScreenBackGound.color = new Color(endScreenBackGound.color.r, endScreenBackGound.color.g, endScreenBackGound.color.b, 0);
         defeatText.fontSize = minDefeatTextSize;
         endScreen.SetActive(false);
+        levelEndScreen.SetActive(false);
         playerDead = false;
 
         foreach(Transform child in abilityStatsContainer.transform)
         {
             Destroy(child.gameObject);
         }
+
+        attackManager.masterAttackBlock = false;
     }
 
     public void notifyPlayerDead()
@@ -69,7 +79,7 @@ public class GameManager : MonoBehaviour
             playerDead = true;
             buildAbilitiesStats();
             playerController.canMove = false;
-            attackManager.preventAttack();
+            attackManager.masterAttackBlock = true;
         }
     }
 
@@ -110,18 +120,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void notifyLastMonsterKill()
+    public void startNextStage()
     {
-        //GG
-
-        //Loot
-
         //Start new level
+        inventoryDisplayer.removeLootIfLeft();
         attackManager.init();
         spawnManager.resetForNext();
-        itemManager.reinit();
+        furnitureManager.reinit();
         playerHealth.init();
         initialise();
+
+        playerController.canMove = true;
+    }
+
+    public void notifyLastMonsterKill()
+    {
+        if (playerDead) return;
+        //GG
+        levelEndScreen.SetActive(true);
+        inventoryDisplayer.refreshSlots();
+        //Loot
+        //Debug.Log("Generate a Loot");
+        inventoryDisplayer.generateALoot(stageNumber);
+
+        playerController.canMove = false;
+        attackManager.masterAttackBlock = true;
     }
 
     public void retryClick()
@@ -129,14 +152,17 @@ public class GameManager : MonoBehaviour
         //Debug.Log("retry");
         foreach (Ability a in attackManager.getAbilities())
         {
-            a.totalDamage = 0;
-            a.totalKills = 0;
+            if(a!=null)
+            {
+                a.totalDamage = 0;
+                a.totalKills = 0;
+            }
         }
 
         attackManager.init();
         spawnManager.reinit();
         scoreManager.reinit();
-        itemManager.reinit();
+        furnitureManager.reinit();
         playerHealth.init();
         playerController.canMove = true;
 

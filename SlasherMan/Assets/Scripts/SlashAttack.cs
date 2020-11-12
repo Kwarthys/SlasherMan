@@ -39,7 +39,7 @@ public class SlashAttack : Ability
 
                 if (targetHit)
                 {
-                    manager.registerAttack();
+                    registerAddCharge();
                     targetHit = false;
 
                     //startSoundEffect();
@@ -84,5 +84,10 @@ public class SlashAttack : Ability
     protected override bool inputPressed()
     {
         return MyInputManager.Instance.attackKeyPressed();
+    }
+
+    protected override void registerToManager()
+    {
+        manager.registerAttack();
     }
 }

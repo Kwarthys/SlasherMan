@@ -17,3 +17,5 @@ MonoBehaviour:
   type: 1
   prefab: {fileID: 5184344631776020869, guid: eaa649f19f1ad0e4cb833852381db10b, type: 3}
   instanciatedObject: {fileID: 0}
+  itemName: Dash Item
+  itemLevel: 1
