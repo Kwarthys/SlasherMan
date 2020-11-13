@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 1;
 
+    public float bonusSpeedCoef = 1;
+
     private float threshold = 0.15f;
 
     private Rigidbody rbody;
@@ -46,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
             if (!centerObstacle)
             {
-                transform.position += movement * speed * Time.deltaTime;
+                transform.position += movement * speed * bonusSpeedCoef * Time.deltaTime;
             }
 
         }

@@ -18,6 +18,21 @@ public class LivingThing : MonoBehaviour
     [SerializeField]
     protected int life;
 
+    [Header("Effects")]
+    public int bonusArmor = 0;
+
+    public void changeBonusLife(int amount)
+    {
+        maxLife += amount;
+
+        if(amount > 0)
+        {
+            life += amount;
+        }
+
+        life = Mathf.Min(maxLife, life);
+    }
+
     public int getCurrentLife() { return life; }
 
     private void Start()
@@ -34,7 +49,7 @@ public class LivingThing : MonoBehaviour
 
     public void takeDamage(int amount)
     {
-        life -= amount;
+        life -= Mathf.Max(1,amount + bonusArmor); //can't take less than 1 damage
 
         if (onDamageClips.Count > 0 && audioManager != null && Time.realtimeSinceStartup - lastOnDamage > cooldown)
         {

@@ -51,6 +51,11 @@ public abstract class Ability : MonoBehaviour
 
     protected bool inUse = false;
 
+    public void shakeCamera()
+    {
+        camShaker.shakeCamera(shakeDuration, shakeMagnitude);
+    }
+
     private void Start()
     {
         controller = GetComponentInParent<PlayerController>();
@@ -151,7 +156,7 @@ public abstract class Ability : MonoBehaviour
     {
         if (target != null)
         {
-            int finalDamage = (int)(damageAmount * Mathf.Pow(levelDamageCoef, level-1));
+            int finalDamage = (int)(damageAmount * Mathf.Pow(levelDamageCoef, level-1) * manager.bonusDamageCoef) + manager.bonusDamage;
 
             totalDamage += Mathf.Min(finalDamage, target.getCurrentLife());
             target.takeDamage(finalDamage);

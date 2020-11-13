@@ -10,7 +10,7 @@ public class ItemLootBehaviour : MonoBehaviour, IDragHandler, IBeginDragHandler,
 
     private Vector2 initPos;
 
-    public PlayerItemScriptable associatedItem;// { get; private set; }
+    public PlayerItem associatedItem { get; private set; }
 
     public InventoryDisplayer inventoryDisplayer;
 

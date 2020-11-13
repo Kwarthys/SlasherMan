@@ -6,7 +6,7 @@ using TMPro;
 
 public class PlayerItemDisplayer : MonoBehaviour
 {
-    public PlayerItemScriptable item;
+    public PlayerItem item;
     public TextMeshProUGUI itemNameText;
 
     public bool isSpecific = false;
@@ -14,7 +14,7 @@ public class PlayerItemDisplayer : MonoBehaviour
 
     private Image image;
 
-    public bool setItem(PlayerItemScriptable item)
+    public bool setItem(PlayerItem item)
     {
         if(isSpecific && item!=null)
         {
@@ -53,8 +53,20 @@ public class PlayerItemDisplayer : MonoBehaviour
         else
         {
             image.color = new Color(1, 1, 1);
-            image.sprite = item.itemSpriteON;
-            itemNameText.text = item.itemName + " (" + item.itemLevel + ")";
+            image.sprite = item.baseScriptable.itemSpriteON;
+            itemNameText.text = item.baseScriptable.itemBaseName;
+
+            if(item.getModifiers().Count > 0)
+            {
+                itemNameText.text += item.getModifiers()[0].modifierItemName;
+            }
+
+            itemNameText.text += " (" + item.itemLevel + ")<size=75%> ";
+
+            foreach (ItemModifierEffect modifier in item.getModifiers())
+            {
+                itemNameText.text += "\n" + modifier.finalAmount + " " + modifier.modifierEffect;
+            }
         }
     }
 

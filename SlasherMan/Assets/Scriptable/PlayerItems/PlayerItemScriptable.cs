@@ -11,9 +11,6 @@ public class PlayerItemScriptable : ScriptableObject
     public Sprite itemSpriteOFF;
     public ItemType type;
     public GameObject prefab;
-    public GameObject instanciatedObject = null;
 
-    public string itemName =  "Item";
-
-    public int itemLevel = 1;
+    public string itemBaseName =  "Item";
 }

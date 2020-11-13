@@ -45,6 +45,8 @@ public class FireBallController : MonoBehaviour
 
     private void explode()
     {
+        initiator.shakeCamera();
+
         bool hit = false;
 
         foreach(Collider other in Physics.OverlapSphere(transform.position, maxDistance))

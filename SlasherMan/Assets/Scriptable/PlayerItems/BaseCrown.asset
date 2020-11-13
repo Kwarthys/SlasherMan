@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9294ae8bc4e86c44bf23b0c57299991, type: 3}
-  m_Name: BlazeItem
+  m_Name: BaseCrown
   m_EditorClassIdentifier: 
-  itemSpriteON: {fileID: 21300000, guid: 85f48814f2f68494ea9015ef868b195a, type: 3}
-  itemSpriteOFF: {fileID: 21300000, guid: a8a18b226cbcbc640abdf50e42b322ce, type: 3}
-  type: 2
-  prefab: {fileID: 6068856570968395015, guid: d3acf0d45385d7e4592d3d20738750ac, type: 3}
-  itemBaseName: Blaze Ring
+  itemSpriteON: {fileID: 21300000, guid: b09539a785c3f00449ad39b3f4fb7393, type: 3}
+  itemSpriteOFF: {fileID: 0}
+  type: 3
+  prefab: {fileID: 0}
+  itemBaseName: Crown

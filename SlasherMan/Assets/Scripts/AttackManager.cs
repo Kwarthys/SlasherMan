@@ -15,6 +15,10 @@ public class AttackManager : MonoBehaviour
     public Image specialImage;
     public Image attackImage;
 
+    [Space]
+    public int bonusDamage = 0;
+    public float bonusDamageCoef = 1;
+
     public InventoryManager inventoryManager;
 
     public List<Animator> supportTokenAnimators = new List<Animator>();
@@ -68,9 +72,9 @@ public class AttackManager : MonoBehaviour
             special.chargeAmount = 0;
     }
 
-    public void updateAbility(PlayerItemScriptable abilityItem)
+    public void updateAbility(PlayerItem abilityItem)
     {
-        Ability a = abilityItem.instanciatedObject.GetComponent<Ability>();
+        Ability a = abilityItem.instanciatedEffector.GetComponent<Ability>();
         a.level = abilityItem.itemLevel;
 
         //Debug.log
@@ -94,34 +98,34 @@ public class AttackManager : MonoBehaviour
 
     private void updateButtons()
     {
-        PlayerItemScriptable item;
+        PlayerItem item;
 
         if (inventoryManager.tryGetItemInSlot(ItemType.Special, out item))
         {
-            Sprite specialSprite = item.itemSpriteON;
+            Sprite specialSprite = item.baseScriptable.itemSpriteON;
             if (!special.canBeCasted() || attackBlock)
             {
-                specialSprite = item.itemSpriteOFF;
+                specialSprite = item.baseScriptable.itemSpriteOFF;
             }
             specialImage.sprite = specialSprite;
         }
 
         if (inventoryManager.tryGetItemInSlot(ItemType.Support, out item))
         {
-            Sprite supportSprite = item.itemSpriteON;
+            Sprite supportSprite = item.baseScriptable.itemSpriteON;
             if (!support.canBeCasted() || attackBlock)
             {
-                supportSprite = item.itemSpriteOFF;
+                supportSprite = item.baseScriptable.itemSpriteOFF;
             }
             supportImage.sprite = supportSprite;
         }
 
         if (inventoryManager.tryGetItemInSlot(ItemType.Attack, out item))
         {
-            Sprite attackSprite = item.itemSpriteON;
+            Sprite attackSprite = item.baseScriptable.itemSpriteON;
             if (!attack.canBeCasted() || attackBlock)
             {
-                attackSprite = item.itemSpriteOFF;
+                attackSprite = item.baseScriptable.itemSpriteOFF;
             }
             attackImage.sprite = attackSprite;
         }

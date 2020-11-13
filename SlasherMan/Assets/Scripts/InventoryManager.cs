@@ -4,13 +4,57 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+public class PlayerItem
+{
+    public PlayerItemScriptable baseScriptable;
+    public int itemLevel = 1;
+    public ItemType type;
+    public GameObject instanciatedEffector = null;
+
+    private List<ItemModifierEffect> modifiers = new List<ItemModifierEffect>();
+
+    public PlayerItem(PlayerItemScriptable baseItem, int level = 1)
+    {
+        baseScriptable = baseItem;
+        itemLevel = level;
+        type = baseItem.type;
+    }
+
+    public List<ItemModifierEffect> getModifiers() { return modifiers; }
+
+    public void addModifier(ItemModifierEffect modifier)
+    {
+        ItemModifierEffect same = null;
+        bool found = false;
+        for(int i = 0; i < modifiers.Count && !found; ++i)
+        {
+            if(modifiers[i].modifierType == modifier.modifierType)
+            {
+                found = true;
+                same = modifiers[i];
+            }
+        }
+
+        if(found)
+        {
+            same.finalAmount += modifier.finalAmount;
+        }
+        else
+        {
+            modifiers.Add(modifier);
+        }
+    }
+}
+
+
 public class InventoryManager : MonoBehaviour
 {
     public List<PlayerItemScriptable> starterItems = new List<PlayerItemScriptable>();
 
     public List<PlayerItemScriptable> allItemsInGame = new List<PlayerItemScriptable>();
 
-    public Dictionary<ItemType, PlayerItemScriptable> equippedItems = new Dictionary<ItemType, PlayerItemScriptable>();
+    public Dictionary<ItemType, PlayerItem> equippedItems = new Dictionary<ItemType, PlayerItem>();
 
     public Image attackImage;
     public Image supportImage;
@@ -19,39 +63,38 @@ public class InventoryManager : MonoBehaviour
     public Transform playerAbilityHolder;
 
     public AttackManager attackManager;
+    public PlayerController controller;
+    public PlayerHealth health;
 
     private void Awake()
     {
-        foreach (PlayerItemScriptable item in allItemsInGame)
-        {
-            item.itemLevel = 1;
-        }
-
         foreach (PlayerItemScriptable item in starterItems)
-            {
-                if (equippedItems.ContainsKey(item.type))
+        {
+            PlayerItem instanciatedObect = new PlayerItem(item);
+
+            if (equippedItems.ContainsKey(item.type))
             {
                 Debug.LogWarning("Replacing item in starter");
                 if(isItemWeapon(item.type))
                 {
-                    Destroy(equippedItems[item.type].instanciatedObject);
-                    equippedItems[item.type].instanciatedObject = null;
-                    equippedItems[item.type] = item;
-                    equippedItems[item.type].instanciatedObject = Instantiate(item.prefab, playerAbilityHolder);
-                    attackManager.updateAbility(item);
+                    Destroy(equippedItems[item.type].instanciatedEffector);
+                    equippedItems[item.type].instanciatedEffector = null;
+                    equippedItems[item.type] = instanciatedObect;
+                    equippedItems[item.type].instanciatedEffector = Instantiate(item.prefab, playerAbilityHolder);
+                    attackManager.updateAbility(instanciatedObect);
                 }
                 else
                 {
-                    equippedItems[item.type] = item;
+                    equippedItems[item.type] = instanciatedObect;
                 }
             }
             else
             {
-                equippedItems.Add(item.type, item);
+                equippedItems.Add(item.type, instanciatedObect);
                 if (isItemWeapon(item.type))
                 {
-                    item.instanciatedObject = Instantiate(item.prefab, playerAbilityHolder);
-                    attackManager.updateAbility(item);
+                    instanciatedObect.instanciatedEffector = Instantiate(item.prefab, playerAbilityHolder);
+                    attackManager.updateAbility(instanciatedObect);
                 }
             }
         }
@@ -64,22 +107,32 @@ public class InventoryManager : MonoBehaviour
         return type == ItemType.Attack || type == ItemType.Support || type == ItemType.Special;
     }
 
-    public void replaceItem(PlayerItemScriptable newItem)
+    public void replaceItem(PlayerItem newItem)
     {
-        if (isItemWeapon(newItem.type))
+        if(equippedItems.ContainsKey(newItem.type))
         {
-            if(equippedItems.ContainsKey(newItem.type))
+            foreach(ItemModifierEffect effect in equippedItems[newItem.type].getModifiers())
             {
-                Destroy(equippedItems[newItem.type].instanciatedObject);
-                equippedItems[newItem.type].instanciatedObject = null;
+                effect.removeEffects(controller, health, attackManager);
+            }
+
+            if (isItemWeapon(newItem.type))
+            {
+                Destroy(equippedItems[newItem.type].instanciatedEffector);
+                equippedItems[newItem.type].instanciatedEffector = null;
             }
         }
 
         equippedItems[newItem.type] = newItem;
 
-        if(isItemWeapon(newItem.type))
+        foreach (ItemModifierEffect effect in equippedItems[newItem.type].getModifiers())
         {
-            equippedItems[newItem.type].instanciatedObject = Instantiate(newItem.prefab, playerAbilityHolder);
+            effect.applyEffects(controller, health, attackManager);
+        }
+
+        if (isItemWeapon(newItem.type))
+        {
+            equippedItems[newItem.type].instanciatedEffector = Instantiate(newItem.baseScriptable.prefab, playerAbilityHolder);
             attackManager.updateAbility(newItem);
             updateUI();
         }
@@ -92,7 +145,7 @@ public class InventoryManager : MonoBehaviour
         updateUIFor(ItemType.Special, specialImage);
     }
 
-    public bool tryGetItemInSlot(ItemType slot, out PlayerItemScriptable item)
+    public bool tryGetItemInSlot(ItemType slot, out PlayerItem item)
     {
         item = null;
 
@@ -110,9 +163,9 @@ public class InventoryManager : MonoBehaviour
 
     private void updateUIFor(ItemType slot, Image image)
     {
-        if (tryGetItemInSlot(slot, out PlayerItemScriptable item))
+        if (tryGetItemInSlot(slot, out PlayerItem item))
         {
-            image.sprite = item.itemSpriteON;
+            image.sprite = item.baseScriptable.itemSpriteON;
         }
         else
         {
@@ -120,12 +173,18 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-
-    public PlayerItemScriptable getRandomItem(int stageNumber)
+    public PlayerItem getRandomItem(int stageNumber)
     {
         int r = UnityEngine.Random.Range(0, allItemsInGame.Count);
-        PlayerItemScriptable item = allItemsInGame[r];
-        item.itemLevel = stageNumber;
+        PlayerItem item = new PlayerItem(allItemsInGame[r], stageNumber);
+
+        int modifCap = UnityEngine.Random.Range(1, Mathf.Min(4, stageNumber));
+
+        for(int i = 0; i < modifCap; ++i)
+        {
+            item.addModifier(ItemModifierEffect.getRandomModifierOfLevel(stageNumber - i));
+        }
+
         return item;
     }
 }

@@ -19,7 +19,7 @@ public class InventoryDisplayer : MonoBehaviour
     {
         foreach (InventorySlotBehaviour slot in slots)
         {
-            inventoryManager.tryGetItemInSlot(slot.associatedDisplay.specificType, out PlayerItemScriptable item);
+            inventoryManager.tryGetItemInSlot(slot.associatedDisplay.specificType, out PlayerItem item);
             slot.associatedDisplay.setItem(item);
         }
     }
@@ -45,7 +45,7 @@ public class InventoryDisplayer : MonoBehaviour
 
     public void generateALoot(int stageNumber)
     {
-        PlayerItemScriptable lootItem = inventoryManager.getRandomItem(stageNumber);
+        PlayerItem lootItem = inventoryManager.getRandomItem(stageNumber);
         ItemLootBehaviour lootBehaviour = Instantiate(lootPrefab, lootHolder).GetComponent<ItemLootBehaviour>();
         PlayerItemDisplayer displayer = lootBehaviour.GetComponent<PlayerItemDisplayer>();
         displayer.setItem(lootItem);

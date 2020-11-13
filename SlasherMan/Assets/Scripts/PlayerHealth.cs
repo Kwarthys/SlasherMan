@@ -22,6 +22,7 @@ public class PlayerHealth : LivingThing
     private float opacity = 0;
     private Color color = Color.white;
 
+
     protected override void onUpdate()
     {
         if(opacity > 0)
