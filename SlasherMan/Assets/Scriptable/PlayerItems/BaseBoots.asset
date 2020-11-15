@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9294ae8bc4e86c44bf23b0c57299991, type: 3}
   m_Name: BaseBoots
   m_EditorClassIdentifier: 
-  itemSpriteON: {fileID: 21300000, guid: aac701d320c9aad4ab1da7176d12b45b, type: 3}
+  itemSpriteON: {fileID: 21300000, guid: 91c94e5d8cf85954fbc63f28e982db96, type: 3}
   itemSpriteOFF: {fileID: 0}
   type: 4
   prefab: {fileID: 0}

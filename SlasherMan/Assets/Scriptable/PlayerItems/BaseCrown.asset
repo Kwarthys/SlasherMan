@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9294ae8bc4e86c44bf23b0c57299991, type: 3}
   m_Name: BaseCrown
   m_EditorClassIdentifier: 
-  itemSpriteON: {fileID: 21300000, guid: b09539a785c3f00449ad39b3f4fb7393, type: 3}
+  itemSpriteON: {fileID: 21300000, guid: 3650995046218f341b04e6b30388512a, type: 3}
   itemSpriteOFF: {fileID: 0}
   type: 3
   prefab: {fileID: 0}

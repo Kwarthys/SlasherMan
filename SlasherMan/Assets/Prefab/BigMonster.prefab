@@ -212,6 +212,7 @@ GameObject:
   - component: {fileID: 8800394191712460217}
   - component: {fileID: 1676399379}
   - component: {fileID: 8800394191712460216}
+  - component: {fileID: 6207474463244478459}
   m_Layer: 9
   m_Name: BigMonster
   m_TagString: Untagged
@@ -285,6 +286,7 @@ MonoBehaviour:
   clipsVolume: 1
   cooldown: 2.1
   life: 0
+  bonusArmor: 0
   speed: 5
   rotSpeed: 5
   monsterLayer:
@@ -292,6 +294,7 @@ MonoBehaviour:
     m_Bits: 512
   friendAvoidDistance: 8
   monsterKillScore: 5
+  attackManager: {fileID: 1676399379}
   seeDistance: 80
 --- !u!114 &1676399379
 MonoBehaviour:
@@ -327,6 +330,21 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &6207474463244478459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8800394191712460219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96fc87c4051384d459c1511df2430fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterRenderer: {fileID: 2793402113675359906}
+  deathMaterial: {fileID: 2100000, guid: b8dba73a18df1844c8ed06cb8bb54e5c, type: 2}
+  animDuration: 0.5
 --- !u!1001 &6964925080862997252
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -421,5 +439,10 @@ Transform:
 --- !u!1 &6935840739393777000 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 65702495048144492, guid: 6b43d29e5fdf62b40b020af54656c976, type: 3}
+  m_PrefabInstance: {fileID: 6964925080862997252}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &2793402113675359906 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5074512353664290214, guid: 6b43d29e5fdf62b40b020af54656c976, type: 3}
   m_PrefabInstance: {fileID: 6964925080862997252}
   m_PrefabAsset: {fileID: 0}

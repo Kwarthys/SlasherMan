@@ -9,6 +9,9 @@ public class PlayerItemDisplayer : MonoBehaviour
     public PlayerItem item;
     public TextMeshProUGUI itemNameText;
 
+    public Sprite emptyRing;
+    public Sprite emptyEquip;
+
     public bool isSpecific = false;
     public ItemType specificType;
 
@@ -39,7 +42,16 @@ public class PlayerItemDisplayer : MonoBehaviour
 
         if (item == null)
         {
-            image.sprite = null;
+            image.sprite = emptyEquip;
+
+            if(isSpecific)
+            {
+                if(specificType == ItemType.Attack || specificType == ItemType.Support || specificType == ItemType.Special)
+                {
+                    image.sprite = emptyRing;
+                }
+            }
+
             image.color = new Color(1, 1, 1, 0.1f);
             if(isSpecific)
             {
@@ -52,7 +64,7 @@ public class PlayerItemDisplayer : MonoBehaviour
         }
         else
         {
-            image.color = new Color(1, 1, 1);
+            image.color = Color.white;
             image.sprite = item.baseScriptable.itemSpriteON;
             itemNameText.text = item.baseScriptable.itemBaseName;
 

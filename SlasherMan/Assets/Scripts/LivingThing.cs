@@ -21,6 +21,8 @@ public class LivingThing : MonoBehaviour
     [Header("Effects")]
     public int bonusArmor = 0;
 
+    private bool dead = false;
+
     public void changeBonusLife(int amount)
     {
         maxLife += amount;
@@ -63,8 +65,9 @@ public class LivingThing : MonoBehaviour
 
     private void Update()
     {
-        if (life <= 0)
+        if (life <= 0 && !dead)
         {
+            dead = true;
             onDeath();
         }
 

@@ -26,7 +26,11 @@ public class Monster : LivingThing
 
     private Transform closestAlly;
 
+    public MonsterAttackManager attackManager;
+
     public float seeDistance = 15;
+
+    private MonsterDeathAnimationManager deathAnimationManager;
 
     public void setAllowMovement(bool state)
     {
@@ -42,6 +46,8 @@ public class Monster : LivingThing
         agent = GetComponent<NavMeshAgent>();
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        deathAnimationManager = GetComponent<MonsterDeathAnimationManager>();
     }
 
     private void FixedUpdate()
@@ -96,14 +102,19 @@ public class Monster : LivingThing
 
     protected override void onDeath()
     {
+        scoreManager.notifyKill(monsterKillScore);
+        attackManager.enabled = false;
+        /*
         if (deathAnimation != null)
         {
             Instantiate(deathAnimation, transform.position, Quaternion.identity);
         }
 
         //ded
-        scoreManager.notifyKill(monsterKillScore);
-        Destroy(gameObject);        
+        //Destroy(gameObject);        
+        */
+
+        deathAnimationManager.startAnimation();
     }
 
     protected override void onTakeDamage()

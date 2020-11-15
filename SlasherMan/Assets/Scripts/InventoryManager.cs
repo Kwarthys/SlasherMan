@@ -66,6 +66,8 @@ public class InventoryManager : MonoBehaviour
     public PlayerController controller;
     public PlayerHealth health;
 
+    public Sprite emptySlot;
+
     private void Awake()
     {
         foreach (PlayerItemScriptable item in starterItems)
@@ -169,7 +171,7 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            image.sprite = null;
+            image.sprite = emptySlot;
         }
     }
 

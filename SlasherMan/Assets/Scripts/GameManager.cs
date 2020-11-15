@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public float maxDefeatTextSize = 70;
 
     [Header("EndOfLevel")]
+    public MusicManager musicManager;
     public int stageNumber = 1;
     public GameObject levelEndScreen;
     public InventoryDisplayer inventoryDisplayer;
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour
         furnitureManager.gameObject.SetActive(false);
         loreScreen.SetActive(true);
         stageNumber = 1;
+        musicManager.transiToMusic();
     }
 
     public void startGame()
@@ -130,6 +132,8 @@ public class GameManager : MonoBehaviour
         playerHealth.init();
         initialise();
 
+        musicManager.transiToMusic();
+
         playerController.canMove = true;
     }
 
@@ -145,6 +149,8 @@ public class GameManager : MonoBehaviour
 
         playerController.canMove = false;
         attackManager.masterAttackBlock = true;
+
+        musicManager.transiToBass();
     }
 
     public void retryClick()

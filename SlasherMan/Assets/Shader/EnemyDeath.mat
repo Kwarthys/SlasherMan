@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ExplosionMat
+  m_Name: EnemyDeath
   m_Shader: {fileID: -6465566751694194690, guid: 68af07ae9050c254f82cb8697cdac3fe, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -21,10 +21,9 @@ Material:
     m_TexEnvs: []
     m_Floats:
     - EdgeWIdth: 0.1
-    - NoiseResolution: 10
-    - Vector1_240D4F63: 0
+    - NoiseResolution: 50
     - _FadeAmount: 0
     m_Colors:
-    - BaseAlbedo: {r: 1, g: 0.9398438, b: 0, a: 0}
-    - EmissionColor: {r: 21.361254, g: 0.16517173, b: 0, a: 0}
+    - BaseAlbedo: {r: 1, g: 0, b: 0, a: 1}
+    - EmissionColor: {r: 64, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
