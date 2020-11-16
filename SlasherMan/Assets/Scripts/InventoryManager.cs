@@ -12,6 +12,10 @@ public class PlayerItem
     public ItemType type;
     public GameObject instanciatedEffector = null;
 
+    public static InventoryManager inventoryManager;
+
+    public int rarity = 0;
+
     private List<ItemModifierEffect> modifiers = new List<ItemModifierEffect>();
 
     public PlayerItem(PlayerItemScriptable baseItem, int level = 1)
@@ -45,6 +49,40 @@ public class PlayerItem
             modifiers.Add(modifier);
         }
     }
+
+    /*
+     * WHITE : 1 modifier 
+     * GREEN : 2 mod
+     * BLUE : 3 mod
+     * RED : 4 mod
+     * YELLOW : 4 upgraded mod
+    */
+    public static Color getItemColor(PlayerItem item)
+    {
+        Color c;
+        if(item.rarity <= 1)
+        {
+            c = inventoryManager.rarity1;
+        }
+        else if(item.rarity == 2)
+        {
+            c = inventoryManager.rarity2;
+        }
+        else if(item.rarity == 3)
+        {
+            c = inventoryManager.rarity3;
+        }
+        else if(item.rarity == 4)
+        {
+            c = inventoryManager.rarity4;
+        }
+        else
+        {
+            c = inventoryManager.rarity5;
+        }
+
+        return c;
+    }
 }
 
 
@@ -66,10 +104,20 @@ public class InventoryManager : MonoBehaviour
     public PlayerController controller;
     public PlayerHealth health;
 
+    [Header("ItemColors")]
+    public Color rarity1 = Color.white;
+    public Color rarity2 = Color.green;
+    public Color rarity3 = Color.blue;
+    public Color rarity4 = Color.red;
+    public Color rarity5 = Color.yellow;
+    [Space]
+
     public Sprite emptySlot;
 
     private void Awake()
     {
+        PlayerItem.inventoryManager = this;
+
         foreach (PlayerItemScriptable item in starterItems)
         {
             PlayerItem instanciatedObect = new PlayerItem(item);
@@ -182,9 +230,19 @@ public class InventoryManager : MonoBehaviour
 
         int modifCap = UnityEngine.Random.Range(1, Mathf.Min(4, stageNumber));
 
+        item.rarity = modifCap;
+
         for(int i = 0; i < modifCap; ++i)
         {
-            item.addModifier(ItemModifierEffect.getRandomModifierOfLevel(stageNumber - i));
+            int rarityModifier = 0;
+            if(UnityEngine.Random.value > 0.99)
+            {
+                Debug.Log("WAow +1");
+                rarityModifier = 1;
+                item.rarity += 1;
+            }
+
+            item.addModifier(ItemModifierEffect.getRandomModifierOfLevel(stageNumber - i + rarityModifier));
         }
 
         return item;

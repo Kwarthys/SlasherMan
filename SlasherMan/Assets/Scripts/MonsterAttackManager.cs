@@ -29,6 +29,12 @@ public class MonsterAttackManager : MonoBehaviour
         }
     }
 
+    public void deactivate()
+    {
+        ability.enabled = false;
+        this.enabled = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.isTrigger)

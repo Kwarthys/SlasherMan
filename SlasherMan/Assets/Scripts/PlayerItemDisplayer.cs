@@ -66,6 +66,7 @@ public class PlayerItemDisplayer : MonoBehaviour
         {
             image.color = Color.white;
             image.sprite = item.baseScriptable.itemSpriteON;
+            itemNameText.color = PlayerItem.getItemColor(item);
             itemNameText.text = item.baseScriptable.itemBaseName;
 
             if(item.getModifiers().Count > 0)

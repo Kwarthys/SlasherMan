@@ -6432,6 +6432,11 @@ MonoBehaviour:
   attackManager: {fileID: 403791607}
   controller: {fileID: 403791606}
   health: {fileID: 403791608}
+  rarity1: {r: 1, g: 1, b: 1, a: 1}
+  rarity2: {r: 0.1882353, g: 0.8784314, b: 0.1882353, a: 1}
+  rarity3: {r: 0, g: 0.3955245, b: 1, a: 1}
+  rarity4: {r: 1, g: 0, b: 0, a: 1}
+  rarity5: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   emptySlot: {fileID: 21300000, guid: 9d0c524eb9b3d4b458dbb0c7ab189dc4, type: 3}
 --- !u!1 &1687258581
 GameObject:

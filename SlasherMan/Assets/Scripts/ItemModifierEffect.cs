@@ -27,30 +27,29 @@ public abstract class ItemModifierEffect
 
     public static ItemModifierEffect getRandomModifierOfLevel(int level)
     {
-        if(Random.value > 0.95)
-        {
-            level++; //Rare quality item
-        }
-
         int rand = Random.Range(0, 100);
 
         ItemModifierEffect modifier;
 
-        if (rand < 25)
+        if (rand < 20)
         {
             modifier = new ArmourModifier(level);
         }
-        else if (rand < 50)
+        else if (rand < 40)
         {
             modifier = new SpeedModifier(level);
         }
-        else if (rand < 75)
+        else if (rand < 60)
         {
             modifier = new FlatDamageModifier(level);
         }
+        else if (rand < 80)
+        {
+            modifier = new RelDamageModifier(level);
+        }
         else
         {
-            modifier = new ArmourModifier(level);
+            modifier = new LifeModifier(level);
         }
 
         return modifier;
@@ -74,7 +73,7 @@ public class ArmourModifier : ItemModifierEffect
         levelCoef = 1.1f;
         modifierType = ModifierType.Armor;
         modifierEffect = "Of Armor";
-        modifierItemName = " of the Defenser";
+        modifierItemName = " of the Defender";
         amount = 2;
 
         this.level = level;
@@ -97,11 +96,11 @@ public class SpeedModifier : ItemModifierEffect
 
     public SpeedModifier(int level)
     {
-        levelCoef = 1.05f;
+        levelCoef = 1.01f;
         modifierType = ModifierType.Speed;
         modifierEffect = "% Of Speed";
         modifierItemName = " of Swiftness";
-        amount = 5;
+        amount = 2;
 
         this.level = level;
 
@@ -127,6 +126,58 @@ public class FlatDamageModifier : ItemModifierEffect
         modifierType = ModifierType.FlatDamage;
         modifierEffect = "Of Damage";
         modifierItemName = " of Rage";
+        amount = 2;
+
+        this.level = level;
+
+        computeEffect();
+    }
+}
+
+public class RelDamageModifier : ItemModifierEffect
+{
+    public override void applyEffects(PlayerController controller, PlayerHealth health, AttackManager attacks)
+    {
+        attacks.bonusDamageCoef += (int)finalAmount;
+    }
+
+    public override void removeEffects(PlayerController controller, PlayerHealth health, AttackManager attacks)
+    {
+        attacks.bonusDamageCoef -= (int)finalAmount;
+    }
+
+    public RelDamageModifier(int level)
+    {
+        levelCoef = 1.05f;
+        modifierType = ModifierType.FlatDamage;
+        modifierEffect = "% Of Damage";
+        modifierItemName = " of Hatred";
+        amount = 5;
+
+        this.level = level;
+
+        computeEffect();
+    }
+}
+
+public class LifeModifier : ItemModifierEffect
+{
+    public override void applyEffects(PlayerController controller, PlayerHealth health, AttackManager attacks)
+    {
+        health.changeBonusLife((int)finalAmount);
+    }
+
+    public override void removeEffects(PlayerController controller, PlayerHealth health, AttackManager attacks)
+    {
+        health.changeBonusLife(-(int)finalAmount);
+    }
+
+    public LifeModifier(int level)
+    {
+        levelCoef = 1.02f;
+        modifierType = ModifierType.FlatDamage;
+        modifierEffect = "Of Life";
+        modifierItemName = " of Constitution";
         amount = 5;
 
         this.level = level;

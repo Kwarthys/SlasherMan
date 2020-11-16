@@ -103,7 +103,7 @@ public class Monster : LivingThing
     protected override void onDeath()
     {
         scoreManager.notifyKill(monsterKillScore);
-        attackManager.enabled = false;
+        attackManager.deactivate();
         /*
         if (deathAnimation != null)
         {
