@@ -63,6 +63,12 @@ public class LivingThing : MonoBehaviour
         onTakeDamage();
     }
 
+    public void reinit()
+    {
+        dead = false;
+        life = maxLife;
+    }
+
     private void Update()
     {
         if (life <= 0 && !dead)

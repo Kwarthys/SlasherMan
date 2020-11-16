@@ -45,7 +45,7 @@ public class MusicManager : MonoBehaviour
         float t = monsterHolder.transform.childCount * 1.0f / monsterHolder.maxMonsterCount;
         musicSource.volume = Mathf.Lerp(volumeMin, volumeMax, t) * mainVolume.value * musicCoef;
 
-        bassSource.volume = bassCoef;
+        bassSource.volume = bassCoef * mainVolume.value;
     }
 
     public void transiToBass()

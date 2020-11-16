@@ -17,8 +17,10 @@ public class SpawnerManager : MonoBehaviour
 
     public int startCreditsPerSpawn = 10;
     public float coefIncrease = 1.15f;
-    private int creditsPerSpawn = 0;
+    private float creditsPerSpawn = 0;
     private int waveCredits = 0;
+
+    public int stageLevel = 1;
 
     private int mID = 0;
 
@@ -82,8 +84,8 @@ public class SpawnerManager : MonoBehaviour
             if (Time.realtimeSinceStartup - lastSpawn > spawnRate && !wavesEnded)
             {
                 lastSpawn = Time.realtimeSinceStartup;
-                waveCredits = creditsPerSpawn;
-                creditsPerSpawn = (int)(creditsPerSpawn * coefIncrease);
+                waveCredits = Mathf.RoundToInt(creditsPerSpawn);
+                creditsPerSpawn = creditsPerSpawn * coefIncrease;
                 //Spawn
                 while(waveCredits > 0 && transform.childCount < maxMonsterCount)
                 {
@@ -107,6 +109,14 @@ public class SpawnerManager : MonoBehaviour
 
         Monster m = Instantiate(getRandomMonsterPrefab(), spawnPoint, Quaternion.identity, transform).GetComponent<Monster>();
         m.transform.name = "Monster" + ++mID;
+
+        //modify monster life and armor
+        m.bonusArmor = stageLevel;
+        m.changeBonusLife((int)Mathf.Pow(stageLevel,  1.10f));
+
+        //modifyDamages
+        m.attackManager.registerAbility();
+        m.attackManager.changeAbilityDamage((int)(m.attackManager.getAbilityDamage() * Mathf.Pow(1.10f, stageLevel)));
     }
 
     private Vector3 getSpawnPoint()

@@ -4711,7 +4711,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 70376873}
   bassSource: {fileID: 70376874}
-  transiTime: 1
+  transiTime: 5
   monsterHolder: {fileID: 607826860}
   mainVolume: {fileID: 585018484}
   volumeMin: 0.5

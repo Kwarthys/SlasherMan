@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public GameObject abilityStatsContainer;
     public GameObject abilityTextPrefab;
     public TextMeshProUGUI defeatText;
+    private Dictionary<string, int> abilityTotalDamages = new Dictionary<string, int>();
+    private Dictionary<string, int> abilityTotalKills = new Dictionary<string, int>();
 
     private bool playerDead = false;
     public float fadeInTime = 2;
@@ -79,6 +81,7 @@ public class GameManager : MonoBehaviour
             endScreen.SetActive(true);
             startFadeInTime = Time.realtimeSinceStartup;
             playerDead = true;
+            registerAndResetWeaponsStats();
             buildAbilitiesStats();
             playerController.canMove = false;
             attackManager.masterAttackBlock = true;
@@ -103,17 +106,19 @@ public class GameManager : MonoBehaviour
 
     private void buildAbilitiesStats()
     {
-        foreach(Ability a in attackManager.getAbilities())
+        foreach(string abilityName in abilityTotalDamages.Keys)
         {
-            string text = a.abilityName + ":\n";
-            string damage = "Damage: " + a.totalDamage;
+            string text = abilityName + ":\n";
+            string damage = "Damage: " + abilityTotalDamages[abilityName];
 
-            while(damage.Length < 30)
+            string kills = "Kills: " + abilityTotalKills[abilityName];
+
+            while (damage.Length + kills.Length < 30)
             {
                 damage += "_";
             }
 
-            damage += "Kills: " + a.totalKills;
+            damage += kills;
 
             text += damage;
 
@@ -150,7 +155,32 @@ public class GameManager : MonoBehaviour
         playerController.canMove = false;
         attackManager.masterAttackBlock = true;
 
+        spawnManager.stageLevel = stageNumber;
+
         musicManager.transiToBass();
+
+        registerAndResetWeaponsStats();
+    }
+
+    private void registerAndResetWeaponsStats()
+    {
+        foreach (Ability a in attackManager.getAbilities())
+        {
+            if(a!=null)
+            {
+                if (!abilityTotalDamages.ContainsKey(a.abilityName))
+                {
+                    abilityTotalDamages.Add(a.abilityName, 0);
+                    abilityTotalKills.Add(a.abilityName, 0);
+                }
+
+                abilityTotalDamages[a.abilityName] += a.totalDamage;
+                abilityTotalKills[a.abilityName] += a.totalKills;
+
+                a.totalKills = 0;
+                a.totalDamage = 0;
+            }
+        }
     }
 
     public void retryClick()
@@ -171,6 +201,8 @@ public class GameManager : MonoBehaviour
         furnitureManager.reinit();
         playerHealth.init();
         playerController.canMove = true;
+
+        stageNumber = 1;
 
         initialise();
     }

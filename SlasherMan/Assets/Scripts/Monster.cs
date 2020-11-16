@@ -32,6 +32,10 @@ public class Monster : LivingThing
 
     private MonsterDeathAnimationManager deathAnimationManager;
 
+    public int level = 1;
+
+    public Collider physicCollider;
+
     public void setAllowMovement(bool state)
     {
         allowMovement = state;
@@ -104,6 +108,7 @@ public class Monster : LivingThing
     {
         scoreManager.notifyKill(monsterKillScore);
         attackManager.deactivate();
+        physicCollider.enabled = false;
         /*
         if (deathAnimation != null)
         {

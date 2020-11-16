@@ -5,15 +5,22 @@ using UnityEngine;
 public class MonsterAttackManager : MonoBehaviour
 {
     private Collider attackTrigger;
-    private MonsterAbility ability;
+    private MonsterAbility ability = null;
 
     // Start is called before the first frame update
     void Start()
     {
         attackTrigger = GetComponent<Collider>();
         attackTrigger.enabled = false;
+        registerAbility();
+    }
 
-        ability = transform.Find("Attacker").GetComponent<MonsterAbility>();
+    public void registerAbility()
+    {
+        if(ability == null)
+        {
+            ability = transform.Find("Attacker").GetComponent<MonsterAbility>();
+        }
     }
 
     // Update is called once per frame
@@ -33,6 +40,13 @@ public class MonsterAttackManager : MonoBehaviour
     {
         ability.enabled = false;
         this.enabled = false;
+    }
+
+    public int getAbilityDamage() { return ability.damage; }
+
+    public void changeAbilityDamage(int amount)
+    {
+        ability.damage = amount;
     }
 
     private void OnTriggerEnter(Collider other)

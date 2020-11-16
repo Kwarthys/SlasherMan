@@ -63,7 +63,7 @@ public class PlayerHealth : LivingThing
 
     public override void init()
     {
-        life = maxLife;
+        reinit();
         slider.value = life * 1.0f / maxLife;
 
         transform.position = Vector3.zero;

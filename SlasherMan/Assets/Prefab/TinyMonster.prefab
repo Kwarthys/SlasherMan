@@ -156,6 +156,8 @@ MonoBehaviour:
   monsterKillScore: 1
   attackManager: {fileID: 2690901792615521550}
   seeDistance: 80
+  level: 1
+  physicCollider: {fileID: 184451521633362790}
 --- !u!195 &3591091783852753974
 NavMeshAgent:
   m_ObjectHideFlags: 0
