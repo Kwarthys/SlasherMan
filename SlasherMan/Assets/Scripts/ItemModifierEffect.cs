@@ -180,7 +180,33 @@ public class LifeModifier : ItemModifierEffect
         modifierItemName = " of Constitution";
         amount = 5;
 
-        this.level = level;
+        this.level = 1;
+
+        computeEffect();
+    }
+}
+
+public class TieModifier : ItemModifierEffect
+{
+    public override void applyEffects(PlayerController controller, PlayerHealth health, AttackManager attacks)
+    {
+        health.hasTie = true;
+    }
+
+    public override void removeEffects(PlayerController controller, PlayerHealth health, AttackManager attacks)
+    {
+        health.hasTie = false;
+    }
+
+    public TieModifier(int level)
+    {
+        levelCoef = 1;
+        modifierType = ModifierType.FlatDamage;
+        modifierEffect = "% Of freewill";
+        modifierItemName = "";
+        amount = -100;
+
+        this.level = 0;
 
         computeEffect();
     }

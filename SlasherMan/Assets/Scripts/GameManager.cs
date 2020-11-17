@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     private Dictionary<string, int> abilityTotalKills = new Dictionary<string, int>();
 
     private bool playerDead = false;
+    private bool endscreenanim = false;
     public float fadeInTime = 2;
     private float startFadeInTime = -2;
 
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour
     public GameObject levelEndScreen;
     public InventoryDisplayer inventoryDisplayer;
     public InventoryManager inventoryManager;
+    public GameObject nextStageButton;
 
     [Header("RestartTheGame")]
     public SpawnerManager spawnManager;
@@ -72,25 +74,45 @@ public class GameManager : MonoBehaviour
         }
 
         attackManager.masterAttackBlock = false;
+
+        playerHealth.hasTie = false;
+
+        nextStageButton.SetActive(true);
     }
 
     public void notifyPlayerDead()
     {
-        if(!playerDead)
-        {
-            endScreen.SetActive(true);
-            startFadeInTime = Time.realtimeSinceStartup;
-            playerDead = true;
-            registerAndResetWeaponsStats();
-            buildAbilitiesStats();
-            playerController.canMove = false;
-            attackManager.masterAttackBlock = true;
-        }
+        //Loot the tie
+        levelEndScreen.SetActive(true);
+        inventoryDisplayer.refreshSlots();
+        inventoryDisplayer.generateTieLoot();
+        playerDead = true;
+
+        nextStageButton.SetActive(false);
+
+        playerController.canMove = false;
+        attackManager.masterAttackBlock = true;
+    }
+
+    private void showDeathScreen()
+    {
+        endScreen.SetActive(true);
+        startFadeInTime = Time.realtimeSinceStartup;
+        registerAndResetWeaponsStats();
+        buildAbilitiesStats();
+
+        scoreManager.freeze = true;
     }
 
     private void Update()
     {
-        if(playerDead)
+        if(playerHealth.hasTie && !endscreenanim)
+        {
+            showDeathScreen();
+            endscreenanim = true;
+        }
+
+        if(endscreenanim)
         {
             float t = (Time.realtimeSinceStartup - startFadeInTime) / fadeInTime;
             float alpha = Mathf.Min(maxAlphaValue, t);
@@ -99,8 +121,6 @@ public class GameManager : MonoBehaviour
             if (t > 1) t = 1;
             float size = Mathf.Lerp(minDefeatTextSize, maxDefeatTextSize, t);
             defeatText.fontSize = size;
-
-            scoreManager.freeze = true;
         }
     }
 
@@ -185,6 +205,8 @@ public class GameManager : MonoBehaviour
 
     public void retryClick()
     {
+        endscreenanim = false;
+
         //Debug.Log("retry");
         foreach (Ability a in attackManager.getAbilities())
         {
@@ -201,6 +223,8 @@ public class GameManager : MonoBehaviour
         furnitureManager.reinit();
         playerHealth.init();
         playerController.canMove = true;
+
+        inventoryManager.reinit();
 
         stageNumber = 1;
 

@@ -980,7 +980,7 @@ RectTransform:
   - {fileID: 319623709}
   - {fileID: 826742243}
   m_Father: {fileID: 929960964}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1609,6 +1609,7 @@ MonoBehaviour:
   onHitImage: {fileID: 414547863}
   maxOpacity: 0.5
   decreaseOpacity: 0.02
+  hasTie: 0
 --- !u!54 &403791609
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2921,6 +2922,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3d4392e24f9299544b2e48cb6ab81102, type: 2}
   startCreditsPerSpawn: 10
   coefIncrease: 1.01
+  stageLevel: 1
   floor:
     serializedVersion: 2
     m_Bits: 256
@@ -3532,6 +3534,155 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   inventoryManager: {fileID: 1679324842}
   inventoryDisplayer: {fileID: 1014824755}
+--- !u!1 &863242480
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 863242481}
+  - component: {fileID: 863242483}
+  - component: {fileID: 863242482}
+  m_Layer: 0
+  m_Name: Ambiance
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &863242481
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863242480}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1140905072}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &863242482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863242480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd0d7651cfe275a459874d16df7460d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  masterSound: {fileID: 585018484}
+  clips:
+  - {fileID: 8300000, guid: 77245953a77625a42abcda4716136fe7, type: 3}
+  - {fileID: 8300000, guid: 1c9ef869201943d459c05c615ac2a8b0, type: 3}
+  - {fileID: 8300000, guid: e64752529e78a1b42942e8e9cb86f704, type: 3}
+  clipVolume: 0.2
+  source: {fileID: 863242483}
+  timeBetween: 10
+  randomTime: 40
+--- !u!82 &863242483
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863242480}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &868956655
 GameObject:
   m_ObjectHideFlags: 0
@@ -3702,8 +3853,8 @@ RectTransform:
   - {fileID: 796922996}
   - {fileID: 1245577358}
   - {fileID: 1468645216}
-  - {fileID: 1626056006}
   - {fileID: 203052271}
+  - {fileID: 1626056006}
   - {fileID: 764290604}
   - {fileID: 281614996}
   - {fileID: 1499778706}
@@ -4694,6 +4845,7 @@ Transform:
   - {fileID: 1878669633}
   - {fileID: 1063961597}
   - {fileID: 70376872}
+  - {fileID: 863242481}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6159,7 +6311,7 @@ RectTransform:
   m_Children:
   - {fileID: 543668138}
   m_Father: {fileID: 929960964}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -6390,7 +6542,7 @@ MonoBehaviour:
   abilityTextPrefab: {fileID: 7341261042373924359, guid: 5912e4dcdd6c30340a4a0e7b196e59ac, type: 3}
   defeatText: {fileID: 1689580635}
   fadeInTime: 2
-  maxAlphaValue: 0.95
+  maxAlphaValue: 1
   minDefeatTextSize: 50
   maxDefeatTextSize: 70
   musicManager: {fileID: 1140905073}
@@ -6398,6 +6550,7 @@ MonoBehaviour:
   levelEndScreen: {fileID: 203052270}
   inventoryDisplayer: {fileID: 1014824755}
   inventoryManager: {fileID: 1679324842}
+  nextStageButton: {fileID: 826742242}
   spawnManager: {fileID: 607826860}
   attackManager: {fileID: 403791607}
   scoreManager: {fileID: 1679324839}
@@ -6425,6 +6578,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 33fe1f0e7e9b38d4c99418efd81d04db, type: 2}
   - {fileID: 11400000, guid: 3f6804139a336944e8302f15cface713, type: 2}
   - {fileID: 11400000, guid: 9ccb7f1466fff4e49abc179c5eb70a49, type: 2}
+  tieItem: {fileID: 11400000, guid: 1a65b2af7cebd344a9a563a46bfc3109, type: 2}
   attackImage: {fileID: 261240330}
   supportImage: {fileID: 1270103255}
   specialImage: {fileID: 1033784138}

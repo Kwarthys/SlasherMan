@@ -92,6 +92,8 @@ public class InventoryManager : MonoBehaviour
 
     public List<PlayerItemScriptable> allItemsInGame = new List<PlayerItemScriptable>();
 
+    public PlayerItemScriptable tieItem;
+
     public Dictionary<ItemType, PlayerItem> equippedItems = new Dictionary<ItemType, PlayerItem>();
 
     public Image attackImage;
@@ -188,6 +190,12 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    public void reinit()
+    {
+        equippedItems.Clear();
+        Awake();
+    }
+
     public void updateUI()
     {
         updateUIFor(ItemType.Attack, attackImage);
@@ -221,6 +229,14 @@ public class InventoryManager : MonoBehaviour
         {
             image.sprite = emptySlot;
         }
+    }
+
+    public PlayerItem getDeadlyTie()
+    {
+        PlayerItem item = new PlayerItem(tieItem);
+        item.rarity = 4;
+        item.addModifier(new TieModifier(0));
+        return item;
     }
 
     public PlayerItem getRandomItem(int stageNumber)

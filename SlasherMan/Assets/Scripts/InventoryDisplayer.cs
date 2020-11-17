@@ -43,22 +43,33 @@ public class InventoryDisplayer : MonoBehaviour
         }
     }
 
-    public void generateALoot(int stageNumber)
+    private void activateLoot(PlayerItem item)
     {
-        PlayerItem lootItem = inventoryManager.getRandomItem(stageNumber);
         ItemLootBehaviour lootBehaviour = Instantiate(lootPrefab, lootHolder).GetComponent<ItemLootBehaviour>();
         PlayerItemDisplayer displayer = lootBehaviour.GetComponent<PlayerItemDisplayer>();
-        displayer.setItem(lootItem);
+        displayer.setItem(item);
         lootBehaviour.inventoryDisplayer = this;
 
         loot = lootBehaviour.gameObject;
     }
 
-    internal void removeLootIfLeft()
+    public void generateALoot(int stageNumber)
+    {
+        PlayerItem lootItem = inventoryManager.getRandomItem(stageNumber);
+
+        activateLoot(lootItem);
+    }
+
+    public void removeLootIfLeft()
     {
         if(loot != null)
         {
             Destroy(loot);
         }
+    }
+
+    public void generateTieLoot()
+    {
+        activateLoot(inventoryManager.getDeadlyTie());
     }
 }
