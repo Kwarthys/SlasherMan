@@ -5200,6 +5200,8 @@ MonoBehaviour:
   objects:
   - {fileID: 11400000, guid: 701eed1dca2ebfe46aec10a97a2d99c0, type: 2}
   - {fileID: 11400000, guid: 5ca8e99906846734ba509d9685006ba9, type: 2}
+  - {fileID: 11400000, guid: 9de9bbfb974ba4042948a79d1e24d2d2, type: 2}
+  - {fileID: 11400000, guid: b6e815cab8b9b1140b56125ba575ffd3, type: 2}
   gridUnitSize: 6.5
   mapSize: 50
   density: 0.6
