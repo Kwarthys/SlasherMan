@@ -15,3 +15,4 @@ MonoBehaviour:
   prefab: {fileID: 2743695444389685127, guid: 17e5c6651a49c4046896690769ccd430, type: 3}
   probability: 0.3
   itemName: Plant
+  canMoveInCell: 1

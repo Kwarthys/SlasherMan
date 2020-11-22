@@ -16,4 +16,4 @@ MonoBehaviour:
   itemSpriteOFF: {fileID: 0}
   type: 5
   prefab: {fileID: 0}
-  itemBaseName: Deadly Tie of Death
+  itemBaseName: Deadly Tie

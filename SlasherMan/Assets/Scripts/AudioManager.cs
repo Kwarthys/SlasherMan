@@ -16,6 +16,8 @@ public class AudioManager : MonoBehaviour
 
     public Slider mainVolume;
 
+    public float ambianceVolumeCoef = 1;
+
     private float centerZoneSize = 20;
 
     public static AudioManager Instance { get; private set; }
@@ -55,7 +57,7 @@ public class AudioManager : MonoBehaviour
         {
             //if(!source.isPlaying) //For now i'll check how stacking everything will work
             //{
-                source.PlayOneShot(clip, volume * mainVolume.value);
+                source.PlayOneShot(clip, volume * mainVolume.value * ambianceVolumeCoef);
             //}
         }
     }

@@ -236,6 +236,7 @@ public class InventoryManager : MonoBehaviour
         PlayerItem item = new PlayerItem(tieItem);
         item.rarity = 4;
         item.addModifier(new TieModifier(0));
+        item.itemLevel = -1;
         return item;
     }
 

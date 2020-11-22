@@ -7,7 +7,7 @@ public class FurnitureSpawnerManager : MonoBehaviour
 {
     public List<SceneItemMeta> objects = new List<SceneItemMeta>();
 
-    public float gridUnitSize = 2;
+    public Vector2 gridUnitSize = new Vector2(6.5f,6.5f);
 
     public float mapSize = 50;
 
@@ -16,26 +16,32 @@ public class FurnitureSpawnerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for(float j = -mapSize + gridUnitSize/2; j < mapSize - gridUnitSize/2; j+=gridUnitSize)
+        for(float j = -mapSize + gridUnitSize.y/2; j < mapSize - gridUnitSize.y/2; j+=gridUnitSize.y)
         {
-            for (float i = -mapSize + gridUnitSize/2; i < mapSize - gridUnitSize/2; i += gridUnitSize)
+            for (float i = -mapSize + gridUnitSize.x/2; i < mapSize - gridUnitSize.x/2; i += gridUnitSize.x)
             {
                 if(Random.value > 1-density)
                 {
-                    GameObject prefab = getRandomObject();
+                    GameObject prefab = getRandomObject(out bool canMoveInCell);
 
                     float x = i;// + Random.value * gridUnitSize/2;
                     float y = j;// + Random.value * gridUnitSize/2;
+
+                    if(canMoveInCell)
+                    {
+                        x += Random.value * gridUnitSize.x / 1.8f;
+                        y += Random.value * gridUnitSize.y / 1.8f;
+                    }
 
                     Instantiate(prefab, new Vector3(x, 0, y), Random.value > 0.5f ? Quaternion.identity : Quaternion.LookRotation(Vector3.back), transform);
                 }
             }
         }
 
-        transform.Rotate(0, -45, 0);
+        transform.Rotate(0, 45 * (Random.value > 0.5f ? 1 : -1), 0);
     }
 
-    private GameObject getRandomObject()
+    private GameObject getRandomObject(out bool canMoveInCell)
     {
         float rarity = Random.value;
 
@@ -46,6 +52,7 @@ public class FurnitureSpawnerManager : MonoBehaviour
             item = objects[Random.Range(0, objects.Count)];
         } while (item.probability <= rarity);
 
+        canMoveInCell = item.canMoveInCell;
         return item.prefab;
     }
 

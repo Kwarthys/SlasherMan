@@ -206,7 +206,7 @@ public class TieModifier : ItemModifierEffect
         modifierItemName = "";
         amount = -100;
 
-        this.level = 0;
+        this.level = -1;
 
         computeEffect();
     }

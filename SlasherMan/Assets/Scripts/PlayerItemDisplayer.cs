@@ -74,7 +74,12 @@ public class PlayerItemDisplayer : MonoBehaviour
                 itemNameText.text += item.getModifiers()[0].modifierItemName;
             }
 
-            itemNameText.text += " (" + item.itemLevel + ")<size=75%> ";
+            if(item.itemLevel != -1)
+            {
+                itemNameText.text += " (" + item.itemLevel + ")";
+            }
+
+            itemNameText.text += "<size=75%>";
 
             foreach (ItemModifierEffect modifier in item.getModifiers())
             {

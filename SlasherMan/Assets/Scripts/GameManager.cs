@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI defeatText;
     private Dictionary<string, int> abilityTotalDamages = new Dictionary<string, int>();
     private Dictionary<string, int> abilityTotalKills = new Dictionary<string, int>();
+    public AudioManager audioManager;
 
     private bool playerDead = false;
     private bool endscreenanim = false;
@@ -96,6 +97,7 @@ public class GameManager : MonoBehaviour
 
     private void showDeathScreen()
     {
+        musicManager.transiToBass();
         endScreen.SetActive(true);
         startFadeInTime = Time.realtimeSinceStartup;
         registerAndResetWeaponsStats();
@@ -119,6 +121,7 @@ public class GameManager : MonoBehaviour
             endScreenBackGound.color = new Color(endScreenBackGound.color.r, endScreenBackGound.color.g, endScreenBackGound.color.b, alpha);
 
             if (t > 1) t = 1;
+            audioManager.ambianceVolumeCoef = 1 - t;
             float size = Mathf.Lerp(minDefeatTextSize, maxDefeatTextSize, t);
             defeatText.fontSize = size;
         }

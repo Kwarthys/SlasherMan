@@ -8,4 +8,6 @@ public class SceneItemMeta : ScriptableObject
     public GameObject prefab;
     public float probability = 1;
     public string itemName;
+
+    public bool canMoveInCell = false;
 }
