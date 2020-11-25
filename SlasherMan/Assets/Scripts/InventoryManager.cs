@@ -16,6 +16,8 @@ public class PlayerItem
 
     public int rarity = 0;
 
+    public bool consumable = false;
+
     private List<ItemModifierEffect> modifiers = new List<ItemModifierEffect>();
 
     public PlayerItem(PlayerItemScriptable baseItem, int level = 1)
@@ -112,8 +114,12 @@ public class InventoryManager : MonoBehaviour
     public Color rarity3 = Color.blue;
     public Color rarity4 = Color.red;
     public Color rarity5 = Color.yellow;
-    [Space]
 
+    [Header("Audio")]
+    public List<AudioClip> clips;
+    public AudioSource audioSource;
+    public float reactVolume = 1;
+    [Space]
     public Sprite emptySlot;
 
     private void Awake()
@@ -161,6 +167,9 @@ public class InventoryManager : MonoBehaviour
 
     public void replaceItem(PlayerItem newItem)
     {
+        if(newItem.baseScriptable.itemBaseName != "Deadly Tie")
+            audioSource.PlayOneShot(clips[UnityEngine.Random.Range(0, clips.Count)], reactVolume);
+
         if(equippedItems.ContainsKey(newItem.type))
         {
             foreach(ItemModifierEffect effect in equippedItems[newItem.type].getModifiers())
@@ -188,11 +197,31 @@ public class InventoryManager : MonoBehaviour
             attackManager.updateAbility(newItem);
             updateUI();
         }
+
+        if(newItem.consumable)
+        {
+            equippedItems.Remove(newItem.type);
+            Debug.Log("Item used");
+        }
     }
 
     public void reinit()
     {
+        foreach(PlayerItem item in equippedItems.Values)
+        {
+            if(isItemWeapon(item.type))
+            {
+                Destroy(item.instanciatedEffector);
+                item.instanciatedEffector = null;
+                foreach (ItemModifierEffect mod in item.getModifiers())
+                {
+                    mod.removeEffects(controller, health, attackManager);
+                }
+            }
+        }
+
         equippedItems.Clear();
+
         Awake();
     }
 
@@ -244,6 +273,14 @@ public class InventoryManager : MonoBehaviour
     {
         int r = UnityEngine.Random.Range(0, allItemsInGame.Count);
         PlayerItem item = new PlayerItem(allItemsInGame[r], stageNumber);
+
+        if(item.type == ItemType.Body)
+        {
+            //Potion
+            item.addModifier(new PotionModifier(1));
+            item.consumable = true;
+            return item;
+        }
 
         int modifCap = UnityEngine.Random.Range(1, Mathf.Min(4, stageNumber));
 

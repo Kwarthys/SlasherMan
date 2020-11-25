@@ -69,6 +69,9 @@ public class GameManager : MonoBehaviour
         levelEndScreen.SetActive(false);
         playerDead = false;
 
+        musicManager.transiToMusic();
+        audioManager.ambianceVolumeCoef = 1;
+
         foreach(Transform child in abilityStatsContainer.transform)
         {
             Destroy(child.gameObject);
@@ -157,7 +160,7 @@ public class GameManager : MonoBehaviour
         attackManager.init();
         spawnManager.resetForNext();
         furnitureManager.reinit();
-        playerHealth.init();
+        playerHealth.replace();
         initialise();
 
         musicManager.transiToMusic();

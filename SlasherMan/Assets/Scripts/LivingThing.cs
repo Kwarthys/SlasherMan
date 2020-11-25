@@ -63,6 +63,14 @@ public class LivingThing : MonoBehaviour
         onTakeDamage();
     }
 
+    protected virtual void onHeal() { }
+
+    public void heal(int amount)
+    {
+        life = Mathf.Min(maxLife, life + amount);
+        onHeal();
+    }
+
     public void reinit()
     {
         dead = false;

@@ -68,6 +68,15 @@ public class PlayerHealth : LivingThing
         reinit();
         slider.value = life * 1.0f / maxLife;
 
+    }
+
+    public void replace()
+    {
         transform.position = Vector3.zero;
+    }
+
+    protected override void onHeal()
+    {
+        slider.value = life * 1.0f / maxLife;
     }
 }

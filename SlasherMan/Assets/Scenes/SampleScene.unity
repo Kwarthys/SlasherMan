@@ -3022,7 +3022,7 @@ MonoBehaviour:
   spawnMinRange: 30
   spawnMaxRange: 45
   spawnRate: 3
-  wavesPerLevel: 10
+  wavesPerLevel: 2
   monsters:
   - {fileID: 11400000, guid: a309d6780632a8948b3e32d24e8c3732, type: 2}
   - {fileID: 11400000, guid: 3d4392e24f9299544b2e48cb6ab81102, type: 2}
@@ -7812,7 +7812,7 @@ MonoBehaviour:
   abilityStatsContainer: {fileID: 1781359608}
   abilityTextPrefab: {fileID: 7341261042373924359, guid: 5912e4dcdd6c30340a4a0e7b196e59ac, type: 3}
   defeatText: {fileID: 1689580635}
-  audioManager: {fileID: 0}
+  audioManager: {fileID: 1140905071}
   fadeInTime: 2
   maxAlphaValue: 1
   minDefeatTextSize: 50
@@ -7850,6 +7850,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 33fe1f0e7e9b38d4c99418efd81d04db, type: 2}
   - {fileID: 11400000, guid: 3f6804139a336944e8302f15cface713, type: 2}
   - {fileID: 11400000, guid: 9ccb7f1466fff4e49abc179c5eb70a49, type: 2}
+  - {fileID: 11400000, guid: a9f544e85ccfdca46ad45d9289173959, type: 2}
   tieItem: {fileID: 11400000, guid: 1a65b2af7cebd344a9a563a46bfc3109, type: 2}
   attackImage: {fileID: 261240330}
   supportImage: {fileID: 1270103255}
@@ -7863,6 +7864,15 @@ MonoBehaviour:
   rarity3: {r: 0, g: 0.3955245, b: 1, a: 1}
   rarity4: {r: 1, g: 0, b: 0, a: 1}
   rarity5: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  clips:
+  - {fileID: 8300000, guid: 5c421dd9a6018a546b79f065643e692f, type: 3}
+  - {fileID: 8300000, guid: 3324421bc6b7eb940a727f37c9020394, type: 3}
+  - {fileID: 8300000, guid: 3cce6eae94a90cb4ca2f0a53348db8f7, type: 3}
+  - {fileID: 8300000, guid: 0ac3023665a0b0f47abef973f619ba77, type: 3}
+  - {fileID: 8300000, guid: 16bd80e1603850a409aafa076aa1cc69, type: 3}
+  - {fileID: 8300000, guid: 33df10bef71407a4090781bd308c26b9, type: 3}
+  audioSource: {fileID: 406172932}
+  reactVolume: 1
   emptySlot: {fileID: 21300000, guid: 9d0c524eb9b3d4b458dbb0c7ab189dc4, type: 3}
 --- !u!4 &1683859436 stripped
 Transform:

@@ -211,3 +211,26 @@ public class TieModifier : ItemModifierEffect
         computeEffect();
     }
 }
+
+public class PotionModifier : ItemModifierEffect
+{
+    public override void applyEffects(PlayerController controller, PlayerHealth health, AttackManager attacks)
+    {
+        health.heal((int)finalAmount);
+    }
+
+    public override void removeEffects(PlayerController controller, PlayerHealth health, AttackManager attacks){}
+
+    public PotionModifier(int level)
+    {
+        levelCoef = 1;
+        modifierType = ModifierType.FlatDamage;
+        modifierEffect = " Health";
+        modifierItemName = "";
+        amount = 50;
+
+        this.level = 1;
+
+        computeEffect();
+    }
+}
