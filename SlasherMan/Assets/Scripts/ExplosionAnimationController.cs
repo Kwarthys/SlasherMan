@@ -8,10 +8,13 @@ public class ExplosionAnimationController : MonoBehaviour
     private Renderer theRenderer;
     public float expansionTime = .1f;
     public float explosionDuration = .3f;
+    public float destructionTimer = 1;
     public float lightStartingIntensity = 3;
     private float spawnTime;
 
     private Vector3 originalScale;
+
+    private bool terminated = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +29,8 @@ public class ExplosionAnimationController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (terminated) return;
+
         float expT = (Time.realtimeSinceStartup - spawnTime) / expansionTime;
 
         if(expT < 1)
@@ -38,7 +43,8 @@ public class ExplosionAnimationController : MonoBehaviour
 
         if(t > 1)
         {
-            Destroy(gameObject);
+            terminated = true;
+            Destroy(gameObject, destructionTimer - explosionDuration);
             return;
         }
 

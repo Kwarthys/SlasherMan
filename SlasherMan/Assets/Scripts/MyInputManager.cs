@@ -13,7 +13,7 @@ public class MyInputManager : MonoBehaviour
 
     public static MyInputManager Instance { get; private set; }
 
-    private float mouseTimeOut = .5f;
+    private float mouseTimeOut = 2f;
     private float lastMouseMove = -1;
 
     public TextMeshProUGUI blazeKeyHint;

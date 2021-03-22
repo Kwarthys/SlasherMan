@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class BlazeAttack : Ability
 {
-    public float duration = 60;
-
     private ParticleSystem particles;
 
     // Start is called before the first frame update
@@ -20,7 +18,7 @@ public class BlazeAttack : Ability
 
     protected override void prepareCast()
     {
-        controller.speed /= 1.5f;
+        //controller.speed /= 1.5f;
 
         playerAnimator.SetTrigger("Blaze");
 
@@ -55,7 +53,7 @@ public class BlazeAttack : Ability
         {
             if(Time.realtimeSinceStartup - lastCast > duration)
             {
-                controller.speed *= 1.5f;
+                //controller.speed *= 1.5f;
                 attackZone.enabled = false;
                 particles.Stop();
                 inUse = false;

@@ -483,7 +483,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5253802022569194213}
   - component: {fileID: 5253802022569194215}
-  - component: {fileID: 5253802022569194212}
   m_Layer: 0
   m_Name: DeskCollider
   m_TagString: Untagged
@@ -518,22 +517,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.6502583, y: 1.8493738, z: 3.3722918}
   m_Center: {x: 0.48677886, y: -0.5754328, z: 0.051190257}
---- !u!208 &5253802022569194212
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5253802022569194210}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.825129, y: 0.924687, z: 1.686146}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0.4867789, y: -0.5754328, z: 0.05119026}
-  m_TimeToStationary: 0.5
 --- !u!1 &5253802023107397967
 GameObject:
   m_ObjectHideFlags: 0
@@ -543,6 +526,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5253802023107397966}
+  - component: {fileID: 2336048223343701176}
   m_Layer: 0
   m_Name: Colliders
   m_TagString: Untagged
@@ -566,6 +550,22 @@ Transform:
   m_Father: {fileID: 5253802023769965397}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2336048223343701176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5253802023107397967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &5253802023769965394
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,7 +608,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5253802023913877568}
   - component: {fileID: 5253802023913877570}
-  - component: {fileID: 5253802023913877571}
   m_Layer: 0
   m_Name: ChairCollider
   m_TagString: Untagged
@@ -643,22 +642,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 2.5163214, z: 1}
   m_Center: {x: 0, y: -0.24761331, z: 0}
---- !u!208 &5253802023913877571
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5253802023913877569}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 1.2581605, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: -0.2476133, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1 &5739964752583798297
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,10 +13,15 @@ public class FurnitureSpawnerManager : MonoBehaviour
 
     public float density = 0.5f;
 
+    public NavMeshSurface surface;
+
+    private bool rebaked;
+
     // Start is called before the first frame update
     void Start()
     {
-        for(float j = -mapSize + gridUnitSize.y/2; j < mapSize - gridUnitSize.y/2; j+=gridUnitSize.y)
+        rebaked = false;
+        for (float j = -mapSize + gridUnitSize.y/2; j < mapSize - gridUnitSize.y/2; j+=gridUnitSize.y)
         {
             for (float i = -mapSize + gridUnitSize.x/2; i < mapSize - gridUnitSize.x/2; i += gridUnitSize.x)
             {
@@ -39,6 +44,15 @@ public class FurnitureSpawnerManager : MonoBehaviour
         }
 
         transform.Rotate(0, 45 * (Random.value > 0.5f ? 1 : -1), 0);
+    }
+
+    private void FixedUpdate()
+    {
+        if(!rebaked)
+        {
+            rebaked = true;
+            surface.BuildNavMesh();
+        }
     }
 
     private GameObject getRandomObject(out bool canMoveInCell)

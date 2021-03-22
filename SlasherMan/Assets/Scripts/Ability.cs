@@ -26,8 +26,6 @@ public abstract class Ability : MonoBehaviour
     public int level = 1;
     public float levelDamageCoef = 1.01f;//1% more damage by level
     [Space]
-    public float attackDelay = 0;
-    private bool waitingDelay = false;
 
     protected Vector3 aimDir;
 
@@ -35,17 +33,18 @@ public abstract class Ability : MonoBehaviour
 
     [Header("AttackParameters")]
     public GameObject anim;
-
     public float internalCD;
     protected float lastCast = 0;
-
     protected Collider attackZone;
-
     public int damage;
-
     public int chargeCost = 0;
     public int chargeCapacity = 0;
     public int chargeAmount = 0;
+    public float speedMalusCoef = 1;
+    public float attackDelay = 0;
+    private bool waitingDelay = false;
+    public float duration = 0;
+    private bool releaseDelay = false;
 
     protected Animator playerAnimator;
 
@@ -84,6 +83,8 @@ public abstract class Ability : MonoBehaviour
             {
                 prepareCast();
                 waitingDelay = true;
+
+                controller.speed /= speedMalusCoef;
             }
         }
 
@@ -93,6 +94,16 @@ public abstract class Ability : MonoBehaviour
             {
                 waitingDelay = false;
                 cast();
+                releaseDelay = true;
+            }
+        }
+
+        if(releaseDelay)
+        {
+            if(Time.realtimeSinceStartup - lastCast > duration)
+            {
+                releaseDelay = false;
+                controller.speed *= speedMalusCoef;
             }
         }
 

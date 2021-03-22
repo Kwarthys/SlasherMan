@@ -55,12 +55,15 @@ MonoBehaviour:
   abilityName: FireBall
   totalDamage: 0
   totalKills: 0
-  allowed: 1
-  attackDelay: 0.2
+  level: 1
+  levelDamageCoef: 1.01
   anim: {fileID: 0}
   internalCD: 0.5
   damage: 50
   chargeCost: 0
   chargeCapacity: 0
   chargeAmount: 0
+  speedMalusCoef: 2
+  attackDelay: 0.2
+  duration: 0.4
   fireballPrefab: {fileID: 3817527407424081201, guid: 91b0f9c336cc94b48a29571ac10b3f17, type: 3}
